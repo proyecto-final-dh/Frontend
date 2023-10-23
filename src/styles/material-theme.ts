@@ -12,6 +12,8 @@ export const theme = createTheme({
     },
     secondary: {
       main: '#E37E40', //Orange
+      light: '#F3C58E',
+      dark: '#B76435',
     },
   },
 });
