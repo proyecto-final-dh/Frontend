@@ -1,6 +1,8 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
 
 function App() {
   return (
@@ -13,6 +15,10 @@ function App() {
         <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
           Learn React
         </a>
+        <Typography color='secondary'> Ejemplo </Typography>
+        <Button variant='contained' sx={{ background: 'primary' }}>
+          Ochre
+        </Button>
       </header>
     </div>
   );
