@@ -6,12 +6,12 @@ export const theme = createTheme({
   },
   palette: {
     primary: {
-      main: '#D8A868', //Dorado
+      main: '#D8A868',
       light: '#F3C58E',
       dark: '#B76435',
     },
     secondary: {
-      main: '#E37E40', //Orange
+      main: '#E37E40',
       light: '#F3C58E',
       dark: '#B76435',
     },
