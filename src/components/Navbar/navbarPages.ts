@@ -6,8 +6,8 @@ import { SvgIconTypeMap } from '@mui/material';
 import { OverridableComponent } from '@mui/material/OverridableComponent';
 
 export const NAVBARROUTES: { label: string; route: string; icon: OverridableComponent<SvgIconTypeMap<object, 'svg'>> }[] = [
-  { label: 'crear QR', route: '/crear-QR', icon: AddCircleIcon },
-  { label: 'adoptar', route: '/adoptar', icon: PetsIcon },
-  { label: 'dar en adopción', route: '/dar-adopcion', icon: HouseIcon },
-  { label: 'tu cuenta', route: '/tu-cuenta', icon: AccountCircleIcon },
+  { label: 'crear QR', route: '/create-qr', icon: AddCircleIcon },
+  { label: 'adoptar', route: '/adopt', icon: PetsIcon },
+  { label: 'dar en adopción', route: '/give-for-adoption', icon: HouseIcon },
+  { label: 'tu cuenta', route: '/your-account', icon: AccountCircleIcon },
 ];
