@@ -1,12 +1,21 @@
-import { Stack } from '@mui/system';
 import * as React from 'react';
 import Navbar from '../Navbar';
 
-const Layout = () => {
+interface PropsLayout {
+  children: React.ReactNode;
+}
+
+const Layout = ({ children }: PropsLayout) => {
   return (
-    <Stack>
-      <Navbar />
-    </Stack>
+    <>
+      <nav>
+        <Navbar />
+      </nav>
+      <main>{children}</main>
+      {/* <footer>
+        <Footer />
+      </footer> */}
+    </>
   );
 };
 

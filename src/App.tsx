@@ -17,7 +17,7 @@ function App() {
         />
       </head>
       <header>
-        <Layout></Layout>
+        <Layout>futuro home</Layout>
       </header>
     </div>
   );
