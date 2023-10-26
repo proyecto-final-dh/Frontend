@@ -1,7 +1,13 @@
-import React from 'react';
+import { Stack } from '@mui/system';
+import * as React from 'react';
+import Navbar from '../Navbar';
 
 const Layout = () => {
-  return <div>Layout</div>;
+  return (
+    <Stack>
+      <Navbar />
+    </Stack>
+  );
 };
 
 export default Layout;
