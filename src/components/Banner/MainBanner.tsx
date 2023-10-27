@@ -10,7 +10,7 @@ const MainBanner: FC<BannerProps> = ({ images }) => {
   return (
     <>
       <Box>
-        <img src={images} />
+        <img src={images} width={1903} />
       </Box>
     </>
   );
