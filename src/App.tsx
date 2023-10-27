@@ -1,24 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Button from '@mui/material/Button';
-import { Typography } from '@mui/material';
+import Layout from './components/Layout';
 
 function App() {
   return (
     <div className='App'>
-      <header className='App-header'>
-        <img src={logo} className='App-logo' alt='logo' />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className='App-link' href='https://reactjs.org' target='_blank' rel='noopener noreferrer'>
-          Learn React
-        </a>
-        <Typography color='secondary'> Ejemplo </Typography>
-        <Button variant='contained' sx={{ background: 'primary' }}>
-          Ochre
-        </Button>
+      <head>
+        <title>ResQpet</title>
+        <meta
+          name='description'
+          content='ResQPet ayuda a los dueños de mascotas a mantener a sus queridas mascotas seguras y permite adoptar o dar en adopción a mascotas necesitadas.'
+        />
+        <meta
+          name='keywords'
+          content='codigo QR, mascotas, cuidado de perros, adopción de gatos, adopción de perros, dar en adopción, veterinario, consejos para mascotas'
+        />
+      </head>
+      <header>
+        <Layout>futuro home</Layout>
       </header>
     </div>
   );
