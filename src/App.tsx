@@ -18,10 +18,12 @@ function App() {
           content='codigo QR, mascotas, cuidado de perros, adopción de gatos, adopción de perros, dar en adopción, veterinario, consejos para mascotas'
         />
       </head>
-      <Layout />
-      <Routes>
-        <Route path='/' element={<Home />} />
-      </Routes>
+
+      <Layout>
+        <Routes>
+          <Route path='/' element={<Home />} />
+        </Routes>
+      </Layout>
     </div>
   );
 }
