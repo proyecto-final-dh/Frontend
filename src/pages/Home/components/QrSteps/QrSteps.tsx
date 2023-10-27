@@ -22,7 +22,7 @@ const QrSteps = () => {
             </Typography>
           </div>
           <Grid container spacing={2}>
-            <Grid item xs={12} sm={4} md={4}>
+            <Grid item xs={12} sm={4} md={4} sx={{ textAlign: 'center' }}>
               <img src={markStepOne} />
               <Typography sx={{ textAlign: 'center' }}>
                 <h3>Registrate</h3>
@@ -31,7 +31,7 @@ const QrSteps = () => {
                 <p>Crea tu cuenta para acceder a las herramientas de generación de QR.</p>
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={4} md={4}>
+            <Grid item xs={12} sm={4} md={4} sx={{ textAlign: 'center' }}>
               <img src={markStepTwo} />
               <Typography sx={{ textAlign: 'center' }}>
                 <h3>Carga sus datos</h3>
@@ -40,7 +40,7 @@ const QrSteps = () => {
                 <p>Completa la información de tu mascota.</p>
               </Typography>
             </Grid>
-            <Grid item xs={12} sm={4} md={4}>
+            <Grid item xs={12} sm={4} md={4} sx={{ textAlign: 'center' }}>
               <img src={markStepThree} />
               <Typography sx={{ textAlign: 'center' }}>
                 <h3>Generación de QR</h3>
