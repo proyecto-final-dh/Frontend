@@ -1,0 +1,32 @@
+.banner_contenedor{
+    display: flex;
+    background-color: #FFAE12;
+    width: 100%;
+    height: 380px;
+}
+
+.image_QR{
+    width: 202px;
+    height: 202px;
+    padding: 89px;
+}
+
+.text_banner{
+    font-size: 65px;
+    padding: 28px;
+}
+
+
+.black_text{
+    color:#000;
+}
+
+.white_text{
+    color: #FFF;
+}
+
+.dog_banner{
+    width: 773px;
+    height: 435px;
+    flex-shrink: 0;
+}
