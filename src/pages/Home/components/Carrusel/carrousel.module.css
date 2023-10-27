@@ -1,0 +1,41 @@
+.carrusel_container {
+  padding: 45px 120px;
+  /* display: flex; */
+  align-items: center;
+  justify-content: center;
+  /* overflow: hidden; */
+}
+.arrow_container {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+
+.carrusel {
+  display: flex;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  justify-content: center;
+}
+
+.left_arrow {
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.right_arrow {
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.desable {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+@media (max-width: 768px) {
+  .card {
+    flex: 0 0 100%; /* Muestra una sola tarjeta en dispositivos móviles */
+    margin: 0; /* Elimina el margen en dispositivos móviles */
+  }
+}

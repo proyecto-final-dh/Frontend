@@ -3,6 +3,9 @@ import QrSteps from './components/QrSteps/QrSteps';
 import { MainBanner } from '../../components';
 import imgBanner from '../../assets/banner-init.png';
 import { Box } from '@mui/material';
+import Banner from './components/Banner/Banner';
+import Carrusel from './components/Carrusel/Carrusel';
+import { petData } from '../../data/petData';
 
 const Home = () => {
   return (
@@ -14,7 +17,9 @@ const Home = () => {
         {/* pasos para creacion de QR junior*/}
         <QrSteps />
         {/* banner info QR jess */}
+        <Banner />
         {/* carrousel con card de mascotas jess */}
+        <Carrusel pets={petData} />
       </Box>
     </div>
   );
