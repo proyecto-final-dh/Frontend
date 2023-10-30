@@ -52,9 +52,9 @@ const Register = () => {
   const onSubmit = async () => {
     if (!phone || !location || !keycloak.tokenParsed?.sub) return;
     const request: APISaveUserDetailsRequest = {
-      id: keycloak.tokenParsed.sub,
+      userId: keycloak.tokenParsed.sub,
       cellphone: phone,
-      location_id: location,
+      locationId: location,
     };
     try {
       await createUserDetails(request);

@@ -1,6 +1,7 @@
 export type APISaveUserDetailsRequest = {
-  id: string;
+  id?: string;
+  userId: string;
   cellphone: string;
-  location_id: number;
+  locationId: number;
 };
 export type APISaveUserDetailsResponse = TAPIResponse<APISaveUserDetailsRequest[], { [x: string]: string }>;

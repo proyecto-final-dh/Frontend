@@ -12,6 +12,6 @@ export const createUserDetails = async (request: APISaveUserDetailsRequest) => {
 export const getUserDetailsById = async (id: string) => {
   const token = kc.token;
   if (!token) throw new Error('No token found');
-  const response = await resqpetAPI(token).get(`/user-details/${id}`);
+  const response = await resqpetAPI(token).get(`/user-details/user/${id}`);
   return response.data;
 };
