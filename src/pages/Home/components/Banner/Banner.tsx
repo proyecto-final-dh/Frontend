@@ -1,4 +1,3 @@
-import React from 'react';
 import qr from '../../../../assets/qr-code-movil.png';
 import dog from '../../../../assets/dog-glasses.png';
 import styles from './banner.module.css';

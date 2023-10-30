@@ -1,4 +1,3 @@
-import React from 'react';
 import QrSteps from './components/QrSteps/QrSteps';
 import { MainBanner } from '../../components';
 import imgBanner from '../../assets/banner-init.png';
