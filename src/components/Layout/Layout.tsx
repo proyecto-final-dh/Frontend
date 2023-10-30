@@ -1,4 +1,4 @@
-import React from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Navbar from '../Navbar';
 
 interface PropsLayout {
@@ -6,12 +6,20 @@ interface PropsLayout {
 }
 
 const Layout = ({ children }: PropsLayout) => {
+  const [navbarHeight, setNavbarHeight] = useState('');
+  const navbarRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    if (navbarRef.current) {
+      setNavbarHeight(`${(navbarRef.current.children[0] as HTMLElement).offsetHeight}px`);
+    }
+  }, [navbarRef]);
   return (
     <>
-      <nav>
+      <nav ref={navbarRef}>
         <Navbar />
       </nav>
-      <main>{children}</main>
+      <main style={{ marginTop: navbarHeight }}>{children}</main>
       {/* <footer>
         <Footer />
       </footer> */}
