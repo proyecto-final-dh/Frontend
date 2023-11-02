@@ -1,4 +1,3 @@
-import React from 'react';
 import { Box, Button, Grid, Typography, Container } from '@mui/material';
 import markStepOne from '../../../../assets/mark-step-one.png';
 import markStepTwo from '../../../../assets/mark-step-two.png';
