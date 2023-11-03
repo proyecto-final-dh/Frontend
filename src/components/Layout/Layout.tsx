@@ -1,3 +1,4 @@
+import Footer from '../Footer';
 import Navbar from '../Navbar';
 
 interface PropsLayout {
@@ -11,9 +12,7 @@ const Layout = ({ children }: PropsLayout) => {
         <Navbar />
       </nav>
       <main>{children}</main>
-      {/* <footer>
-        <Footer />
-      </footer> */}
+      <Footer />
     </div>
   );
 };
