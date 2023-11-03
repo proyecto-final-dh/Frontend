@@ -8,16 +8,11 @@ import { petData } from '../../data/petData';
 
 const Home = () => {
   return (
-    <div>
-      <Box sx={{ marginTop: '85px' }}>
-        {/* layout con navbar y footer jesyn*/}
-        {/* imagen principal junior */}
+    <div className='col-span-full'>
+      <Box>
         <MainBanner images={imgBanner} />
-        {/* pasos para creacion de QR junior*/}
         <QrSteps />
-        {/* banner info QR jess */}
         <Banner />
-        {/* carrousel con card de mascotas jess */}
         <Carrusel pets={petData} />
       </Box>
     </div>

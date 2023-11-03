@@ -1,4 +1,3 @@
-import { useEffect, useRef, useState } from 'react';
 import Navbar from '../Navbar';
 
 interface PropsLayout {
@@ -6,24 +5,16 @@ interface PropsLayout {
 }
 
 const Layout = ({ children }: PropsLayout) => {
-  const [navbarHeight, setNavbarHeight] = useState('');
-  const navbarRef = useRef<HTMLElement>(null);
-
-  useEffect(() => {
-    if (navbarRef.current) {
-      setNavbarHeight(`${(navbarRef.current.children[0] as HTMLElement).offsetHeight}px`);
-    }
-  }, [navbarRef]);
   return (
-    <>
-      <nav ref={navbarRef}>
+    <div className='col-span-full'>
+      <nav className='sticky top-0 z-10 w-full'>
         <Navbar />
       </nav>
-      <main style={{ marginTop: navbarHeight }}>{children}</main>
+      <main>{children}</main>
       {/* <footer>
         <Footer />
       </footer> */}
-    </>
+    </div>
   );
 };
 
