@@ -1,5 +1,5 @@
 import QrSteps from './components/QrSteps/QrSteps';
-import { MainBanner } from '../../components';
+import { MainBanner, Title } from '../../components';
 import imgBanner from '../../assets/banner-init.png';
 import { Box } from '@mui/material';
 import Banner from './components/Banner/Banner';
@@ -13,6 +13,9 @@ const Home = () => {
         <MainBanner images={imgBanner} />
         <QrSteps />
         <Banner />
+        <Title variant='h1' className='mt-10 mb-5 font-bold text-center'>
+          ADOPCIONES
+        </Title>
         <Carrusel pets={petData} />
       </Box>
     </div>
