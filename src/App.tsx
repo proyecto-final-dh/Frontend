@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
 import { Home, Register } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { Container } from './components';
 
 // TODO: Change Loader component
 const loader = () => <div>Loading...</div>;
@@ -28,17 +29,19 @@ function App() {
             />
           </head>
 
-          <Routes>
-            <Route
-              path='/'
-              element={
-                <Layout>
-                  <Home />
-                </Layout>
-              }
-            />
-            <Route path='/register' element={<Register />} />
-          </Routes>
+          <Container hasPadding={false}>
+            <Routes>
+              <Route
+                path='/'
+                element={
+                  <Layout>
+                    <Home />
+                  </Layout>
+                }
+              />
+              <Route path='/register' element={<Register />} />
+            </Routes>
+          </Container>
         </div>
       </QueryClientProvider>
     </AuthProvider>

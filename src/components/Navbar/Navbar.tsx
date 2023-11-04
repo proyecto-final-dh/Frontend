@@ -12,7 +12,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <AppBar sx={{ bgcolor: 'primary.light' }}>
+    <AppBar sx={{ bgcolor: 'primary.light', width: '100%', position: 'relative' }}>
       <Toolbar>
         {isMatch ? (
           <>

@@ -7,6 +7,9 @@ module.exports = {
     screens,
     colors: {
       primary: '#D8A868',
+      orange: '#FFAE12',
+      black: '#000000',
+      white: '#FFFFFF',
     },
     fontSize: {
       h1: ['36px'],

@@ -16,10 +16,7 @@ const PetButton = ({ label }: ButtonProps): JSX.Element => {
         textTransform: 'capitalize',
         fontWeight: '700',
         '&:hover': { backgroundColor: '#FFFFFF' },
-        width: '150px',
-        '@media (max-width: 768px)': {
-          width: '100%',
-        },
+        padding: '10px 30px',
       }}
     >
       {label}
