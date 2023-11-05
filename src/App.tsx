@@ -16,7 +16,7 @@ function App() {
   return (
     <AuthProvider loader={loader}>
       <QueryClientProvider client={queryClient}>
-        <div className='App'>
+        <div className='App bg-orange-light'>
           <head>
             <title>ResQpet</title>
             <meta
