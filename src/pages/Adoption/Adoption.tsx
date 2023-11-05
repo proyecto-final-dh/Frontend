@@ -24,11 +24,16 @@ const Adoption = ({ pages }: AdoptionProps) => {
       {/* Junior section */}
       {/* End Junior Section */}
 
-      {/* Felipe section */}
-      {/* End Felipe Section */}
       <section className='flex flex-col gap-8'>
         <div className='flex justify-center w-full'>
-          <Pagination pages={pages} maxPagesToShow={maxPagesToShow} currentPage={currentPage} onPageChange={setCurrentPage} />
+          <Pagination
+            pages={pages}
+            maxPagesToShow={maxPagesToShow}
+            currentPage={currentPage}
+            onPageChange={(page) => {
+              if (page >= 1 && page <= pages) setCurrentPage(page);
+            }}
+          />
         </div>
         <section className='flex flex-wrap justify-center px-10 gap-7'>
           {data.map((item) => (
@@ -36,7 +41,14 @@ const Adoption = ({ pages }: AdoptionProps) => {
           ))}
         </section>
         <div className='flex justify-center w-full'>
-          <Pagination pages={pages} maxPagesToShow={maxPagesToShow} currentPage={currentPage} onPageChange={setCurrentPage} />
+          <Pagination
+            pages={pages}
+            maxPagesToShow={maxPagesToShow}
+            currentPage={currentPage}
+            onPageChange={(page) => {
+              if (page >= 1 && page <= pages) setCurrentPage(page);
+            }}
+          />
         </div>
       </section>
     </div>
