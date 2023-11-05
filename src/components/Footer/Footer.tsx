@@ -11,7 +11,7 @@ const Footer = () => {
       <TextDetail size='xs' weight='bold' className='text-center text-white'>
         © 2023 - Proyecto final Digital House- Todos los derechos reservados resqpet.com.ar
       </TextDetail>
-      <div className='flex gap-12'>
+      <div className='flex items-center justify-center gap-12'>
         <a href='https://instagram.com/resqpet?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr' target='_blank' rel='noreferrer' className='cursor-pointer'>
           <img src={instagramIcon} alt='instagram-icon' />
         </a>
