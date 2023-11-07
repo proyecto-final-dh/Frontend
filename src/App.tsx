@@ -7,6 +7,7 @@ import { AuthProvider } from './config';
 import { Home, Register } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
+import PetDetail from './pages/PetDetail';
 
 // TODO: Change Loader component
 const loader = () => <div>Loading...</div>;
@@ -40,6 +41,14 @@ function App() {
                 }
               />
               <Route path='/register' element={<Register />} />
+              <Route
+                path='/petDetail'
+                element={
+                  <Layout>
+                    <PetDetail />
+                  </Layout>
+                }
+              />
             </Routes>
           </Container>
         </div>
