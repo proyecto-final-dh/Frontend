@@ -12,7 +12,7 @@ const RelatedPets = ({ pets }: RelatedPetslProps) => {
       <Title variant={'h2'} className='font-bold pb-5'>
         Otros peluditos esperando ser adoptados:
       </Title>
-      <article className='w-full flex flex-col justify-center lg:flex-row gap-20'>
+      <article className='w-full flex flex-col justify-center items-center gap-10 lg:flex-row lg:gap-20'>
         {pets.map((pet) => (
           <MuiCard key={pet.id} pet={pet} />
         ))}
