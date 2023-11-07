@@ -1,6 +1,5 @@
 import Logo from '../Logo';
 import TextDetail from '../TextDetail';
-import whatsappIcon from '../../assets/icons/whatsapp.svg';
 import coffeeIcon from '../../assets/icons/coffee.svg';
 import instagramIcon from '../../assets/icons/instagram.svg';
 
@@ -15,7 +14,7 @@ const Footer = () => {
         <a href='https://instagram.com/resqpet?igshid=NzZlODBkYWE4Ng%3D%3D&utm_source=qr' target='_blank' rel='noreferrer' className='cursor-pointer'>
           <img src={instagramIcon} alt='instagram-icon' />
         </a>
-        <img src={whatsappIcon} alt='whatsapp-icon' />
+        {/* <img src={whatsappIcon} alt='whatsapp-icon' /> */}
         <a href='https://cafecito.app/resqpet' target='_blank' rel='noreferrer' className='cursor-pointer'>
           <img src={coffeeIcon} alt='coffee-icon' />
         </a>
