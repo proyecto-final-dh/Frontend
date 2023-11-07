@@ -7,8 +7,6 @@ import { petData } from '../../data/petData';
 import HeroBanner from '../../components/Banner/HeroBanner';
 import qr from '../../../src/assets/qr-code-movil.png';
 import dog1 from '../../../src/assets/dog-glasses1.png';
-import { relatedPets } from '../../data/relatedPets';
-import RelatedPets from '../PetDetail/components/RelatedPets';
 
 const Home = () => {
   return (
