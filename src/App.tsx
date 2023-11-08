@@ -42,7 +42,7 @@ function App() {
               />
               <Route path='/register' element={<Register />} />
               <Route
-                path='/petDetail'
+                path='/pet/:pet_id'
                 element={
                   <Layout>
                     <PetDetail />
