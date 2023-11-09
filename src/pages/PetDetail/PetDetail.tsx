@@ -43,12 +43,12 @@ const PetDetail: React.FC = () => {
       {/*  componente de detalle de mascota JESS */}
       {/* <CardDetail pets={petData} /> */}
       <div className='flex flex-col w-full lg:flex-row'>
-        <div className='w-1/2'>
+        <div className='lg:w-1/2'>
           <CardDetailPet key={selectedPet.id} pet={selectedPet} />
         </div>
 
         {data && (
-          <article className='w-1/2 pr-4 mt-4'>
+          <article className='mt-4 px-7 lg:pl-0 lg:pr-4 lg:w-1/2'>
             <Title variant='h1' className='mb-6 font-bold'>
               {data.name}
             </Title>
