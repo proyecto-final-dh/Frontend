@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Pet } from '../../../contracts/pet';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import { Title, TextBody } from '../../../components';
 
 import 'tailwindcss/tailwind.css';
 interface CardProps {
@@ -22,11 +21,10 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
 
   return (
     <div className='col-span-full'>
-      {' '}
       <div className='flex flex-col lg:flex-row'>
         <div className='mb-4 sm:mb-0 sm:mr-4'>
           <div className='flex justify-center p-5 '>
-            <img src={pet.image[currentImageIndex].url} alt={pet.image[currentImageIndex].alt} className='object-cover w-full h-96   rounded-lg' />
+            <img src={pet.image[currentImageIndex].url} alt={pet.image[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
           </div>
           {pet.image.length > 1 && (
             <div className='flex justify-center mt-2 space-x-4'>
@@ -38,14 +36,6 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
               </div>
             </div>
           )}
-        </div>
-        <div>
-          <Title variant='h2' className='mt-10 mb-5 font-bold text-center'>
-            {pet.name}
-          </Title>
-          <TextBody size='s' weight='regular'>
-            {pet.description}
-          </TextBody>
         </div>
       </div>
     </div>
