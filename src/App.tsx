@@ -40,7 +40,14 @@ function App() {
                 }
               />
               <Route path='/register' element={<Register />} />
-              <Route path='/pet/:id' element={<PetDetail />} />
+              <Route
+                path='/pet/:id'
+                element={
+                  <Layout>
+                    <PetDetail />
+                  </Layout>
+                }
+              />
             </Routes>
           </Container>
         </div>
