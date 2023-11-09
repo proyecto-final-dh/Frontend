@@ -3,6 +3,7 @@ import { FC } from 'react';
 
 export interface BannerProps {
   images: string;
+  text?: string;
 }
 
 const MainBanner: FC<BannerProps> = ({ images }) => {
