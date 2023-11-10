@@ -20,7 +20,6 @@ const Adoption = ({ pages }: AdoptionProps) => {
   const [location, setLocation] = useState<null | number>(null);
   const [specie, setSpecie] = useState<null | number>(null);
   const [breed, setBreed] = useState<null | number>(null);
-  /* const [size] = useState(''); */
 
   useEffect(() => {
     if (errorLocations) console.log({ error: errorLocations });
@@ -36,7 +35,7 @@ const Adoption = ({ pages }: AdoptionProps) => {
         <div>
           {/* Junior section */}
           <MainBanner images={imgBanner} />
-          <div className='p-4 grid grid-rows-none gap-4 md:grid-cols-4 lg:grid-cols-4'>
+          <div className='p-4 py-8 grid grid-rows-none gap-4 md:grid-cols-4 lg:grid-cols-4 lg:px-10 md:px-10'>
             <FormControl fullWidth>
               <InputLabel id='location'>Ubicación</InputLabel>
               <Select labelId='location' id='location' value={location} label='Ubicación' onChange={(e) => setLocation(Number(e.target.value))}>
@@ -67,15 +66,7 @@ const Adoption = ({ pages }: AdoptionProps) => {
                 ))}
               </Select>
             </FormControl>
-            {/*             <FormControl fullWidth>
-              <InputLabel id='label-select-size'>Tamaño</InputLabel>
-              <Select labelId='label-select-size' id='input-select-size' value={size} label='Ubicación'>
-                <MenuItem value={1}>Pequeño</MenuItem>
-                <MenuItem value={2}>Mediano</MenuItem>
-                <MenuItem value={2}>Grande</MenuItem>
-              </Select>
-            </FormControl> */}
-            <button className='rounded-3xl bg-primary text-center py-3 lg:mt-0 w-full'>Buscar</button>
+            <button className='rounded-full bg-primary text-center py-3 lg:mt-0 w-full'>Buscar</button>
           </div>
           {/* End Junior Section */}
 
