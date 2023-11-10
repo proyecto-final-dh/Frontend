@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Home, Register } from './pages';
+import { Adoption, Home, Register } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
 
@@ -36,6 +36,15 @@ function App() {
                 element={
                   <Layout>
                     <Home />
+                  </Layout>
+                }
+              />
+              <Route
+                path='/adoption'
+                element={
+                  <Layout>
+                    {/* TODO: cambiar hardcodeo al implementar backend */}
+                    <Adoption pages={10} />
                   </Layout>
                 }
               />
