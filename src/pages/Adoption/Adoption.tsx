@@ -1,21 +1,22 @@
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import { MainBanner } from '../../components';
+import { MainBanner, Pagination } from '../../components';
 import imgBanner from '../../assets/banner-adopti.png';
 import { useEffect, useState, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { getLocations } from '../Register/services/locations.service';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
-import { Pagination } from '../../components';
 import { Card } from '../../components/Card';
 import useBreakpoint from '../../hooks/use-breakpoint';
-import data from './lib/data';
+import { getPetsByStatus } from '../PetDetail/services/pet.service';
+import images from './lib/data';
 
-type AdoptionProps = {
-  pages: number;
-};
+const Adoption = () => {
+  const EN_ADOPCION = 'EN_ADOPCION';
 
-const Adoption = ({ pages }: AdoptionProps) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const { data: pets } = useQuery(['pet', currentPage], () => getPetsByStatus({ status: EN_ADOPCION, page: currentPage - 1 }));
   const { data: locations, isLoading: isLoadingLocations, error: errorLocations } = useQuery('locations', getLocations);
   const { data: species, isLoading: isLoadingSpacies, error: errorSpacies } = useQuery('species', getSpecies);
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
@@ -30,7 +31,6 @@ const Adoption = ({ pages }: AdoptionProps) => {
     if (errorBreeds) console.log({ error: errorBreeds });
   }, [errorLocations, errorSpacies, errorBreeds]);
 
-  const [currentPage, setCurrentPage] = useState(1);
   const { isLg } = useBreakpoint('lg');
 
   const maxPagesToShow = useMemo(() => {
@@ -47,7 +47,7 @@ const Adoption = ({ pages }: AdoptionProps) => {
       ) : (
         <div className='pb-8'>
           <MainBanner images={imgBanner} />
-          <div className='p-4 py-8 grid grid-rows-none gap-4 md:grid-cols-4 lg:grid-cols-4 lg:px-10 md:px-10'>
+          <div className='grid grid-rows-none gap-4 p-4 py-8 md:grid-cols-4 lg:grid-cols-4 lg:px-10 md:px-10'>
             <FormControl fullWidth>
               <InputLabel id='location'>Ubicación</InputLabel>
               <Select labelId='location' id='location' value={location} label='Ubicación' onChange={(e) => setLocation(Number(e.target.value))}>
@@ -78,35 +78,46 @@ const Adoption = ({ pages }: AdoptionProps) => {
                 ))}
               </Select>
             </FormControl>
-            <button className='rounded-full bg-primary text-center py-3 lg:mt-0 w-full'>Buscar</button>
+            <button className='w-full py-3 text-center rounded-full bg-primary lg:mt-0'>Buscar</button>
           </div>
-          <section className='flex flex-col gap-8'>
-            <div className='flex justify-center w-full'>
-              <Pagination
-                pages={pages}
-                maxPagesToShow={maxPagesToShow}
-                currentPage={currentPage}
-                onPageChange={(page) => {
-                  if (page >= 1 && page <= pages) setCurrentPage(page);
-                }}
-              />
-            </div>
-            <section className='flex flex-wrap justify-center px-10 gap-7'>
-              {data.map((item) => (
-                <Card key={item.id} {...item} variant={isLg ? 'm' : 's'} />
-              ))}
+          {pets && (
+            <section className='flex flex-col gap-8'>
+              <div className='flex justify-center w-full'>
+                <Pagination
+                  pages={pets.pageable.totalPages}
+                  maxPagesToShow={maxPagesToShow}
+                  currentPage={currentPage}
+                  onPageChange={(page) => {
+                    if (page >= 1 && page <= pets.pageable.totalPages) setCurrentPage(page);
+                  }}
+                />
+              </div>
+              <section className='flex flex-wrap justify-center px-10 gap-7'>
+                {pets.content.map((pet, index) => (
+                  <Card
+                    key={pet.id}
+                    variant={isLg ? 'm' : 's'}
+                    id={pet.id.toString()}
+                    img={images[index]}
+                    title={pet.name}
+                    description={pet.description}
+                    buttonLabel='Adoptar'
+                    onClick={console.log}
+                  />
+                ))}
+              </section>
+              <div className='flex justify-center w-full'>
+                <Pagination
+                  pages={pets.pageable.totalPages}
+                  maxPagesToShow={maxPagesToShow}
+                  currentPage={currentPage}
+                  onPageChange={(page) => {
+                    if (page >= 1 && page <= pets.pageable.totalPages) setCurrentPage(page);
+                  }}
+                />
+              </div>
             </section>
-            <div className='flex justify-center w-full'>
-              <Pagination
-                pages={pages}
-                maxPagesToShow={maxPagesToShow}
-                currentPage={currentPage}
-                onPageChange={(page) => {
-                  if (page >= 1 && page <= pages) setCurrentPage(page);
-                }}
-              />
-            </div>
-          </section>
+          )}
         </div>
       )}
     </div>

@@ -43,8 +43,7 @@ function App() {
                 path='/adoption'
                 element={
                   <Layout>
-                    {/* TODO: cambiar hardcodeo al implementar backend */}
-                    <Adoption pages={10} />
+                    <Adoption />
                   </Layout>
                 }
               />
