@@ -10,6 +10,8 @@ module.exports = {
       orange: '#FFAE12',
       black: '#000000',
       white: '#FFFFFF',
+      gray: '#B9B9B9',
+      'light-gray': '#F0F0F0',
     },
     fontSize: {
       h1: ['36px'],
