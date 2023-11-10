@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Home, Register, PetDetail } from './pages';
+import { Home, Register, PetDetail, Adoption } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
 
@@ -16,7 +16,7 @@ function App() {
   return (
     <AuthProvider loader={loader}>
       <QueryClientProvider client={queryClient}>
-        <div className='App'>
+        <div className='App bg-orange-light'>
           <head>
             <title>ResQpet</title>
             <meta
@@ -36,6 +36,15 @@ function App() {
                 element={
                   <Layout>
                     <Home />
+                  </Layout>
+                }
+              />
+              <Route
+                path='/adoption'
+                element={
+                  <Layout>
+                    {/* TODO: cambiar hardcodeo al implementar backend */}
+                    <Adoption pages={10} />
                   </Layout>
                 }
               />

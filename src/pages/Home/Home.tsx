@@ -10,7 +10,7 @@ import dog1 from '../../../src/assets/dog-glasses1.png';
 
 const Home = () => {
   return (
-    <div className='col-span-full'>
+    <div className='bg-white col-span-full'>
       <Box>
         <MainBanner images={imgBanner} />
         <QrSteps />
