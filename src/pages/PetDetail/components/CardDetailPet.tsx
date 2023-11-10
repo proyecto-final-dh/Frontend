@@ -22,7 +22,7 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
   return (
     <div className='col-span-full'>
       <div className='flex flex-col lg:flex-row'>
-        <div className='mb-4 sm:mb-0 sm:mr-4'>
+        <div className='w-1/2 mb-4 sm:mb-0 sm:mr-4'>
           <div className='flex justify-center p-5 '>
             <img src={pet.image[currentImageIndex].url} alt={pet.image[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
           </div>

@@ -1,7 +1,12 @@
 import { resqpetAPI } from '../../../clients/resqpet-api.client';
-import { APIGetPetResponse } from '../contracts/pet.contract';
+import { Pet } from '../../../contracts/pet';
 
 export const getPetById = async (id: string) => {
-  const response = await resqpetAPI().get<APIGetPetResponse>(`/pets/${id}`);
+  const response = await resqpetAPI().get<Pet>(`/pets/${id}`);
+  return response.data;
+};
+
+export const getPetsByStatus = async () => {
+  const response = await resqpetAPI().get<Pet>(`/pets/status`);
   return response.data;
 };
