@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Adoption, Home, Register } from './pages';
+import { Home, Register, PetDetail, Adoption } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
 
@@ -49,6 +49,14 @@ function App() {
                 }
               />
               <Route path='/register' element={<Register />} />
+              <Route
+                path='/pet/:id'
+                element={
+                  <Layout>
+                    <PetDetail />
+                  </Layout>
+                }
+              />
             </Routes>
           </Container>
         </div>

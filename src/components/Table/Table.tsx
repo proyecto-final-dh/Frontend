@@ -14,7 +14,7 @@ const Table = ({ data, headers }: TableProps) => {
       <thead>
         <tr className='bg-light-gray text-[16px] font-regular text-left'>
           {headers.map((header) => (
-            <th key={header.ref} className='px-3 border first:rounded-tl-lg last:rounded-tr-lg border-gray'>
+            <th key={header.ref} className='px-3 capitalize border first:rounded-tl-lg last:rounded-tr-lg border-gray'>
               {header.label}
             </th>
           ))}
@@ -34,21 +34,5 @@ const Table = ({ data, headers }: TableProps) => {
     </table>
   );
 };
-
-// Example
-
-// const data = [
-//   { specie: 'Raza', cat: 'Mestizo/criollo' },
-//   { specie: 'Tamaño', cat: 'Mediano' },
-//   { specie: 'Edad', cat: '12 meses' },
-//   { specie: 'Género', cat: 'Hembra' },
-//   { specie: 'Descripción', cat: 'Efusiva y cariñosa' },
-//   { specie: 'Localización', cat: 'Medellín-Colombia' },
-// ];
-
-// const headers = [
-//   { ref: 'specie', label: 'Especie' },
-//   { ref: 'cat', label: 'Gato' },
-// ];
 
 export default Table;
