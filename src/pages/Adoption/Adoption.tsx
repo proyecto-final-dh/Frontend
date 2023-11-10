@@ -1,18 +1,21 @@
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import { MainBanner } from '../../components';
 import imgBanner from '../../assets/banner-adopti.png';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { getLocations } from '../Register/services/locations.service';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
+import { Pagination } from '../../components';
+import { Card } from '../../components/Card';
+import useBreakpoint from '../../hooks/use-breakpoint';
+import data from './lib/data';
 
 type AdoptionProps = {
   pages: number;
 };
 
 const Adoption = ({ pages }: AdoptionProps) => {
-  console.log({ pages });
   const { data: locations, isLoading: isLoadingLocations, error: errorLocations } = useQuery('locations', getLocations);
   const { data: species, isLoading: isLoadingSpacies, error: errorSpacies } = useQuery('species', getSpecies);
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
@@ -27,13 +30,22 @@ const Adoption = ({ pages }: AdoptionProps) => {
     if (errorBreeds) console.log({ error: errorBreeds });
   }, [errorLocations, errorSpacies, errorBreeds]);
 
+  const [currentPage, setCurrentPage] = useState(1);
+  const { isLg } = useBreakpoint('lg');
+
+  const maxPagesToShow = useMemo(() => {
+    if (isLg) {
+      return 5;
+    }
+    return 4;
+  }, [currentPage, isLg]);
+
   return (
     <div className='col-span-full'>
       {isLoadingLocations || !locations?.length || isLoadingSpacies || !species?.length || isLoadingBreeds || !breeds?.length ? (
         <>Aca deberia ir un skeleton o spinner...</>
       ) : (
-        <div>
-          {/* Junior section */}
+        <div className='pb-8'>
           <MainBanner images={imgBanner} />
           <div className='p-4 py-8 grid grid-rows-none gap-4 md:grid-cols-4 lg:grid-cols-4 lg:px-10 md:px-10'>
             <FormControl fullWidth>
@@ -68,10 +80,33 @@ const Adoption = ({ pages }: AdoptionProps) => {
             </FormControl>
             <button className='rounded-full bg-primary text-center py-3 lg:mt-0 w-full'>Buscar</button>
           </div>
-          {/* End Junior Section */}
-
-          {/* Felipe section */}
-          {/* End Felipe Section */}
+          <section className='flex flex-col gap-8'>
+            <div className='flex justify-center w-full'>
+              <Pagination
+                pages={pages}
+                maxPagesToShow={maxPagesToShow}
+                currentPage={currentPage}
+                onPageChange={(page) => {
+                  if (page >= 1 && page <= pages) setCurrentPage(page);
+                }}
+              />
+            </div>
+            <section className='flex flex-wrap justify-center px-10 gap-7'>
+              {data.map((item) => (
+                <Card key={item.id} {...item} variant={isLg ? 'm' : 's'} />
+              ))}
+            </section>
+            <div className='flex justify-center w-full'>
+              <Pagination
+                pages={pages}
+                maxPagesToShow={maxPagesToShow}
+                currentPage={currentPage}
+                onPageChange={(page) => {
+                  if (page >= 1 && page <= pages) setCurrentPage(page);
+                }}
+              />
+            </div>
+          </section>
         </div>
       )}
     </div>
