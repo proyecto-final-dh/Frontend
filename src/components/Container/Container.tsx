@@ -15,7 +15,7 @@ const Container = ({ id, hasPadding = true, children, className }: ContainerProp
   return (
     <div
       id={id}
-      className={cn('w-full max-w-[1320px] mx-auto grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12 gap-x-4', className, {
+      className={cn('bg-white w-full max-w-[1320px] mx-auto grid grid-cols-4 sm:grid-cols-8 lg:grid-cols-12 gap-x-4', className, {
         'px-6 sm:px-8': hasPadding,
       })}
     >
