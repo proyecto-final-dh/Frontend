@@ -10,6 +10,7 @@ import { Card } from '../../components/Card';
 import useBreakpoint from '../../hooks/use-breakpoint';
 import { getPetsByStatus } from '../PetDetail/services/pet.service';
 import images from './lib/data';
+import withKeycloakAuth from '../../config/withKeycloakAuth';
 
 const Adoption = () => {
   const EN_ADOPCION = 'EN_ADOPCION';
@@ -124,4 +125,4 @@ const Adoption = () => {
   );
 };
 
-export default Adoption;
+export default withKeycloakAuth(Adoption);
