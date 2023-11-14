@@ -9,7 +9,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
 
 // TODO: Change Loader component
-const loader = () => <div>Loading...</div>;
+const loader = () => <div className='flex items-center justify-center w-screen h-screen bg-white'>Loading...</div>;
 
 function App() {
   const queryClient = new QueryClient();

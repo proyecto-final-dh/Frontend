@@ -3,9 +3,10 @@ import { TRoles } from './roles';
 
 export type TClients = 'fe-resqpet';
 
+// TODO:
 const getKcConfig = (): import('keycloak-js').KeycloakConfig => {
   return {
-    url: 'http://localhost:8080',
+    url: 'https://34.229.216.23:8443/',
     realm: 'kc-resqpet-auth',
     clientId: 'fe-resqpet',
   };
