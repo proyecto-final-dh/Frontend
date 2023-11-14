@@ -12,6 +12,7 @@ import { getPetsByStatus } from '../PetDetail/services/pet.service';
 import images from './lib/data';
 import { Pet } from '../../contracts/pet';
 import { APIGetBreeds } from '../../contracts/breeds.contract';
+import withKeycloakAuth from '../../config/withKeycloakAuth';
 
 const Adoption = () => {
   const EN_ADOPCION = 'EN_ADOPCION';
@@ -160,4 +161,4 @@ const Adoption = () => {
   );
 };
 
-export default Adoption;
+export default withKeycloakAuth(Adoption);
