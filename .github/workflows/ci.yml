@@ -4,16 +4,18 @@ on:
         branches: [Deployment]
 jobs:
     build:
-        runs-on: [self-hosted]
+        runs-on: [ubuntu]
         steps:
             - name: Checkout App
               uses: actions/checkout@v4
             - name: Use Node.js
               uses: actions/setup-node@v4
               with:
-                node-version: 18
-                cache: 'npm'
-            - name: Install dependences
-              run: npm ci
-            - name: Build App
-              run: npm run build --if-present
+                  node-version: 16
+                  cache: 'npm'
+            - run: npm ci
+            - run: npm test
+            # - name: Install dependences
+            #   run: npm ci
+            # - name: Build App
+            #   run: npm run build --if-present
