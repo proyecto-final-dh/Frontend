@@ -1,5 +1,5 @@
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import { MainBanner, Pagination } from '../../components';
+import { Loader, MainBanner, Pagination } from '../../components';
 import imgBanner from '../../assets/banner-adopti.png';
 import { useEffect, useState, useMemo } from 'react';
 import { useQuery } from 'react-query';
@@ -43,7 +43,7 @@ const Adoption = () => {
   return (
     <div className='col-span-full'>
       {isLoadingLocations || !locations?.length || isLoadingSpacies || !species?.length || isLoadingBreeds || !breeds?.length ? (
-        <>Aca deberia ir un skeleton o spinner...</>
+        <Loader opacity={60} />
       ) : (
         <div className='pb-8'>
           <MainBanner images={imgBanner} />
