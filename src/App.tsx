@@ -6,13 +6,13 @@ import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
 import { Home, Register, PetDetail, Adoption } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
-import { Container } from './components';
-
-// TODO: Change Loader component
-const loader = () => <div className='flex items-center justify-center w-screen h-screen bg-white'>Loading...</div>;
+import { Container, Loader } from './components';
 
 function App() {
   const queryClient = new QueryClient();
+
+  const loader = () => <Loader opacity={0} />;
+
   return (
     <AuthProvider loader={loader}>
       <QueryClientProvider client={queryClient}>

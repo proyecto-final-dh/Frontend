@@ -1,0 +1,10 @@
+.paw-path {
+  fill: white;
+  animation: fillAnimation 1s ease infinite alternate;
+}
+
+@keyframes fillAnimation {
+  to {
+    fill: black;
+  }
+}
