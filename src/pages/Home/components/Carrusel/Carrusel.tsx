@@ -1,13 +1,12 @@
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import React, { useState } from 'react';
 import MuiCard from '../../../../components/Card/MuiCards';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Pet } from '../../../../contracts/pet';
 import styles from './carrousel.module.css';
 import { petData } from '../../../../data/petData';
 
 import cn from 'classnames';
 import useBreakpoint from '../../../../hooks/use-breakpoint';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 
 interface CarouselProps {
   pets: Pet[];
@@ -35,8 +34,8 @@ const Carrusel: React.FC<CarouselProps> = ({ pets }) => {
         ))}
       </div>
       <div className={styles.arrow_container}>
-        <ArrowBackIosIcon
-          className={cn(styles.left_arrow, {
+        <IconChevronLeft
+          className={cn('w-10 h-10 min-w-[40px] min-h-[40px]', styles.left_arrow, {
             [styles['desable']]: currentIndex <= 0,
           })}
           onClick={() => {
@@ -44,11 +43,10 @@ const Carrusel: React.FC<CarouselProps> = ({ pets }) => {
               prevSlide();
             }
           }}
-          sx={{ fontSize: 40 }}
         />
 
-        <ArrowForwardIosIcon
-          className={cn(styles.right_arrow, {
+        <IconChevronRight
+          className={cn('w-10 h-10 min-w-[40px] min-h-[40px]', styles.right_arrow, {
             [styles['desable']]: currentIndex >= lastIndex,
           })}
           onClick={() => {
@@ -56,7 +54,6 @@ const Carrusel: React.FC<CarouselProps> = ({ pets }) => {
               nextSlide();
             }
           }}
-          sx={{ fontSize: 40 }}
         />
       </div>
     </div>

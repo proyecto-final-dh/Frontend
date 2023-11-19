@@ -19,12 +19,16 @@ const Navbar = () => {
       <Toolbar>
         {isMatch ? (
           <>
-            <Logo width={40} height={50} variant='blackV' />
+            <button onClick={() => navigate('/')}>
+              <Logo width={40} height={50} variant='blackV' />
+            </button>
             <DrawerMenu />
           </>
         ) : (
           <>
-            <Logo width={50} height={60} variant='blackV' />
+            <button onClick={() => navigate('/')}>
+              <Logo width={50} height={60} variant='blackV' />
+            </button>
             <Tabs
               sx={{ display: 'flex', flexDirection: 'column', minHeight: '36px', height: '36px', marginLeft: 'auto' }}
               indicatorColor='secondary'
