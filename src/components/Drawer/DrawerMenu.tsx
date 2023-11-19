@@ -13,7 +13,7 @@ const DrawerMenu = () => {
   return (
     <>
       <Drawer anchor='right' open={openDrawer} onClose={() => setOpenDrawer(false)}>
-        <Box sx={{ width: 200, bgcolor: 'primary.light' }}>
+        <Box sx={{ width: 200, bgcolor: 'primary.light', height: '100%' }}>
           <List>
             {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => (
               <ListItemButton

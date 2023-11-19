@@ -1,5 +1,4 @@
 import { useAuthProvider, withKeycloakAuth } from '../../config';
-import { ChevronLeftIcon } from '@heroicons/react/24/solid';
 import { TextDetail, Title, Logo } from '../../components';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
@@ -8,6 +7,7 @@ import { createUserDetails, getUserDetailsById } from './services/register.servi
 import { useNavigate } from 'react-router-dom';
 import { getLocations } from './services/locations.service';
 import { useQuery } from 'react-query';
+import { IconChevronLeft } from '@tabler/icons-react';
 import cn from 'classnames';
 
 const Register = () => {
@@ -82,7 +82,7 @@ const Register = () => {
             <header className='flex justify-between w-full mb-4 lg:justify-end lg:w-full'>
               <div className='flex flex-col justify-between gap-4 lg:hidden'>
                 <button className='cursor-pointer' onClick={window.history.back}>
-                  <ChevronLeftIcon className='w-8 h-8 min-w-[32px] min-h-[32px]' />
+                  <IconChevronLeft className='w-8 h-8 min-w-[32px] min-h-[32px]' />
                 </button>
                 <Title variant='h2' className='font-bold'>
                   Registro
