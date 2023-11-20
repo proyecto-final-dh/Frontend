@@ -1,23 +1,34 @@
 import { FormControl, InputLabel, MenuItem, Select, TextField, TextareaAutosize } from '@mui/material';
 import { DragAndDrop, Loader, TextDetail, Title } from '../../components';
-import qrBannerImage from './../../assets/qr-banner.jpeg';
 import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
+import { IconAt, IconChevronLeft, IconChevronRight, IconPhone, IconUser } from '@tabler/icons-react';
+import { dateFormatter } from '../../utils/dates';
+import { useKeycloak } from '@react-keycloak/web';
+import { useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
+import qrBannerImage from './../../assets/slider adopción (1).png';
+import qrPawsImage from './../../assets/icons/huellas.svg';
 import cn from 'classnames';
 
 const QrGenerator = () => {
+  const {
+    keycloak: { idTokenParsed },
+  } = useKeycloak();
   const { data: species, isLoading: isLoadingSpacies, error: errorSpecies } = useQuery('species', getSpecies);
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
+  const [getUserDetails, { isError: errorGetUserDetails, isFetching: isFetchingUserDetails, isLoading: isLoadingUserDetails, data: userDetails }] =
+    useLazyGetUserDetailsByIdQuery();
 
-  const isLoading = isLoadingSpacies || isLoadingBreeds;
+  const isLoading = isLoadingSpacies || isLoadingBreeds || isLoadingUserDetails || isFetchingUserDetails;
 
   const [petName, setPetName] = useState('');
   const [specie, setSpecie] = useState<null | number>(null);
   const [breed, setBreed] = useState<null | number>(null);
   const [images, setImages] = useState<{ id: number; value: File | null }[]>([{ id: 0, value: null }]);
   const [description, setDescription] = useState('');
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const filteredBreeds = useMemo(() => {
     if (!breeds) return [];
@@ -27,19 +38,31 @@ const QrGenerator = () => {
   useEffect(() => {
     if (errorSpecies) console.log({ errorSpecies });
     if (errorBreeds) console.log({ errorBreeds });
-  }, [errorSpecies, errorBreeds]);
+    if (errorGetUserDetails) console.log({ errorGetUserDetails });
+  }, [errorSpecies, errorBreeds, errorGetUserDetails]);
+
+  useEffect(() => {
+    if (idTokenParsed?.sub) {
+      getUserDetails({ userId: idTokenParsed.sub });
+    }
+  }, [idTokenParsed]);
 
   const disableSubmit = useMemo(() => {
     return !petName || !specie || !breed || !images.length || !description;
   }, [petName, specie, breed, images, description]);
 
+  const handleNextImage = () => {
+    setCurrentImageIndex((prevIndex) => prevIndex + 1);
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prevIndex) => prevIndex - 1);
+  };
+
   return (
     <main>
-      <header className='flex items-center gap-3 pb-4 bg-mid-gray lg:gap-8'>
-        <img src={qrBannerImage} alt='dog with cat' className='w-full max-w-[185px] lg:max-w-[250px]' />
-        <TextDetail size='s' weight='bold' className='lg:!text-[30px]'>
-          &quot;Escanea, Encontrá, ¡Reúnite! 🐾 Tu conexión instantánea con tu mascota perdida.&quot;
-        </TextDetail>
+      <header className='w-full'>
+        <img src={qrBannerImage} alt='dog with cat' className='w-full' />
       </header>
       {isLoading && <Loader opacity={60} />}
       <Title variant='h3' className='font-bold text-center'>
@@ -50,9 +73,9 @@ const QrGenerator = () => {
           onSubmit={(e) => {
             e.preventDefault();
           }}
-          className='flex w-full gap-10 p-10'
+          className='flex flex-col w-full gap-10 lg:flex-row'
         >
-          <section className='flex flex-col w-full gap-5 lg:w-1/2'>
+          <section className='relative flex flex-col w-full gap-5 p-10 lg:w-1/2'>
             <TextField
               label='Nombre de la Mascota*'
               variant='outlined'
@@ -112,7 +135,7 @@ const QrGenerator = () => {
                 Descripción
               </TextDetail>
               <TextareaAutosize
-                className='w-full p-4 leading-5 bg-white border border-solid rounded-lg text-mui-gray focus:border-primary focus-visible:outline-0'
+                className='w-full p-4 leading-5 bg-white border border-solid rounded-lg border-mui-gray focus:border-primary focus-visible:outline-0'
                 aria-label='descripción'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -129,6 +152,72 @@ const QrGenerator = () => {
                 Generar QR
               </TextDetail>
             </button>
+            <div className='relative hidden w-full h-28 lg:block'>
+              <div className='absolute left-0 w-full bottom-10'>
+                <img src={qrPawsImage} alt='huellas' />
+              </div>
+            </div>
+          </section>
+          <section className='w-full pr-10 lg:w-1/2'>
+            <div className='flex justify-center p-5 '>
+              {!!images[currentImageIndex].value && (
+                <img src={URL.createObjectURL(images[currentImageIndex].value as File)} className='object-cover w-full rounded-lg h-96' />
+              )}
+            </div>
+            {images.length > 2 && (
+              <div className='flex justify-center mt-2 space-x-4'>
+                <button className={cn({ 'opacity-40': currentImageIndex === 0 })}>
+                  <IconChevronLeft
+                    onClick={() => {
+                      if (currentImageIndex > 0) handlePrevImage();
+                    }}
+                  />
+                </button>
+                <button className={cn({ 'opacity-40': currentImageIndex === images.length - 2 })}>
+                  <IconChevronRight
+                    onClick={() => {
+                      if (currentImageIndex < images.length - 2) handleNextImage();
+                    }}
+                  />
+                </button>
+              </div>
+            )}
+            <article className='flex flex-col gap-3 rounded-t-3xl bg-primary p-9'>
+              <Title variant='h2'>{petName}</Title>
+              <div className='flex justify-between'>
+                <TextDetail size='xs' weight='regular'>
+                  {species?.find((b) => b.id === specie)?.name ?? ''}
+                </TextDetail>
+                <TextDetail size='xs' weight='regular'>
+                  {dateFormatter(new Date().toISOString(), 'YYYY-MM-DD', 'DD MMM YYYY')}
+                </TextDetail>
+              </div>
+              <TextDetail size='xs' weight='regular' className='break-words'>
+                {description}
+              </TextDetail>
+              {!!idTokenParsed && !!userDetails && (
+                <div className='flex flex-col justify-around gap-4'>
+                  <div className='flex flex-col items-center justify-center gap-4 p-2 bg-white rounded-lg'>
+                    <IconUser className='w-7 h-7 min-w-[28px] min-h-[28px]' />
+                    <TextDetail size='xs' weight='regular' className='text-center'>
+                      {idTokenParsed.name}
+                    </TextDetail>
+                  </div>
+                  <div className='flex flex-col items-center justify-center gap-4 p-2 bg-white rounded-lg'>
+                    <IconAt className='w-7 h-7 min-w-[28px] min-h-[28px]' />
+                    <TextDetail size='xs' weight='regular' className='text-center'>
+                      {idTokenParsed.email}
+                    </TextDetail>
+                  </div>
+                  <div className='flex flex-col items-center justify-center gap-4 p-2 bg-white rounded-lg'>
+                    <IconPhone className='w-7 h-7 min-w-[28px] min-h-[28px]' />
+                    <TextDetail size='xs' weight='regular' className='text-center'>
+                      {userDetails.cellphone}
+                    </TextDetail>
+                  </div>
+                </div>
+              )}
+            </article>
           </section>
         </form>
       )}
