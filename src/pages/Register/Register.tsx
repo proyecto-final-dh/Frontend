@@ -1,5 +1,5 @@
 import { useAuthProvider, withKeycloakAuth } from '../../config';
-import { TextDetail, Title, Logo } from '../../components';
+import { TextDetail, Title, Logo, Loader } from '../../components';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { FormControl, InputLabel, MenuItem, Select, TextField } from '@mui/material';
 import { APISaveUserDetailsRequest } from './contracts/user-details.contract';
@@ -67,7 +67,7 @@ const Register = () => {
   return (
     <main className='p-8 overflow-hidden lg:flex lg:h-screen lg:p-0 col-span-full'>
       {isLoadingUserDetails || isLoadingLocations || !locations?.length ? (
-        <>Aca deberia ir un skeleton o spinner...</>
+        <Loader opacity={60} />
       ) : (
         <>
           <figure className='relative hidden lg:block g:max-h-screen lg:h-screen lg:overflow-auto lg:w-1/2'>
