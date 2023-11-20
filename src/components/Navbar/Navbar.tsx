@@ -54,6 +54,7 @@ const Navbar = () => {
                   }}
                 />
               ))}
+              <div className='w-px bg-black h-9' />
               {!keycloak.authenticated && (
                 <div className='flex ml-3 gap-7'>
                   <button
