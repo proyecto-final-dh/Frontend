@@ -135,7 +135,7 @@ const QrGenerator = () => {
                 Descripción
               </TextDetail>
               <TextareaAutosize
-                className='w-full p-4 leading-5 bg-white border border-solid rounded-lg border-mui-gray focus:border-primary focus-visible:outline-0'
+                className='w-full p-4 leading-5 text-black bg-white border border-solid rounded-lg border-mui-gray focus:border-primary focus-visible:outline-0'
                 aria-label='descripción'
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
@@ -158,7 +158,7 @@ const QrGenerator = () => {
               </div>
             </div>
           </section>
-          <section className='w-full pr-10 lg:w-1/2'>
+          <section className='w-full lg:pr-10 lg:w-1/2'>
             <div className='flex justify-center p-5 '>
               {!!images[currentImageIndex].value && (
                 <img src={URL.createObjectURL(images[currentImageIndex].value as File)} className='object-cover w-full rounded-lg h-96' />
