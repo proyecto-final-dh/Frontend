@@ -9,7 +9,7 @@ import withKcContext from '../../hocs/withKcContext';
 
 const Navbar = () => {
   const { keycloak } = useAuthProvider();
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('');
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
@@ -26,7 +26,12 @@ const Navbar = () => {
           </>
         ) : (
           <>
-            <button onClick={() => navigate('/')}>
+            <button
+              onClick={() => {
+                navigate('/');
+                setValue('');
+              }}
+            >
               <Logo width={50} height={60} variant='blackV' />
             </button>
             <Tabs
