@@ -3,18 +3,19 @@ import './index.css';
 import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
-import { AuthProvider } from './config';
-import { Home, Register, PetDetail, Adoption } from './pages';
+// import { AuthProvider } from './config';
+import { Home, Register, PetDetail, Adoption, GiveAdoption } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
 
 // TODO: Change Loader component
-const loader = () => <div className='flex items-center justify-center w-screen h-screen bg-white'>Loading...</div>;
+// const loader = () => <div className='flex items-center justify-center w-screen h-screen bg-white'>Loading...</div>;
 
 function App() {
   const queryClient = new QueryClient();
   return (
-    <AuthProvider loader={loader}>
+    // <AuthProvider loader={loader}>
+    <div>
       <QueryClientProvider client={queryClient}>
         <div className='App bg-orange-light'>
           <head>
@@ -56,11 +57,20 @@ function App() {
                   </Layout>
                 }
               />
+              <Route
+                path='/give-adoption'
+                element={
+                  <Layout>
+                    <GiveAdoption />
+                  </Layout>
+                }
+              />
             </Routes>
           </Container>
         </div>
       </QueryClientProvider>
-    </AuthProvider>
+    </div>
+    // </AuthProvider>
   );
 }
 
