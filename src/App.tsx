@@ -7,6 +7,7 @@ import { AuthProvider } from './config';
 import { Home, Register, PetDetail, Adoption } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container } from './components';
+import ScrollToTop from './components/ScrollToTop';
 
 // TODO: Change Loader component
 const loader = () => <div className='flex items-center justify-center w-screen h-screen bg-white'>Loading...</div>;
@@ -30,6 +31,7 @@ function App() {
           </head>
 
           <Container hasPadding={false}>
+            <ScrollToTop />
             <Routes>
               <Route
                 path='/'

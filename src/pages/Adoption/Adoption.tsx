@@ -11,8 +11,10 @@ import useBreakpoint from '../../hooks/use-breakpoint';
 import { getPetsByStatus } from '../PetDetail/services/pet.service';
 import images from './lib/data';
 import withKeycloakAuth from '../../config/withKeycloakAuth';
+import { useNavigate } from 'react-router-dom';
 
 const Adoption = () => {
+  const navigate = useNavigate();
   const EN_ADOPCION = 'EN_ADOPCION';
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -102,8 +104,8 @@ const Adoption = () => {
                     img={images[index]}
                     title={pet.name}
                     description={pet.description}
-                    buttonLabel='Adoptar'
-                    onClick={console.log}
+                    buttonLabel='Ver más'
+                    onClick={() => navigate(`/pet/${pet.id}`)}
                   />
                 ))}
               </section>
