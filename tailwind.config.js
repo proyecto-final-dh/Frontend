@@ -13,7 +13,9 @@ module.exports = {
       black: '#000000',
       white: '#FFFFFF',
       gray: '#B9B9B9',
+      'mid-gray': '#F4F3F3',
       'light-gray': '#F0F0F0',
+      'mui-gray': '#BDBDBD',
     },
     fontSize: {
       h1: ['36px'],

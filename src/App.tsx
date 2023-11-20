@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Home, Register, PetDetail, Adoption } from './pages';
+import { Home, Register, PetDetail, Adoption, QrGenerator } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container, Loader } from './components';
 import ScrollToTop from './components/ScrollToTop';
@@ -55,6 +55,14 @@ function App() {
                 element={
                   <Layout>
                     <PetDetail />
+                  </Layout>
+                }
+              />
+              <Route
+                path='/qr/create'
+                element={
+                  <Layout>
+                    <QrGenerator />
                   </Layout>
                 }
               />
