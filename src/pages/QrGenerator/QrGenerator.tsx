@@ -10,12 +10,16 @@ import { useKeycloak } from '@react-keycloak/web';
 import { useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
 import qrBannerImage from './../../assets/slider adopción (1).png';
 import qrPawsImage from './../../assets/icons/huellas.svg';
+import imageNotFoundMobile from './../../assets/qr-not-found-image-mobile.png';
+import imageNotFoundDesktop from './../../assets/qr-not-found-image-desktop.png';
 import cn from 'classnames';
+import useBreakpoint from '../../hooks/use-breakpoint';
 
 const QrGenerator = () => {
   const {
     keycloak: { idTokenParsed },
   } = useKeycloak();
+  const { isLg } = useBreakpoint('lg');
   const { data: species, isLoading: isLoadingSpacies, error: errorSpecies } = useQuery('species', getSpecies);
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
   const [getUserDetails, { isError: errorGetUserDetails, isFetching: isFetchingUserDetails, isLoading: isLoadingUserDetails, data: userDetails }] =
@@ -160,6 +164,12 @@ const QrGenerator = () => {
           </section>
           <section className='w-full lg:pr-10 lg:w-1/2'>
             <div className='flex justify-center p-5 '>
+              {!images[currentImageIndex].value && (
+                <>
+                  {isLg && <img src={imageNotFoundDesktop} className='object-contain w-full rounded-lg h-96' />}
+                  {!isLg && <img src={imageNotFoundMobile} className='object-contain w-full rounded-lg h-96' />}
+                </>
+              )}
               {!!images[currentImageIndex].value && (
                 <img src={URL.createObjectURL(images[currentImageIndex].value as File)} className='object-cover w-full rounded-lg h-96' />
               )}
