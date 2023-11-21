@@ -13,7 +13,7 @@ const PetButton = ({ label }: ButtonProps): JSX.Element => {
       sx={{
         bgcolor: '#FFFFFF',
         borderRadius: '30px',
-        textTransform: 'capitalize',
+        textTransform: 'inherit',
         fontWeight: '700',
         '&:hover': { backgroundColor: '#FFFFFF' },
         padding: '10px 30px',

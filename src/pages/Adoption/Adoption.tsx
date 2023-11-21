@@ -1,18 +1,19 @@
 import { Select, MenuItem, InputLabel, FormControl } from '@mui/material';
-import { MainBanner, Pagination } from '../../components';
-import imgBanner from '../../assets/banner-adopti.png';
+import { Loader, MainBanner, Pagination } from '../../components';
 import { useEffect, useState, useMemo } from 'react';
 import { useQuery } from 'react-query';
 import { getLocations } from '../Register/services/locations.service';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
 import { Card } from '../../components/Card';
-import useBreakpoint from '../../hooks/use-breakpoint';
 import { getPetsByStatus } from '../PetDetail/services/pet.service';
+import { useNavigate } from 'react-router-dom';
 import images from './lib/data';
-import withKeycloakAuth from '../../config/withKeycloakAuth';
+import imgBanner from '../../assets/banner-adopti.png';
+import useBreakpoint from '../../hooks/use-breakpoint';
 
 const Adoption = () => {
+  const navigate = useNavigate();
   const EN_ADOPCION = 'EN_ADOPCION';
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -44,7 +45,7 @@ const Adoption = () => {
   return (
     <div className='col-span-full'>
       {isLoadingLocations || !locations?.length || isLoadingSpacies || !species?.length || isLoadingBreeds || !breeds?.length ? (
-        <>Aca deberia ir un skeleton o spinner...</>
+        <Loader opacity={60} />
       ) : (
         <div className='pb-8'>
           <MainBanner images={imgBanner} />
@@ -102,8 +103,8 @@ const Adoption = () => {
                     img={images[index]}
                     title={pet.name}
                     description={pet.description}
-                    buttonLabel='Adoptar'
-                    onClick={console.log}
+                    buttonLabel='Ver más'
+                    onClick={() => navigate(`/pet/${pet.id}`)}
                   />
                 ))}
               </section>
@@ -125,4 +126,4 @@ const Adoption = () => {
   );
 };
 
-export default withKeycloakAuth(Adoption);
+export default Adoption;

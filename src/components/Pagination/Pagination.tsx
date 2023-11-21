@@ -1,6 +1,6 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/24/solid';
 import { useMemo } from 'react';
 import cn from 'classnames';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 
 type PaginationProps = {
   pages: number;
@@ -65,7 +65,7 @@ const Pagination = ({ pages, maxPagesToShow, currentPage, onPageChange }: Pagina
 
   return (
     <div className='flex items-center justify-center gap-5 px-4 py-3 border-2 border-black rounded-l-full rounded-r-full w-fit'>
-      <ChevronLeftIcon
+      <IconChevronLeft
         className={cn('w-4 h-4 min-w-[16px] min-h-[16px] stroke-2 stroke-black', { 'opacity-40': currentPage === 1 })}
         onClick={() => onPageChange(currentPage - 1)}
       />
@@ -85,7 +85,7 @@ const Pagination = ({ pages, maxPagesToShow, currentPage, onPageChange }: Pagina
           <span className='text-[16px]'>{page}</span>
         </div>
       ))}
-      <ChevronRightIcon
+      <IconChevronRight
         className={cn('w-4 h-4 min-w-[16px] min-h-[16px] stroke-2 stroke-black', { 'opacity-40': currentPage === pages })}
         onClick={() => onPageChange(currentPage + 1)}
       />
