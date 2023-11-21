@@ -122,10 +122,10 @@ const QrGenerator = () => {
                   value={image.value}
                   onUpload={(value) => {
                     image.value = value;
-                    setImages([...images, { id: image.id + 1, value: null }]);
+                    setImages([...images]);
                   }}
-                  onRemove={(_, id) => {
-                    setImages(images.filter((image) => image.id !== id));
+                  onRemove={() => {
+                    setImages([{ id: 0, value: null }]);
                   }}
                 />
               ))}
