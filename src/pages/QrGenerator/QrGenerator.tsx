@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
-import { IconAt, IconChevronLeft, IconChevronRight, IconPhone, IconUser } from '@tabler/icons-react';
+import { IconAt, IconPhone, IconQuestionMark, IconUser } from '@tabler/icons-react';
 import { dateFormatter } from '../../utils/dates';
 import { useKeycloak } from '@react-keycloak/web';
 import { useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
@@ -14,11 +14,13 @@ import imageNotFoundMobile from './../../assets/qr-not-found-image-mobile.png';
 import imageNotFoundDesktop from './../../assets/qr-not-found-image-desktop.png';
 import cn from 'classnames';
 import useBreakpoint from '../../hooks/use-breakpoint';
+import { useTour } from '@reactour/tour';
 
 const QrGenerator = () => {
   const {
     keycloak: { idTokenParsed },
   } = useKeycloak();
+  const { setIsOpen, isOpen, currentStep } = useTour();
   const { isLg } = useBreakpoint('lg');
   const { data: species, isLoading: isLoadingSpacies, error: errorSpecies } = useQuery('species', getSpecies);
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
@@ -32,7 +34,6 @@ const QrGenerator = () => {
   const [breed, setBreed] = useState<null | number>(null);
   const [images, setImages] = useState<{ id: number; value: File | null }[]>([{ id: 0, value: null }]);
   const [description, setDescription] = useState('');
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const filteredBreeds = useMemo(() => {
     if (!breeds) return [];
@@ -55,23 +56,22 @@ const QrGenerator = () => {
     return !petName || !specie || !breed || !description;
   }, [petName, specie, breed, description]);
 
-  const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => prevIndex + 1);
-  };
-
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => prevIndex - 1);
-  };
-
   return (
     <main>
-      <header className='w-full'>
+      <header className='relative w-full'>
         <img src={qrBannerImage} alt='dog with cat' className='w-full' />
+        <div
+          className='fixed z-10 flex items-center justify-center w-10 h-10 p-4 bg-white border rounded-full cursor-pointer right-2 bottom-10 border-primary'
+          onClick={() => setIsOpen(true)}
+        >
+          <IconQuestionMark className='w-10 h-10 min-w-[40px] min-h-[40px]' />
+        </div>
       </header>
       {isLoading && <Loader opacity={60} />}
       <Title variant='h3' className='font-bold text-center'>
         Genera un QR único para tu mascota
       </Title>
+      <div id='qr-generator-7-step' className='w-0 h-0 ' />
       {!isLoading && (
         <form
           onSubmit={(e) => {
@@ -79,13 +79,18 @@ const QrGenerator = () => {
           }}
           className='flex flex-col w-full gap-10 lg:flex-row'
         >
-          <section className='relative flex flex-col w-full gap-5 p-10 lg:w-1/2'>
+          <section
+            className={cn('relative flex flex-col w-full gap-5 p-10 lg:w-1/2', {
+              'z-20 bg-white': isOpen && currentStep === 2,
+            })}
+            id='qr-generator-1-step'
+          >
             <TextField
               label='Nombre de la Mascota*'
               variant='outlined'
               type='text'
               name='name'
-              id='name'
+              id='qr-generator-3-step'
               onChange={(e) => {
                 setPetName(e.target.value);
               }}
@@ -93,7 +98,7 @@ const QrGenerator = () => {
               className='w-full'
               placeholder='Nombre de la Mascota'
             />
-            <div className='flex flex-col w-full gap-3 lg:flex-row'>
+            <div className='flex flex-col w-full gap-3 lg:flex-row' id='qr-generator-4-step'>
               <FormControl fullWidth>
                 <InputLabel id='specie'>Especie</InputLabel>
                 <Select labelId='specie' id='specie' value={specie} label='Especie' onChange={(e) => setSpecie(Number(e.target.value))}>
@@ -115,7 +120,7 @@ const QrGenerator = () => {
                 </Select>
               </FormControl>
             </div>
-            <div className='relative flex flex-wrap justify-center gap-4 p-4 border rounded-lg border-mui-gray md:justify-start'>
+            <div className='relative flex flex-wrap justify-center gap-4 p-4 border rounded-lg border-mui-gray md:justify-start' id='qr-generator-5-step'>
               <TextDetail size='xs' weight='regular' className='absolute z-10 px-2 text-black bg-white left-2 -top-3'>
                 Imágenes de la mascota
               </TextDetail>
@@ -134,7 +139,7 @@ const QrGenerator = () => {
                 />
               ))}
             </div>
-            <div className='relative focus-within:text-primary'>
+            <div className='relative focus-within:text-primary' id='qr-generator-6-step'>
               <TextDetail size='xs' weight='regular' className='absolute z-10 px-2 bg-white left-2 -top-3 '>
                 Descripción
               </TextDetail>
@@ -162,36 +167,16 @@ const QrGenerator = () => {
               </div>
             </div>
           </section>
-          <section className='w-full lg:pr-10 lg:w-1/2'>
+          <section className='w-full lg:pr-10 lg:w-1/2' id='qr-generator-2-step'>
             <div className='flex justify-center p-5 '>
-              {!images[currentImageIndex].value && (
+              {!images[0].value && (
                 <>
                   {isLg && <img src={imageNotFoundDesktop} className='object-contain w-full rounded-lg h-96' />}
                   {!isLg && <img src={imageNotFoundMobile} className='object-contain w-full rounded-lg h-96' />}
                 </>
               )}
-              {!!images[currentImageIndex].value && (
-                <img src={URL.createObjectURL(images[currentImageIndex].value as File)} className='object-cover w-full rounded-lg h-96' />
-              )}
+              {!!images[0].value && <img src={URL.createObjectURL(images[0].value)} className='object-cover w-full rounded-lg h-96' />}
             </div>
-            {images.length > 2 && (
-              <div className='flex justify-center mt-2 space-x-4'>
-                <button className={cn({ 'opacity-40': currentImageIndex === 0 })}>
-                  <IconChevronLeft
-                    onClick={() => {
-                      if (currentImageIndex > 0) handlePrevImage();
-                    }}
-                  />
-                </button>
-                <button className={cn({ 'opacity-40': currentImageIndex === images.length - 2 })}>
-                  <IconChevronRight
-                    onClick={() => {
-                      if (currentImageIndex < images.length - 2) handleNextImage();
-                    }}
-                  />
-                </button>
-              </div>
-            )}
             <article className='flex flex-col gap-3 rounded-t-3xl bg-primary p-9'>
               <Title variant='h2'>{petName}</Title>
               <div className='flex justify-between'>
