@@ -48,8 +48,8 @@ const QrGenerator = () => {
   }, [idTokenParsed]);
 
   const disableSubmit = useMemo(() => {
-    return !petName || !specie || !breed || !images.length || !description;
-  }, [petName, specie, breed, images, description]);
+    return !petName || !specie || !breed || !description;
+  }, [petName, specie, breed, description]);
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) => prevIndex + 1);
