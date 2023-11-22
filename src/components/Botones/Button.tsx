@@ -16,7 +16,7 @@ const Button = ({ label, variant, className, onClick }: buttonProps) => {
   }[variant];
 
   return (
-    <button onClick={onClick} className={cn('rounded-3xl border-2 text-[16px] font-bold px-4', variants, className)}>
+    <button onClick={onClick} className={cn('rounded-3xl border-2 text-[16px] font-bold px-4 cursor-pointer', variants, className)}>
       {label}
     </button>
   );
