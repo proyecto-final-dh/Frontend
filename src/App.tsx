@@ -18,23 +18,11 @@ function App() {
   const loader = () => <Loader opacity={0} />;
 
   return (
-    <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <AuthProvider loader={loader}>
+    <AuthProvider loader={loader}>
+      <Provider store={store}>
+        <PersistGate loading={null} persistor={persistor}>
           <QueryClientProvider client={queryClient}>
             <div className='App bg-orange-light'>
-              <head>
-                <title>ResQpet</title>
-                <meta
-                  name='description'
-                  content='ResQPet ayuda a los dueños de mascotas a mantener a sus queridas mascotas seguras y permite adoptar o dar en adopción a mascotas necesitadas.'
-                />
-                <meta
-                  name='keywords'
-                  content='codigo QR, mascotas, cuidado de perros, adopción de gatos, adopción de perros, dar en adopción, veterinario, consejos para mascotas'
-                />
-              </head>
-
               <Container hasPadding={false}>
                 <ScrollToTop />
                 <Routes>
@@ -75,9 +63,9 @@ function App() {
               </Container>
             </div>
           </QueryClientProvider>
-        </AuthProvider>
-      </PersistGate>
-    </Provider>
+        </PersistGate>
+      </Provider>
+    </AuthProvider>
   );
 }
 
