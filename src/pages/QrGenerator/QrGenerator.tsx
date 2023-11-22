@@ -11,6 +11,7 @@ import { useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
 import qrBannerImage from './../../assets/slider adopción (1).png';
 import qrPawsImage from './../../assets/icons/huellas.svg';
 import cn from 'classnames';
+import QrModal from '../../components/QrModal/QrModal';
 
 const QrGenerator = () => {
   const {
@@ -29,6 +30,8 @@ const QrGenerator = () => {
   const [images, setImages] = useState<{ id: number; value: File | null }[]>([{ id: 0, value: null }]);
   const [description, setDescription] = useState('');
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const [qrModal, setQrModal] = useState(false);
 
   const filteredBreeds = useMemo(() => {
     if (!breeds) return [];
@@ -142,16 +145,18 @@ const QrGenerator = () => {
               />
             </div>
             <button
-              className={cn('rounded-3xl bg-primary text-center py-3 w-full lg:max-w-[160px] mx-auto', {
+              className={cn('rounded-3xl bg-primary text-center py-3 w-full lg:max-w-[160px] mx-auto cursor-pointer', {
                 'opacity-40': disableSubmit,
               })}
               type='submit'
               disabled={disableSubmit}
+              onClick={() => setQrModal(true)}
             >
               <TextDetail size='s' weight='bold'>
                 Generar QR
               </TextDetail>
             </button>
+            {qrModal && <QrModal closeModal={() => setQrModal(false)} />}
             <div className='relative hidden w-full h-28 lg:block'>
               <div className='absolute left-0 w-full bottom-10'>
                 <img src={qrPawsImage} alt='huellas' />
