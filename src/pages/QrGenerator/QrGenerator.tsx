@@ -8,7 +8,7 @@ import { IconAt, IconPhone, IconQuestionMark, IconUser } from '@tabler/icons-rea
 import { dateFormatter } from '../../utils/dates';
 import { useKeycloak } from '@react-keycloak/web';
 import { useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
-import qrBannerImage from './../../assets/slider adopción (1).png';
+import qrBannerImage from './../../assets/slider_adopcion.png';
 import qrPawsImage from './../../assets/icons/huellas.svg';
 import imageNotFoundMobile from './../../assets/qr-not-found-image-mobile.png';
 import imageNotFoundDesktop from './../../assets/qr-not-found-image-desktop.png';
@@ -16,7 +16,6 @@ import cn from 'classnames';
 import QrModal from '../../components/QrModal/QrModal';
 import useBreakpoint from '../../hooks/use-breakpoint';
 import { useTour } from '@reactour/tour';
-
 
 const QrGenerator = () => {
   const {
@@ -72,7 +71,7 @@ const QrGenerator = () => {
         </div>
       </header>
       {isLoading && <Loader opacity={60} />}
-      <Title variant='h3' className='font-bold text-center'>
+      <Title variant='h3' className='font-bold text-center p-5'>
         Genera un QR único para tu mascota
       </Title>
       <div id='qr-generator-7-step' className='w-0 h-0 ' />
@@ -168,13 +167,13 @@ const QrGenerator = () => {
             </button>
             {qrModal && <QrModal closeModal={() => setQrModal(false)} />}
             <div className='relative hidden w-full h-28 lg:block'>
-              <div className='absolute left-0 w-full bottom-10'>
+              <div className='left-0 w-full bottom-10'>
                 <img src={qrPawsImage} alt='huellas' />
               </div>
             </div>
           </section>
-          <section className='w-full lg:pr-10 lg:w-1/2' id='qr-generator-2-step'>
-            <div className='flex justify-center p-5 '>
+          <section className='w-full lg:p-10 lg:w-1/2' id='qr-generator-2-step'>
+            <div className='flex justify-center bg-mid-gray rounded-lg'>
               {!images[0].value && (
                 <>
                   {isLg && <img src={imageNotFoundDesktop} className='object-contain w-full rounded-lg h-96' />}
@@ -183,7 +182,7 @@ const QrGenerator = () => {
               )}
               {!!images[0].value && <img src={URL.createObjectURL(images[0].value)} className='object-cover w-full rounded-lg h-96' />}
             </div>
-            <article className='flex flex-col gap-3 rounded-t-3xl bg-primary p-9'>
+            <article className='flex flex-col gap-3 rounded-t-3xl bg-primary p-9 relative z-2 -mt-6'>
               <Title variant='h2'>{petName}</Title>
               <div className='flex justify-between'>
                 <TextDetail size='xs' weight='regular'>
@@ -195,6 +194,9 @@ const QrGenerator = () => {
               </div>
               <TextDetail size='xs' weight='regular' className='break-words'>
                 {description}
+              </TextDetail>
+              <TextDetail size='xs' weight='regular' className='break-words'>
+                Por favor contactarse con su protector para que <strong>{petName}</strong> vuelva con su familia:
               </TextDetail>
               {!!idTokenParsed && !!userDetails && (
                 <div className='flex flex-col justify-around gap-4'>
