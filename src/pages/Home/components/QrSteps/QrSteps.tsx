@@ -5,6 +5,7 @@ import markStepThree from '../../../../assets/mark-step-three.png';
 import styles from './qrsteps.module.css';
 import { TextDetail } from '../../../../components';
 import cn from 'classnames';
+import { Link } from 'react-router-dom';
 
 const markSteps = [
   {
@@ -56,9 +57,11 @@ const QrSteps = () => {
           ))}
         </section>
         <div className={cn(styles.btnActions, 'mt-5')}>
-          <Button variant='contained' color='primary' sx={{ borderRadius: '30px', fontWeight: 700, padding: '10px 15px' }}>
-            Comenzar
-          </Button>
+          <Link to='/qr/create'>
+            <Button variant='contained' color='primary' sx={{ borderRadius: '30px', fontWeight: 700, padding: '10px 15px' }}>
+              Comenzar
+            </Button>
+          </Link>
         </div>
       </Container>
     </Box>

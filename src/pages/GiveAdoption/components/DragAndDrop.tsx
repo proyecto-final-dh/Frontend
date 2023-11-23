@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import useDragAndDrop from '../hooks/DragAndDrop';
 
-
 interface DragAndDropProps {
   id: number;
   value: File;
@@ -13,7 +12,6 @@ interface DragAndDropProps {
 const DragAndDrop: React.FC<DragAndDropProps> = ({ id, value, onUpload, onRemove }) => {
   const [image, setImage] = useState<string | null>();
   const { dragOver, setDragOver, onDragOver, onDragLeave, setFileDropError } = useDragAndDrop();
-  console.log(value)
   const onDrop = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
 
@@ -44,22 +42,30 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ id, value, onUpload, onRemove
   }, [value]);
 
   return (
-    <div className='bg-wheat w-200 h-150'>
-      <label className='label w-full h-full flex cursor-pointer justify-center items-center text-30' htmlFor='file' onDragOver={onDragOver} onDragLeave={onDragLeave} onDrop={onDrop}>
-        {!value && <h1>{!dragOver ? '+' : 'Drop here...'}</h1>}
+    <div className='bg-white w-[200px] h-[150px] overflow-hidden relative border-dashed border border-primary rounded-lg'>
+      <label
+        className='flex items-center justify-center w-full h-full cursor-pointer text-[30px]'
+        htmlFor='file'
+        onDragOver={onDragOver}
+        onDragLeave={onDragLeave}
+        onDrop={onDrop}
+      >
+        {!value && <h1 className='text-[30px] text-center text-primary'>{!dragOver ? '+' : 'Cargar...'}</h1>}
       </label>
-      {!image && <input className='input hidden' type='file' name='file' id='file' onChange={fileSelect} />}
+      {!image && <input className='hidden' type='file' name='file' id='file' onChange={fileSelect} />}
       {image && (
-        <div className='w-150 h-150 bg-gray-300 absolute'>
-          <img className='image w-full h-full' src={image} alt={value?.name || ''} />
+        <div className='absolute top-0 w-full h-full cursor-pointer'>
+          <img className='w-full h-full' src={image} alt={value?.name || ''} />
           <section
-            className='layout bg-transparent flex justify-center items-center w-full h-full text-transparent absolute top-0 text-30'
+            className='bg-[transparent] flex items-center justify-center w-full h-full text-[transparent] absolute top-0 text-[30px] hover:text-black hover:bg-white/70'
             onClick={() => {
-              setImage(null);
-              onRemove(value, id);
+              if (value) {
+                setImage(null);
+                onRemove(value, id);
+              }
             }}
           >
-            <i className='fa-solid fa-x'></i>
+            X
           </section>
         </div>
       )}

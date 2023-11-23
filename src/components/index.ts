@@ -12,5 +12,6 @@ export { default as Pagination } from './Pagination';
 export { default as Table } from './Table';
 export { default as useInput } from './useInput';
 export { default as Loader } from './Loader';
+export { default as TourBadge } from './TourBadge';
 export { default as DragAndDrop } from './DragAndDrop';
 export * from './DragAndDrop';
