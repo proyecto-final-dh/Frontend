@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { DragEvent, useState } from 'react';
 
 const useDragAndDrop = () => {
   const [dragOver, setDragOver] = useState(false);
   const [fileDropError, setFileDropError] = useState('');
 
-  const onDragOver = (e : React.DragEvent<HTMLLabelElement>) => {
+  const onDragOver = (e: DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     setDragOver(true);
   };

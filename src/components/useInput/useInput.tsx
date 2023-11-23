@@ -1,31 +1,20 @@
-import { useState, ChangeEvent } from 'react';
+import { useState } from "react";
 
-type Validator = (value: string) => [boolean, string];
+const useInput = (initialValue, validator) => {
+  const [value, setValue] = useState(initialValue);
+  const [error, setError] = useState([false]);
 
-interface UseInputProps {
-  value: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  hasError: boolean;
-  errorMessage: string;
-}
-
-const useInput = (initialValue: string, validator: Validator) => {
-  const [value, setValue] = useState<string>(initialValue);
-  const [error, setError] = useState<[boolean, string]>([false, '']);
-
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (event) => {
     setValue(event.target.value);
-    setError(validator?.(event.target.value) || [false, '']);
+    setError(validator?.(event.target.value) || [false, ""]);
   };
 
-  const inputProps: UseInputProps = {
+  return {
     value,
     onChange: handleChange,
     hasError: error[0],
     errorMessage: error[1],
   };
-
-  return inputProps;
 };
 
 export default useInput;

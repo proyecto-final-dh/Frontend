@@ -1,8 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { Pet } from '../../../contracts/pet';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { TextDetail, Table, Title } from '../../../components';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 interface CardProps {
   pet: Pet;
 }
@@ -45,10 +44,10 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
         {pet.image.length > 1 && (
           <div className='flex justify-center mt-2 space-x-4'>
             <div className='cursor-pointer'>
-              <ArrowBackIosIcon onClick={handlePrevImage} />
+              <IconChevronLeft onClick={handlePrevImage} />
             </div>
             <div className='cursor-pointer'>
-              <ArrowForwardIosIcon onClick={handleNextImage} />
+              <IconChevronRight onClick={handleNextImage} />
             </div>
           </div>
         )}

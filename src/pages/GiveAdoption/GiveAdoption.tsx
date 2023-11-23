@@ -5,9 +5,10 @@ import imgBanner from '../../assets/banner-adoption.png';
 import { TextField } from '@mui/material';
 import Images from './components/Images';
 
-export interface Image {
+interface Image {
   id: number;
   value: string | null;
+  isNew?: boolean;
 }
 
 const GiveAdoption: React.FC = () => {

@@ -43,7 +43,7 @@ const MultiActionAreaCard: React.FC<MultiActionAreaCardProps> = ({ pet }) => {
       </CardActionArea>
       <CardActions sx={{ justifyContent: 'center' }}>
         <Link to={`/pet/${pet.id}`} style={{ textDecoration: 'none' }}>
-          <PetButton label={'Adoptar'} />
+          <PetButton label='Ver más' />
         </Link>
       </CardActions>
     </Card>
