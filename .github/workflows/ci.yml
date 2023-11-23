@@ -1,21 +1,37 @@
 name: Deployment
 on:
-    push:
-        branches: [Deployment]
+  push:
+    branches: [Deployment]
 jobs:
-    build:
-        runs-on: [self-hosted]
-        steps:
-            - name: Checkout App
-              uses: actions/checkout@v4
-            - name: Use Node.js
-              uses: actions/setup-node@v4
-              with:
-                  node-version: 16
-                  cache: 'npm'
-            - run: npm ci
-            - run: npm run build --if-present
-            # - name: Install dependences
-            #   run: npm ci
-            # - name: Build App
-            #   run: npm run build --if-present
+  build:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v3
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 16
+          cache: 'npm'
+      - name: Login to docker Hub
+        run: docker login -u ${{secrets.DOCKER_USERNAME}} --password ${{secrets.DOCKER_PASSWORD}}
+      - name: Build docker Image
+        run: docker build -t piresqpet/frontend .
+      - name: Publish Image to DockerHub
+        run: docker push piresqpet/frontend:latest
+
+  deploy:
+    needs: build
+    runs-on: [Frontend]
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull piresqpet/frontend:latest
+      - name: Delete old container
+        run: docker rm -f frontend-resqpet
+      - name: Run docker container
+        run: docker run -d -p 80:80 --name frontend-resqpet piresqpet/frontend
+
+    # - name: Install dependences
+    #   run: npm ci
+    # - name: Build App
+    #   run: npm run build --if-present
