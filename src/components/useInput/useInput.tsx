@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState } from 'react';
 
 const useInput = (initialValue, validator) => {
   const [value, setValue] = useState(initialValue);
@@ -6,7 +6,7 @@ const useInput = (initialValue, validator) => {
 
   const handleChange = (event) => {
     setValue(event.target.value);
-    setError(validator?.(event.target.value) || [false, ""]);
+    setError(validator?.(event.target.value) || [false, '']);
   };
 
   return {

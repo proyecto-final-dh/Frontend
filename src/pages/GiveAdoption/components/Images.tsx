@@ -1,12 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Title, TextDetail, useInput } from '../../../components';
+import { TextDetail, useInput } from '../../../components';
 import DragAndDrop from './DragAndDrop';
-import cn from 'classnames';
 
 interface Image {
   id: number;
-  value: string | null;
+  value: File | null;
   isNew?: boolean;
 }
 
@@ -35,13 +34,10 @@ const Images: React.FC<ImagesProps> = ({ images, setImages }) => {
           value={image.value || currentImage.value}
           onUpload={(value: File) => {
             if (image) {
-              image.value = value.name; // Assuming you want to store the file name
+              image.value = value; // Assuming you want to store the file name
               image.isNew = true;
 
-              const imageUrl = URL.createObjectURL(value);
-              image.value = imageUrl;
-
-              setImages([...images, { id: image.id + 1, value: '' }]);
+              setImages([...images, { id: image.id + 1, value: null }]);
               currentImage.onChange({ target: { value: '' } });
             }
           }}

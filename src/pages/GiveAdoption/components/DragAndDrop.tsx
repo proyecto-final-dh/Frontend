@@ -38,7 +38,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ id, value, onUpload, onRemove
   };
 
   useEffect(() => {
-    if (value) setImage(`${value}`);
+    if (value) setImage(URL.createObjectURL(value));
   }, [value]);
 
   return (

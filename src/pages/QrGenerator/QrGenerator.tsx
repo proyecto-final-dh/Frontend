@@ -17,7 +17,6 @@ import QrModal from '../../components/QrModal/QrModal';
 import useBreakpoint from '../../hooks/use-breakpoint';
 import { useTour } from '@reactour/tour';
 
-
 const QrGenerator = () => {
   const {
     keycloak: { idTokenParsed },
