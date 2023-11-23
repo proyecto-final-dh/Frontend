@@ -21,6 +21,7 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
     if (!pet) return [];
     return [
       { key: 'Raza', value: pet.breed.name },
+      { key: 'Edad', value: pet.age.toString() },
       { key: 'Tamaño', value: pet.size },
       { key: 'Género', value: pet.gender },
       { key: 'Localización', value: `${pet.userDetails.location.city}-${pet.userDetails.location.country}` },
@@ -39,9 +40,9 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
     <div className='flex flex-col lg:flex-row'>
       <div className='mb-4 lg:w-1/2 sm:mb-0 sm:mr-4'>
         <div className='flex justify-center p-5 '>
-          <img src={pet.image[currentImageIndex].url} alt={pet.image[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
+          <img src={pet.image?.[currentImageIndex].url} alt={pet.image?.[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
         </div>
-        {pet.image.length > 1 && (
+        {pet.image?.length > 1 && (
           <div className='flex justify-center mt-2 space-x-4'>
             <div className='cursor-pointer'>
               <IconChevronLeft onClick={handlePrevImage} />
