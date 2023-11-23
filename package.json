@@ -19,7 +19,7 @@
     "@types/react-dom": "^18.2.14",
     "axios": "^1.6.0",
     "classnames": "^2.3.2",
-    "keycloak-js": "^22.0.1",
+    "keycloak-js": "18.0.1",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -35,9 +35,9 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "eject": "react-scripts eject",
     "prepare": "husky install",
     "format": "prettier --write \"src/**/*.{ts,tsx,js}\""
@@ -74,6 +74,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "husky": "^8.0.0",
     "prettier": "^3.0.3",
+    "react-app-rewired": "^2.2.1",
     "tailwindcss": "^3.3.5"
   },
   "husky": {
