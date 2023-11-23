@@ -7,6 +7,7 @@ import Images from './components/Images';
 import { useQuery } from 'react-query';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
+import TermsAndConditions from '../../components/TermsAndConditions.tsx/TermsAndConditions';
 
 interface Image {
   id: number;
@@ -118,6 +119,7 @@ const GiveAdoption: React.FC = () => {
             onChange={(e) => setDescription(e.target.value)}
           />
         </div>
+        <TermsAndConditions />
       </Box>
     </div>
   );
