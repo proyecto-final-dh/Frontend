@@ -2,12 +2,14 @@ import React, { useMemo, useState } from 'react';
 import { Pet } from '../../../contracts/pet';
 import { TextDetail, Table, Title } from '../../../components';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import ModalAdopConf from './ModalAdopConf';
 interface CardProps {
   pet: Pet;
 }
 
 const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.image.length);
@@ -15,6 +17,14 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
 
   const handlePrevImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.image.length - 1 : prevIndex - 1));
+  };
+
+  const handleAdoptClick = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const rows = useMemo(() => {
@@ -64,7 +74,10 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
         <div className='max-w-xs mx-auto mt-10 lg:max-w-full'>
           <Table headers={headers} data={rows} />
         </div>
-        <button className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>Adoptar</button>
+        <button onClick={handleAdoptClick} className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>
+          Adoptar
+        </button>
+        {isModalOpen && <ModalAdopConf pet={pet} onClose={closeModal} />}
       </article>
     </div>
   );
