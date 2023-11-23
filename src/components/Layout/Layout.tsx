@@ -8,7 +8,7 @@ interface PropsLayout {
 const Layout = ({ children }: PropsLayout) => {
   return (
     <div className='col-span-full'>
-      <nav className='sticky top-0 z-20 w-full'>
+      <nav className='sticky top-0 z-[2] w-full'>
         <Navbar />
       </nav>
       <main>{children}</main>
