@@ -44,7 +44,7 @@ const Home = () => {
         <HeroBanner leftImage={dog1} leftAlt='dog-banner' rightImage={qr} rightAlt='Image-QR'>
           <Title variant='h2' className='font-bold text-center text-black'>
             <span>Todo esto</span>
-            <span className='text-white'>sin instalar nada</span>, en un QR que podes agregar al collar de tu mascota.
+            <span className='text-white'> sin instalar nada</span>, en un QR que podes agregar al collar de tu mascota.
           </Title>
         </HeroBanner>
         <Title variant='h1' className='mt-10 mb-5 font-bold text-center'>
