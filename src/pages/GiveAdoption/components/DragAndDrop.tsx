@@ -1,11 +1,11 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useDragAndDrop from '../hooks/DragAndDrop';
 
 interface DragAndDropProps {
   id: number;
-  value: File;
-  onUpload: (file: File, id: number) => void;
-  onRemove: (file: File | string, id: number) => void;
+  value: Blob | null;
+  onUpload: (file: Blob, id: number) => void;
+  onRemove: (file: Blob | string, id: number) => void;
   disabled?: boolean;
 }
 
@@ -55,7 +55,7 @@ const DragAndDrop: React.FC<DragAndDropProps> = ({ id, value, onUpload, onRemove
       {!image && <input className='hidden' type='file' name='file' id='file' onChange={fileSelect} />}
       {image && (
         <div className='absolute top-0 w-full h-full cursor-pointer'>
-          <img className='w-full h-full' src={image} alt={value?.name || ''} />
+          <img className='w-full h-full' src={image} />
           <section
             className='bg-[transparent] flex items-center justify-center w-full h-full text-[transparent] absolute top-0 text-[30px] hover:text-black hover:bg-white/70'
             onClick={() => {

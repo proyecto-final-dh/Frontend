@@ -12,15 +12,13 @@ import TermsAndConditions from '../../components/TermsAndConditions.tsx/TermsAnd
 
 interface Image {
   id: number;
-  value: File | null;
+  value: Blob | null;
   isNew?: boolean;
 }
 
 const GiveAdoption: React.FC = () => {
-  const { data: species, isLoading: isLoadingSpacies, error: errorSpecies } = useQuery('species', getSpecies);
-  const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
-
-  const isLoading = isLoadingSpacies || isLoadingBreeds;
+  const { data: species, error: errorSpecies } = useQuery('species', getSpecies);
+  const { data: breeds, error: errorBreeds } = useQuery('breeds', getBreeds);
 
   const [petName, setPetName] = useState('');
   const [size, setSize] = useState('');
@@ -38,24 +36,46 @@ const GiveAdoption: React.FC = () => {
       method: 'POST',
       body: formData,
       redirect: 'follow',
+      // headers: {
+      //   'Content-Type': 'application/json',
+      // },
     }).then((response) => response.text()),
   );
 
   const handleSubmit = async () => {
     formData.append(
       'post',
-      `{
-        "name": ${petName} ,
-        "breed_id": ${breed},
-        "owner_id": 1,
-        "gender": ${gender},
-        "size": ${size},
-        "descripion": ${description}
-      }`,
+      new Blob(
+        [
+          JSON.stringify({
+            name: `${petName}`,
+            breed_id: `${breed}`,
+            owner_id: 1,
+            gender: `${gender}`,
+            size: `${size}`,
+            descripion: `${description}`,
+          }),
+        ],
+        {
+          type: 'application/json',
+        },
+      ),
     );
+
+    console.log(images);
     const files = images.filter((image) => image.value);
-    files.forEach((image) => formData.append('image', image.value));
-    await mutation.mutateAsync(formData);
+    files.forEach((image) => {
+      if (image.value != null) {
+        formData.append(`image`, image.value);
+      }
+    });
+
+    mutation.mutateAsync(formData);
+
+    // fetch('http://54.90.177.71:8080/pets/own-with-images', {
+    //   method: 'POST',
+    //   body: formData,
+    // }).then((response) => console.log(response.status));
   };
 
   const filteredBreeds = useMemo(() => {
