@@ -1,16 +1,18 @@
 import cn from 'classnames';
 
 type TitleProps = {
+  id?: string;
   variant: 'h1' | 'h2' | 'h3';
   className?: string;
   children: React.ReactNode;
 };
 
-const Title = ({ children, variant, className }: TitleProps) => {
+const Title = ({ children, variant, className, id }: TitleProps) => {
   const getProps = (textClass: string) => {
     return {
       className: cn(className, textClass),
       children,
+      id,
     };
   };
 

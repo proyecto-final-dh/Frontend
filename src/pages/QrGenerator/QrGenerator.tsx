@@ -71,7 +71,7 @@ const QrGenerator = () => {
         </div>
       </header>
       {isLoading && <Loader opacity={60} />}
-      <Title variant='h3' className='font-bold text-center p-5'>
+      <Title variant='h3' className='p-5 font-bold text-center' id='qr-generator-1-step'>
         Genera un QR único para tu mascota
       </Title>
       <div id='qr-generator-7-step' className='w-0 h-0 ' />
@@ -86,7 +86,6 @@ const QrGenerator = () => {
             className={cn('relative flex flex-col w-full gap-5 p-10 lg:w-1/2', {
               'z-20 bg-white': isOpen && currentStep === 2,
             })}
-            id='qr-generator-1-step'
           >
             <TextField
               label='Nombre de la Mascota*'
@@ -172,8 +171,8 @@ const QrGenerator = () => {
               </div>
             </div>
           </section>
-          <section className='w-full lg:p-10 lg:w-1/2' id='qr-generator-2-step'>
-            <div className='flex justify-center bg-mid-gray rounded-lg'>
+          <section className='w-full lg:p-10 lg:w-1/2'>
+            <div className='flex justify-center rounded-lg bg-mid-gray' id='qr-generator-2-step'>
               {!images[0].value && (
                 <>
                   {isLg && <img src={imageNotFoundDesktop} className='object-contain w-full rounded-lg h-96' />}
@@ -182,7 +181,7 @@ const QrGenerator = () => {
               )}
               {!!images[0].value && <img src={URL.createObjectURL(images[0].value)} className='object-cover w-full rounded-lg h-96' />}
             </div>
-            <article className='flex flex-col gap-3 rounded-t-3xl bg-primary p-9 relative z-2 -mt-6'>
+            <article className='relative flex flex-col gap-3 -mt-6 rounded-t-3xl bg-primary p-9 z-2'>
               <Title variant='h2'>{petName}</Title>
               <div className='flex justify-between'>
                 <TextDetail size='xs' weight='regular'>
