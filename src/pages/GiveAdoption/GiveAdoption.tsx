@@ -8,6 +8,7 @@ import { useQuery, useMutation } from 'react-query';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
 import cn from 'classnames';
+import TermsAndConditions from '../../components/TermsAndConditions.tsx/TermsAndConditions';
 
 interface Image {
   id: number;
@@ -165,6 +166,7 @@ const GiveAdoption: React.FC = () => {
             Dar en adopción
           </button>
         </div>
+        <TermsAndConditions />
       </Box>
     </div>
   );
