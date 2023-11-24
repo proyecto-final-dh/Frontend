@@ -12,11 +12,11 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.image.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.images.length);
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.image.length - 1 : prevIndex - 1));
+    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.images.length - 1 : prevIndex - 1));
   };
 
   const handleAdoptClick = () => {
@@ -50,9 +50,9 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
     <div className='flex flex-col lg:flex-row'>
       <div className='mb-4 lg:w-1/2 sm:mb-0 sm:mr-4'>
         <div className='flex justify-center p-5 '>
-          <img src={pet.image?.[currentImageIndex].url} alt={pet.image?.[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
+          <img src={pet.images[currentImageIndex].url} alt={pet.images[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
         </div>
-        {pet.image?.length > 1 && (
+        {pet.images.length > 1 && (
           <div className='flex justify-center mt-2 space-x-4'>
             <div className='cursor-pointer'>
               <IconChevronLeft onClick={handlePrevImage} />

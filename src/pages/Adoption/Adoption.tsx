@@ -7,7 +7,6 @@ import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
 import { Card } from '../../components/Card';
 import { useNavigate } from 'react-router-dom';
-import images from './lib/data';
 import imgBanner from '../../assets/banner-adopti.png';
 import useBreakpoint from '../../hooks/use-breakpoint';
 import { useLazyGetPetsQuery } from '../../store/apis/resqpet.api';
@@ -132,12 +131,12 @@ const Adoption = () => {
           {!!pets?.content.length && (
             <div className='flex flex-col gap-8 mt-6'>
               <section className='flex flex-wrap justify-center px-10 gap-7'>
-                {pets.content.map((pet, index) => (
+                {pets.content.map((pet) => (
                   <Card
                     key={pet.id}
                     variant={isLg ? 'm' : 's'}
                     id={pet.id.toString()}
-                    img={images[index]}
+                    img={pet.images[0].url}
                     title={pet.name}
                     description={pet.description}
                     buttonLabel='Ver más'
