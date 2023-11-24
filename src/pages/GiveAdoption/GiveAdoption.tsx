@@ -39,7 +39,7 @@ const GiveAdoption: React.FC = () => {
   const navigate = useNavigate();
 
   const mutation = useMutation((formData: FormData) =>
-    fetch('http://54.90.177.71:8080/pets/own-with-images', {
+    fetch('http://54.90.177.71:8080/pets/adoptive-with-images', {
       method: 'POST',
       body: formData,
       redirect: 'follow',
@@ -63,7 +63,7 @@ const GiveAdoption: React.FC = () => {
             owner_id: 1,
             gender: `${gender}`,
             size: `${size}`,
-            descripion: `${description}`,
+            description: `${description}`,
           }),
         ],
         {
