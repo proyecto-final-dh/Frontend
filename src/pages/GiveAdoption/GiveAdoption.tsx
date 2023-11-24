@@ -9,6 +9,8 @@ import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
 import cn from 'classnames';
 import TermsAndConditions from '../../components/TermsAndConditions.tsx/TermsAndConditions';
+import ModalGiveAdoption from './components/ModalGiveAdoption';
+import { useNavigate } from 'react-router';
 
 interface Image {
   id: number;
@@ -26,21 +28,28 @@ const GiveAdoption: React.FC = () => {
   const [description, setDescription] = useState('');
   const [specie, setSpecie] = useState<null | number>(null);
   const [breed, setBreed] = useState<null | number>(null);
+  const [imageModal, setImageModal] = useState<string>('');
+
+  const [isModalOpen, setModalOpen] = useState(false);
 
   const [images, setImages] = useState<Image[]>([{ id: 0, value: null }]);
   const IMAGES_MIN_LENGTH = 1;
   const formData = new FormData();
+  const navigate = useNavigate();
 
   const mutation = useMutation((formData: FormData) =>
     fetch('http://54.90.177.71:8080/pets/own-with-images', {
       method: 'POST',
       body: formData,
       redirect: 'follow',
-      // headers: {
-      //   'Content-Type': 'application/json',
-      // },
-    }).then((response) => response.text()),
+    })
+      .then((response) => response.json())
+      .then((res) => setImageModal(res.data.images[0].url)),
   );
+
+  const currentSpecie = useMemo(() => {
+    return species?.find((s) => s.id === specie)?.name ?? '';
+  }, [species, specie]);
 
   const handleSubmit = async () => {
     formData.append(
@@ -62,7 +71,6 @@ const GiveAdoption: React.FC = () => {
       ),
     );
 
-    console.log(images);
     const files = images.filter((image) => image.value);
     files.forEach((image) => {
       if (image.value != null) {
@@ -71,11 +79,7 @@ const GiveAdoption: React.FC = () => {
     });
 
     mutation.mutateAsync(formData);
-
-    // fetch('http://54.90.177.71:8080/pets/own-with-images', {
-    //   method: 'POST',
-    //   body: formData,
-    // }).then((response) => console.log(response.status));
+    setModalOpen(true);
   };
 
   const filteredBreeds = useMemo(() => {
@@ -162,7 +166,7 @@ const GiveAdoption: React.FC = () => {
           </FormControl>
         </div>
         <div className='relative  gap-4 p-4 focus-within:text-primary'>
-          <TextDetail size='xs' weight='regular' className='absolute z-10 px-2 bg-white left-5 top-1 '>
+          <TextDetail size='xs' weight='regular' className='absolute px-2 bg-white left-5 top-1 '>
             Descripción
           </TextDetail>
           <TextareaAutosize
@@ -185,6 +189,18 @@ const GiveAdoption: React.FC = () => {
           >
             Dar en adopción
           </button>
+          <ModalGiveAdoption
+            isOpen={isModalOpen}
+            onClose={() => {
+              setModalOpen(false);
+              navigate('/adoption');
+            }}
+            petName={petName}
+            specie={currentSpecie}
+            gender={gender}
+            size={size}
+            image={imageModal}
+          />
         </div>
         <TermsAndConditions />
       </Box>

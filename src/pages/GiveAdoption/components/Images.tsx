@@ -24,7 +24,7 @@ const Images: React.FC<ImagesProps> = ({ images, setImages }) => {
 
   return (
     <div className='relative flex flex-wrap justify-center gap-4 p-4 border rounded-lg border-mui-gray md:justify-start' id='qr-generator-5-step'>
-      <TextDetail size='xs' weight='regular' className='absolute z-10 px-2 text-black bg-white left-2 -top-3'>
+      <TextDetail size='xs' weight='regular' className='absolute px-2 text-black bg-white left-2 -top-3'>
         Imágenes de la mascota
       </TextDetail>
       {images.map((image) => (
