@@ -28,7 +28,7 @@ const Adoption = () => {
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
 
   const [location, setLocation] = useState<null | number>(null);
-  const [specie, setSpecie] = useState<null | number>(null);
+  const [specie, setSpecie] = useState<number | undefined>(undefined);
   const [breed, setBreed] = useState<null | number>(null);
   const [size, setSize] = useState<null | PetSizesTypes>(null);
 
@@ -50,7 +50,7 @@ const Adoption = () => {
     const filters = {
       status: EN_ADOPCION as PetStatusesTypes,
       ...(location ? { location } : {}),
-      ...(species ? { specie } : {}),
+      ...(species ? { species: specie } : {}),
       ...(breed ? { breed_id: breed } : {}),
       ...(size ? { pet_size: size } : {}),
       page: currentPage - 1,
@@ -62,7 +62,7 @@ const Adoption = () => {
 
   const onReset = () => {
     setLocation(null);
-    setSpecie(null);
+    setSpecie(undefined);
     setBreed(null);
     setSize(null);
     setCurrentPage(1);
