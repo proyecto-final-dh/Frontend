@@ -16,6 +16,7 @@ import cn from 'classnames';
 import QrModal from '../../components/QrModal/QrModal';
 import useBreakpoint from '../../hooks/use-breakpoint';
 import { useTour } from '@reactour/tour';
+import { withKeycloakAuth } from '../../config';
 
 const QrGenerator = () => {
   const {
@@ -227,4 +228,4 @@ const QrGenerator = () => {
   );
 };
 
-export default QrGenerator;
+export default withKeycloakAuth(QrGenerator);
