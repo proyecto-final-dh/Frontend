@@ -45,32 +45,12 @@ function App() {
                   <meta
                     name='description'
                     content='ResQPet ayuda a los dueños de mascotas a mantener a sus queridas mascotas seguras y permite adoptar o dar en adopción a mascotas necesitadas.'
-            <div className='App bg-orange-light'>
-              <Container hasPadding={false}>
-                <ScrollToTop />
-                <Routes>
-                  <Route
-                    path='/'
-                    element={
-                      <Layout>
-                        <Home />
-                      </Layout>
-                    }
-                  />
-                  <Route
-                    path='/adoption'
-                    element={
-                      <Layout>
-                        <Adoption />
-                      </Layout>
-                    }
                   />
                   <meta
                     name='keywords'
                     content='codigo QR, mascotas, cuidado de perros, adopción de gatos, adopción de perros, dar en adopción, veterinario, consejos para mascotas'
                   />
                 </head>
-
                 <Container hasPadding={false}>
                   <ScrollToTop />
                   <Routes>
