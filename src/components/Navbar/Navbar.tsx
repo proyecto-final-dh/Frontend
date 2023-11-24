@@ -5,11 +5,11 @@ import { NAVBARROUTES } from './navbarPages';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
-import withKcContext from '../../hocs/withKcContext';
+// import withKcContext from '../../hocs/withKcContext';
 
 const Navbar = () => {
   const { keycloak } = useAuthProvider();
-  const [value, setValue] = useState();
+  const [value, setValue] = useState('');
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
   const navigate = useNavigate();
@@ -19,12 +19,21 @@ const Navbar = () => {
       <Toolbar>
         {isMatch ? (
           <>
-            <Logo width={40} height={50} variant='blackV' />
+            <button onClick={() => navigate('/')}>
+              <Logo width={40} height={50} variant='blackV' />
+            </button>
             <DrawerMenu />
           </>
         ) : (
           <>
-            <Logo width={50} height={60} variant='blackV' />
+            <button
+              onClick={() => {
+                navigate('/');
+                setValue('');
+              }}
+            >
+              <Logo width={50} height={60} variant='blackV' />
+            </button>
             <Tabs
               sx={{ display: 'flex', flexDirection: 'column', minHeight: '36px', height: '36px', marginLeft: 'auto' }}
               indicatorColor='secondary'
@@ -50,6 +59,7 @@ const Navbar = () => {
                   }}
                 />
               ))}
+              <div className='w-px bg-black h-9' />
               {!keycloak.authenticated && (
                 <div className='flex ml-3 gap-7'>
                   <button
@@ -84,4 +94,4 @@ const Navbar = () => {
   );
 };
 
-export default withKcContext(Navbar);
+export default Navbar;

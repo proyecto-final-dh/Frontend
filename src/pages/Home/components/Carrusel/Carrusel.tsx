@@ -1,62 +1,46 @@
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
-import React, { useState } from 'react';
+import React from 'react';
 import MuiCard from '../../../../components/Card/MuiCards';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import { Pet } from '../../../../contracts/pet';
 import styles from './carrousel.module.css';
-import { petData } from '../../../../data/petData';
 
 import cn from 'classnames';
-import useBreakpoint from '../../../../hooks/use-breakpoint';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
 
 interface CarouselProps {
   pets: Pet[];
+  disableNext: boolean;
+  disablePrev: boolean;
+  onNext: () => void;
+  onPrev: () => void;
 }
 
-const Carrusel: React.FC<CarouselProps> = ({ pets }) => {
-  const { isLg } = useBreakpoint('lg');
-  const itemsPerPage = isLg ? 3 : 1;
-  const nextSlide = () => {
-    setCurrentIndex((prevIndex) => prevIndex + 1);
-  };
-
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => prevIndex - 1);
-  };
-
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const lastIndex = petData.length - 3;
-
+const Carrusel: React.FC<CarouselProps> = ({ pets, disableNext, disablePrev, onNext, onPrev }) => {
   return (
     <div className={styles.carrusel_container}>
       <div className={styles.carrusel}>
-        {pets.slice(currentIndex, currentIndex + itemsPerPage).map((pet) => (
+        {pets.map((pet) => (
           <MuiCard key={pet.id} pet={pet} />
         ))}
       </div>
       <div className={styles.arrow_container}>
-        <ArrowBackIosIcon
-          className={cn(styles.left_arrow, {
-            [styles['desable']]: currentIndex <= 0,
+        <IconChevronLeft
+          className={cn('w-10 h-10 min-w-[40px] min-h-[40px]', styles.left_arrow, {
+            [styles['desable']]: disablePrev,
           })}
           onClick={() => {
-            if (currentIndex > 0) {
-              prevSlide();
-            }
+            if (disablePrev) return;
+            onPrev();
           }}
-          sx={{ fontSize: 40 }}
         />
 
-        <ArrowForwardIosIcon
-          className={cn(styles.right_arrow, {
-            [styles['desable']]: currentIndex >= lastIndex,
+        <IconChevronRight
+          className={cn('w-10 h-10 min-w-[40px] min-h-[40px]', styles.right_arrow, {
+            [styles['desable']]: disableNext,
           })}
           onClick={() => {
-            if (currentIndex < lastIndex) {
-              nextSlide();
-            }
+            if (disableNext) return;
+            onNext();
           }}
-          sx={{ fontSize: 40 }}
         />
       </div>
     </div>

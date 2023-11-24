@@ -32,10 +32,11 @@ export interface Pet {
   id: number;
   name: string;
   status: string;
+  age: number;
   size: string;
   gender: string;
   description: string;
-  image: Image[];
+  images: Image[];
   breed: Breed;
   userDetails: UserDetails;
 }

@@ -1,27 +1,55 @@
 import React, { useMemo, useState } from 'react';
 import { Pet } from '../../../contracts/pet';
-import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
-import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import { TextDetail, Table, Title } from '../../../components';
+import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { useAuthProvider } from '../../../config';
+import { getUserDetailsByKcId } from '../../../services/user-details.service';
+import { useNavigate } from 'react-router-dom';
+import ModalAdopConf from './ModalAdopConf';
+
 interface CardProps {
   pet: Pet;
 }
 
 const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
+  const { keycloak } = useAuthProvider();
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.image.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.images.length);
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.image.length - 1 : prevIndex - 1));
+    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.images.length - 1 : prevIndex - 1));
+  };
+
+  const handleAdoptClick = () => {
+    if (!keycloak.subject) {
+      navigate('/register');
+      return;
+    }
+    getUserDetailsByKcId(keycloak.subject)
+      .then(() => setIsModalOpen(true))
+      .catch((error) => {
+        if ((error as { response: { status: number } }).response.status === 404) {
+          navigate('/register');
+        } else {
+          console.log({ error });
+        }
+      });
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   const rows = useMemo(() => {
     if (!pet) return [];
     return [
       { key: 'Raza', value: pet.breed.name },
+      { key: 'Edad', value: pet.age.toString() },
       { key: 'Tamaño', value: pet.size },
       { key: 'Género', value: pet.gender },
       { key: 'Localización', value: `${pet.userDetails.location.city}-${pet.userDetails.location.country}` },
@@ -40,15 +68,15 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
     <div className='flex flex-col lg:flex-row'>
       <div className='mb-4 lg:w-1/2 sm:mb-0 sm:mr-4'>
         <div className='flex justify-center p-5 '>
-          <img src={pet.image[currentImageIndex].url} alt={pet.image[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
+          <img src={pet.images[currentImageIndex].url} alt={pet.images[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
         </div>
-        {pet.image.length > 1 && (
+        {pet.images.length > 1 && (
           <div className='flex justify-center mt-2 space-x-4'>
             <div className='cursor-pointer'>
-              <ArrowBackIosIcon onClick={handlePrevImage} />
+              <IconChevronLeft onClick={handlePrevImage} />
             </div>
             <div className='cursor-pointer'>
-              <ArrowForwardIosIcon onClick={handleNextImage} />
+              <IconChevronRight onClick={handleNextImage} />
             </div>
           </div>
         )}
@@ -64,7 +92,10 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
         <div className='max-w-xs mx-auto mt-10 lg:max-w-full'>
           <Table headers={headers} data={rows} />
         </div>
-        <button className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>Adoptar</button>
+        <button onClick={handleAdoptClick} className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>
+          Adoptar
+        </button>
+        {isModalOpen && <ModalAdopConf pet={pet} onClose={closeModal} />}
       </article>
     </div>
   );

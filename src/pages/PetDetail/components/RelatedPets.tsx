@@ -8,11 +8,11 @@ interface RelatedPetslProps {
 
 const RelatedPets = ({ pets }: RelatedPetslProps) => {
   return (
-    <section className='flex flex-col justify-center items-center p-5'>
-      <Title variant={'h2'} className='font-bold pb-5'>
+    <section className='flex flex-col items-center justify-center p-5'>
+      <Title variant={'h2'} className='pb-5 font-bold'>
         Otros peluditos esperando ser adoptados:
       </Title>
-      <article className='w-full flex flex-col justify-center items-center gap-10 lg:flex-row lg:gap-20'>
+      <article className='flex flex-col items-center justify-center w-full gap-10 lg:flex-row lg:gap-20'>
         {pets.map((pet) => (
           <MuiCard key={pet.id} pet={pet} />
         ))}

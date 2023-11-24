@@ -1,10 +1,9 @@
 import { useState } from 'react';
-import { Box, Drawer, IconButton, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import { Box, Drawer, List, ListItemButton, ListItemText } from '@mui/material';
 import { NAVBARROUTES } from '../Navbar/navbarPages';
-import Icon from '@mui/material/Icon';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
+import { IconLogin2, IconLogout2, IconMenu2, IconUserPlus } from '@tabler/icons-react';
 
 const DrawerMenu = () => {
   const { keycloak } = useAuthProvider();
@@ -14,7 +13,7 @@ const DrawerMenu = () => {
   return (
     <>
       <Drawer anchor='right' open={openDrawer} onClose={() => setOpenDrawer(false)}>
-        <Box sx={{ width: 200, bgcolor: 'primary.light' }}>
+        <Box sx={{ width: 200, bgcolor: 'primary.light', height: '100%' }}>
           <List>
             {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => (
               <ListItemButton
@@ -24,12 +23,10 @@ const DrawerMenu = () => {
                   setOpenDrawer(false);
                 }}
               >
-                <ListItemIcon>
-                  <Icon color='primary'>
-                    <ItemIcon />
-                  </Icon>
+                <div className='flex items-center gap-2'>
+                  <ItemIcon className='text-orange-dark' />
                   <ListItemText>{label}</ListItemText>
-                </ListItemIcon>
+                </div>
               </ListItemButton>
             ))}
             <div className='w-full px-4'>
@@ -38,14 +35,16 @@ const DrawerMenu = () => {
             {!keycloak.authenticated && (
               <div>
                 <ListItemButton onClick={() => keycloak.login()}>
-                  <ListItemIcon>
+                  <div className='flex items-center gap-2'>
+                    <IconLogin2 className='text-orange-dark' />
                     <ListItemText>Iniciar sesión</ListItemText>
-                  </ListItemIcon>
+                  </div>
                 </ListItemButton>
                 <ListItemButton onClick={() => keycloak.register()}>
-                  <ListItemIcon>
+                  <div className='flex items-center gap-2'>
+                    <IconUserPlus className='text-orange-dark' />
                     <ListItemText>Registro</ListItemText>
-                  </ListItemIcon>
+                  </div>
                 </ListItemButton>
               </div>
             )}
@@ -56,17 +55,16 @@ const DrawerMenu = () => {
                   keycloak.logout();
                 }}
               >
-                <ListItemIcon>
+                <div className='flex items-center gap-2'>
+                  <IconLogout2 className='text-orange-dark' />
                   <ListItemText>Cerrar Sesión</ListItemText>
-                </ListItemIcon>
+                </div>
               </ListItemButton>
             )}
           </List>
         </Box>
       </Drawer>
-      <IconButton sx={{ color: 'white', marginLeft: 'auto' }} onClick={() => setOpenDrawer(!openDrawer)}>
-        <MenuIcon sx={{ color: 'black' }} />
-      </IconButton>
+      <IconMenu2 className='ml-auto text-orange-dark' onClick={() => setOpenDrawer(!openDrawer)} />
     </>
   );
 };
