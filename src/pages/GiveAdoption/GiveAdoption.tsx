@@ -25,6 +25,7 @@ const GiveAdoption: React.FC = () => {
 
   const [petName, setPetName] = useState('');
   const [size, setSize] = useState('');
+  const [age, setAge] = useState(0);
   const [gender, setGender] = useState('');
   const [description, setDescription] = useState('');
   const [specie, setSpecie] = useState<null | number>(null);
@@ -63,6 +64,7 @@ const GiveAdoption: React.FC = () => {
             owner_id: 1,
             gender: `${gender}`,
             size: `${size}`,
+            age: `${age}`,
             description: `${description}`,
           }),
         ],
@@ -160,7 +162,17 @@ const GiveAdoption: React.FC = () => {
           </FormControl>
         </div>
         <div className='grid grid-rows-none gap-4 p-4 lg:grid-cols-2'>
-          <TextField label='Edad' variant='outlined' type='text' name='age' id='age' className='w-full' placeholder='Introduce aca la edad de tu mascota' />
+          <TextField
+            label='Edad'
+            variant='outlined'
+            type='number'
+            value={age}
+            onChange={(e) => setAge(Number(e.target.value))}
+            name='age'
+            id='age'
+            className='w-full'
+            placeholder='Introduce aca la edad de tu mascota'
+          />
           <FormControl fullWidth>
             <InputLabel id='gender'>Genero</InputLabel>
             <Select labelId='gender' id='gender' value={gender} label='Genero' onChange={(e) => setGender(e.target.value)}>
