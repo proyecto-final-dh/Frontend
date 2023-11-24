@@ -16,6 +16,7 @@ import cn from 'classnames';
 import QrModal from '../../components/QrModal/QrModal';
 import useBreakpoint from '../../hooks/use-breakpoint';
 import { useTour } from '@reactour/tour';
+import { withKeycloakAuth } from '../../config';
 
 const QrGenerator = () => {
   const {
@@ -71,7 +72,7 @@ const QrGenerator = () => {
         </div>
       </header>
       {isLoading && <Loader opacity={60} />}
-      <Title variant='h3' className='font-bold text-center p-5'>
+      <Title variant='h3' className='p-5 font-bold text-center'>
         Genera un QR único para tu mascota
       </Title>
       <div id='qr-generator-7-step' className='w-0 h-0 ' />
@@ -173,7 +174,7 @@ const QrGenerator = () => {
             </div>
           </section>
           <section className='w-full lg:p-10 lg:w-1/2' id='qr-generator-2-step'>
-            <div className='flex justify-center bg-mid-gray rounded-lg'>
+            <div className='flex justify-center rounded-lg bg-mid-gray'>
               {!images[0].value && (
                 <>
                   {isLg && <img src={imageNotFoundDesktop} className='object-contain w-full rounded-lg h-96' />}
@@ -182,7 +183,7 @@ const QrGenerator = () => {
               )}
               {!!images[0].value && <img src={URL.createObjectURL(images[0].value)} className='object-cover w-full rounded-lg h-96' />}
             </div>
-            <article className='flex flex-col gap-3 rounded-t-3xl bg-primary p-9 relative z-2 -mt-6'>
+            <article className='relative flex flex-col gap-3 -mt-6 rounded-t-3xl bg-primary p-9 z-2'>
               <Title variant='h2'>{petName}</Title>
               <div className='flex justify-between'>
                 <TextDetail size='xs' weight='regular'>
@@ -228,4 +229,4 @@ const QrGenerator = () => {
   );
 };
 
-export default QrGenerator;
+export default withKeycloakAuth(QrGenerator);
