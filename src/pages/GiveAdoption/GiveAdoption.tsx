@@ -102,14 +102,17 @@ const GiveAdoption: React.FC = () => {
     <div className='bg-white col-span-full'>
       <Box>
         <MainBanner images={imgBanner} />
-        <div className='pl-4 lg:pl-32'>
-          <Title variant='h3' className='pr-4 font-bold '>
+        <div className='p-4 lg:p-8'>
+          <Title variant='h3' className='pr-4 font-bold text-center'>
             Formulario para dar en adopción
           </Title>
-          <TextDetail size='s' weight='regular'>
-            Complete el siguiente formulario para poder encontrarle un hogar al peludito al cual desea postular en adopción.
+        </div>
+        <div className='p-4 lg:p-8'>
+          <TextDetail size='s' weight='regular' className='mt-4'>
+            Complete el siguiente formulario para poder encontrarle un hogar al peludito al cual desea postular en adopción:
           </TextDetail>
         </div>
+
         <div className='grid grid-rows-none gap-4 p-4'>
           <Images images={images} setImages={setImages} hasError={images.length > 1 && images.length < IMAGES_MIN_LENGTH + 1} minLength={IMAGES_MIN_LENGTH} />
         </div>

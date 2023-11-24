@@ -4,7 +4,7 @@ import TextDetail from '../TextDetail';
 const TermsAndConditions = () => {
   return (
     <div className='p-10 gap-2'>
-      <Title variant='h2' className='text-center font-bold text-[22px] lg:text-[28px] pb-10 '>
+      <Title variant='h3' className='text-center font-bold text-[22px] lg:text-[28px] pb-10 '>
         Términos y Condiciones para la Adopción Responsable de Mascotas
       </Title>
       <ul>
