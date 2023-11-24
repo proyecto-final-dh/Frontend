@@ -36,7 +36,7 @@ export interface Pet {
   size: string;
   gender: string;
   description: string;
-  image: Image[];
+  images: Image[];
   breed: Breed;
   userDetails: UserDetails;
 }
