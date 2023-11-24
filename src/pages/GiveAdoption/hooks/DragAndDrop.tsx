@@ -4,7 +4,7 @@ const useDragAndDrop = () => {
   const [dragOver, setDragOver] = useState(false);
   const [fileDropError, setFileDropError] = useState('');
 
-  const onDragOver = (e : React.DragEvent<HTMLLabelElement>) => {
+  const onDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
     e.preventDefault();
     setDragOver(true);
   };

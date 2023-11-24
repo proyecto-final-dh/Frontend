@@ -4,14 +4,16 @@ import { MainBanner, Title, TextDetail } from '../../components';
 import imgBanner from '../../assets/banner-adoption.png';
 import { TextField, TextareaAutosize, Select, MenuItem, InputLabel, FormControl } from '@mui/material';
 import Images from './components/Images';
-import { useQuery } from 'react-query';
+import { useQuery, useMutation } from 'react-query';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
+import cn from 'classnames';
 import TermsAndConditions from '../../components/TermsAndConditions.tsx/TermsAndConditions';
+import ModalGiveAdoption from './components/ModalGiveAdoption';
 
 interface Image {
   id: number;
-  value: string | null;
+  value: File | null;
   isNew?: boolean;
 }
 
@@ -21,18 +23,52 @@ const GiveAdoption: React.FC = () => {
 
   const isLoading = isLoadingSpacies || isLoadingBreeds;
 
+  const [petName, setPetName] = useState('');
   const [size, setSize] = useState('');
   const [gender, setGender] = useState('');
-
+  const [description, setDescription] = useState('');
   const [specie, setSpecie] = useState<null | number>(null);
   const [breed, setBreed] = useState<null | number>(null);
-  const [description, setDescription] = useState('');
 
-  const [images, setImages] = useState<Image[]>([{ id: 0, value: '' }]);
-  const IMAGES_MIN_LENGTH = 5;
+  const [isModalOpen, setModalOpen] = useState(false);
+
+  const [images, setImages] = useState<Image[]>([{ id: 0, value: null }]);
+  const IMAGES_MIN_LENGTH = 1;
+  const formData = new FormData();
+
+  const mutation = useMutation((formData: FormData) =>
+    fetch('http://54.90.177.71:8080/pets/own-with-images', {
+      method: 'POST',
+      body: formData,
+      redirect: 'follow',
+    }).then((response) => response.text()),
+  );
+
+  const currentSpecie = useMemo(() => {
+    return species?.find((s) => s.id === specie)?.name ?? '';
+  }, [species, specie]);
+
+  const handleSubmit = async () => {
+    formData.append(
+      'post',
+      `{
+        "name": ${petName} ,
+        "breed_id": ${breed},
+        "owner_id": 1,
+        "gender": ${gender},
+        "size": ${size},
+        "descripion": ${description}
+      }`,
+    );
+    const files = images.filter((image) => image.value);
+    files.forEach((image) => formData.append('image', image.value));
+    await mutation.mutateAsync(formData);
+
+    setModalOpen(true);
+  };
 
   const filteredBreeds = useMemo(() => {
-    console.log(breeds);
+    console.log(images);
     if (!breeds) return [];
     return breeds.filter((b) => b.species.id === specie);
   }, [breed, specie, breeds, species]);
@@ -41,6 +77,10 @@ const GiveAdoption: React.FC = () => {
     if (errorSpecies) console.log({ errorSpecies });
     if (errorBreeds) console.log({ errorBreeds });
   }, [errorSpecies, errorBreeds]);
+
+  const disableSubmit = useMemo(() => {
+    return !petName || !size || !gender || !description || !specie || !breed || !images;
+  }, [petName, size, gender, description, specie, breed, images]);
 
   return (
     <div className='bg-white col-span-full'>
@@ -66,6 +106,8 @@ const GiveAdoption: React.FC = () => {
             id='namePet'
             className='w-full'
             placeholder='Introduce aca el nombre de tu mascota'
+            value={petName}
+            onChange={(e) => setPetName(e.target.value)}
           />
           <FormControl fullWidth>
             <InputLabel id='specie'>Especie</InputLabel>
@@ -108,16 +150,31 @@ const GiveAdoption: React.FC = () => {
             </Select>
           </FormControl>
         </div>
-        <div className='grid grid-rows-none gap-4 p-4 '>
-          <TextDetail size='xs' weight='regular' className='absolute z-10 px-2 bg-white left-2 -top-3 '>
+        <div className='relative  gap-4 p-4 focus-within:text-primary'>
+          <TextDetail size='xs' weight='regular' className='absolute z-10 px-2 bg-white left-5 top-1 '>
             Descripción
           </TextDetail>
           <TextareaAutosize
             className='w-full p-4 leading-5 text-black bg-white border border-solid rounded-lg border-mui-gray focus:border-primary focus-visible:outline-0'
             aria-label='descripción'
+            placeholder='Describa aquí personalidad, características y/o necesidades de la mascota'
             value={description}
+            minRows={3}
             onChange={(e) => setDescription(e.target.value)}
           />
+        </div>
+        <div className='flex lg:content-center p-4 '>
+          <button
+            className={cn('rounded-3xl bg-primary text-center text-white py-3 w-full lg:max-w-[160px] mx-auto cursor-pointer', {
+              'opacity-40': disableSubmit,
+            })}
+            type='submit'
+            disabled={disableSubmit}
+            onClick={handleSubmit}
+          >
+            Dar en adopción
+          </button>
+          <ModalGiveAdoption isOpen={isModalOpen} onClose={() => setModalOpen(false)} petName={petName} specie={currentSpecie} gender={gender} size={size} />
         </div>
         <TermsAndConditions />
       </Box>
