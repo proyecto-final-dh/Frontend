@@ -185,7 +185,7 @@ const QrGenerator = () => {
             <article className='relative flex flex-col gap-3 -mt-6 rounded-t-3xl bg-primary p-9 z-2'>
               <Title variant='h2'>{petName}</Title>
               <div className='flex justify-between'>
-                <TextDetail size='xs' weight='regular'>
+                <TextDetail size='xs' weight='bold' className='uppercase'>
                   {species?.find((b) => b.id === specie)?.name ?? ''}
                 </TextDetail>
                 <TextDetail size='xs' weight='regular'>
