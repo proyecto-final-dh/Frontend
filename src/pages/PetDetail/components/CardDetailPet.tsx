@@ -2,25 +2,43 @@ import React, { useMemo, useState } from 'react';
 import { Pet } from '../../../contracts/pet';
 import { TextDetail, Table, Title } from '../../../components';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { useAuthProvider } from '../../../config';
+import { getUserDetailsByKcId } from '../../../services/user-details.service';
+import { useNavigate } from 'react-router-dom';
 import ModalAdopConf from './ModalAdopConf';
+
 interface CardProps {
   pet: Pet;
 }
 
 const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
+  const { keycloak } = useAuthProvider();
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.image.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.images.length);
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.image.length - 1 : prevIndex - 1));
+    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.images.length - 1 : prevIndex - 1));
   };
 
   const handleAdoptClick = () => {
-    setIsModalOpen(true);
+    if (!keycloak.subject) {
+      navigate('/register');
+      return;
+    }
+    getUserDetailsByKcId(keycloak.subject)
+      .then(() => setIsModalOpen(true))
+      .catch((error) => {
+        if ((error as { response: { status: number } }).response.status === 404) {
+          navigate('/register');
+        } else {
+          console.log({ error });
+        }
+      });
   };
 
   const closeModal = () => {
@@ -50,9 +68,9 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
     <div className='flex flex-col lg:flex-row'>
       <div className='mb-4 lg:w-1/2 sm:mb-0 sm:mr-4'>
         <div className='flex justify-center p-5 '>
-          <img src={pet.image?.[currentImageIndex].url} alt={pet.image?.[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
+          <img src={pet.images[currentImageIndex].url} alt={pet.images[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
         </div>
-        {pet.image?.length > 1 && (
+        {pet.images.length > 1 && (
           <div className='flex justify-center mt-2 space-x-4'>
             <div className='cursor-pointer'>
               <IconChevronLeft onClick={handlePrevImage} />
