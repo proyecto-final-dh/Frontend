@@ -2,12 +2,18 @@ import React, { useMemo, useState } from 'react';
 import { Pet } from '../../../contracts/pet';
 import { TextDetail, Table, Title } from '../../../components';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { useAuthProvider } from '../../../config';
+import { getUserDetailsByKcId } from '../../../services/user-details.service';
+import { useNavigate } from 'react-router-dom';
 import ModalAdopConf from './ModalAdopConf';
+
 interface CardProps {
   pet: Pet;
 }
 
 const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
+  const { keycloak } = useAuthProvider();
+  const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -20,7 +26,19 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
   };
 
   const handleAdoptClick = () => {
-    setIsModalOpen(true);
+    if (!keycloak.subject) {
+      navigate('/register');
+      return;
+    }
+    getUserDetailsByKcId(keycloak.subject)
+      .then(() => setIsModalOpen(true))
+      .catch((error) => {
+        if ((error as { response: { status: number } }).response.status === 404) {
+          navigate('/register');
+        } else {
+          console.log({ error });
+        }
+      });
   };
 
   const closeModal = () => {
