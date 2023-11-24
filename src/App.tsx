@@ -70,6 +70,7 @@ function App() {
                         </Layout>
                       }
                     />
+                    <Route path='/register' element={<Register />} />
                     <Route
                       path='/pet/:id'
                       element={
@@ -97,45 +98,6 @@ function App() {
                   </Routes>
                 </Container>
               </div>
-
-              <Container hasPadding={false}>
-                <ScrollToTop />
-                <Routes>
-                  <Route
-                    path='/'
-                    element={
-                      <Layout>
-                        <Home />
-                      </Layout>
-                    }
-                  />
-                  <Route
-                    path='/adoption'
-                    element={
-                      <Layout>
-                        <Adoption />
-                      </Layout>
-                    }
-                  />
-                  <Route path='/register' element={<Register />} />
-                  <Route
-                    path='/pet/:id'
-                    element={
-                      <Layout>
-                        <PetDetail />
-                      </Layout>
-                    }
-                  />
-                  <Route
-                    path='/qr/create'
-                    element={
-                      <Layout>
-                        <QrGenerator />
-                      </Layout>
-                    }
-                  />
-                </Routes>
-              </Container>
             </TourProvider>
           </QueryClientProvider>
         </PersistGate>

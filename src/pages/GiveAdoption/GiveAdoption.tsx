@@ -11,6 +11,7 @@ import cn from 'classnames';
 import TermsAndConditions from '../../components/TermsAndConditions.tsx/TermsAndConditions';
 import ModalGiveAdoption from './components/ModalGiveAdoption';
 import { useNavigate } from 'react-router';
+import { withKeycloakAuth } from '../../config';
 
 interface Image {
   id: number;
@@ -208,4 +209,4 @@ const GiveAdoption: React.FC = () => {
   );
 };
 
-export default GiveAdoption;
+export default withKeycloakAuth(GiveAdoption);
