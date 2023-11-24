@@ -21,7 +21,7 @@ const ModalAdopConf: React.FC<ModalProps> = ({ pet, onClose }) => {
           <IconX onClick={onClose} className='text-orange-dark absolute top-4 right-4' />
           <div className='flex flex-col lg:flex-row items-center gap-8'>
             <div>
-              <img src={pet.image[0].url} alt={pet.image[0].alt} className='md:max-w-[200px] rounded-3xl lg:max-w-[250px] ' />
+              <img src={pet.images[0].url} alt={pet.images[0].alt} className='md:max-w-[200px] rounded-3xl lg:max-w-[250px] ' />
             </div>
             <div className='flex justify-center items-center gap-5'>
               <h3 className='font-bold text-center text-h3'>{pet.name}</h3>

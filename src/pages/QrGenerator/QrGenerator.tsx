@@ -18,6 +18,7 @@ import useBreakpoint from '../../hooks/use-breakpoint';
 import { useTour } from '@reactour/tour';
 import { withKeycloakAuth } from '../../config';
 
+
 const QrGenerator = () => {
   const {
     keycloak: { idTokenParsed },

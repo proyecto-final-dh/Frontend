@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Home, Register, PetDetail, Adoption, QrGenerator } from './pages';
+import { Home, Register, PetDetail, Adoption, QrGenerator, GiveAdoption } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container, Loader, TourBadge } from './components';
 import { Provider } from 'react-redux';
@@ -70,7 +70,6 @@ function App() {
                         </Layout>
                       }
                     />
-                    <Route path='/register' element={<Register />} />
                     <Route
                       path='/pet/:id'
                       element={
@@ -87,9 +86,56 @@ function App() {
                         </Layout>
                       }
                     />
+                    <Route
+                      path='/give-for-adoption'
+                      element={
+                        <Layout>
+                          <GiveAdoption />
+                        </Layout>
+                      }
+                    />
                   </Routes>
                 </Container>
               </div>
+
+              <Container hasPadding={false}>
+                <ScrollToTop />
+                <Routes>
+                  <Route
+                    path='/'
+                    element={
+                      <Layout>
+                        <Home />
+                      </Layout>
+                    }
+                  />
+                  <Route
+                    path='/adoption'
+                    element={
+                      <Layout>
+                        <Adoption />
+                      </Layout>
+                    }
+                  />
+                  <Route path='/register' element={<Register />} />
+                  <Route
+                    path='/pet/:id'
+                    element={
+                      <Layout>
+                        <PetDetail />
+                      </Layout>
+                    }
+                  />
+                  <Route
+                    path='/qr/create'
+                    element={
+                      <Layout>
+                        <QrGenerator />
+                      </Layout>
+                    }
+                  />
+                </Routes>
+              </Container>
             </TourProvider>
           </QueryClientProvider>
         </PersistGate>
