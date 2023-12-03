@@ -1,7 +1,7 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import { REHYDRATE } from 'redux-persist';
 import { APIResponseUserDetails, APIUserDetailsResponse } from '../../contracts/user-details.contract';
-import { APIGetPetsWithFiltersQueryParams, APIPageableGetPetsResponse, TPageableGetPetsResponse } from '../../contracts/pets';
+import { APIGetPetsResponse, APIGetPetsWithFiltersQueryParams, APIPageableGetPetsResponse, TPageableGetPetsResponse } from '../../contracts/pets';
 import petsMapper from '../../mappers/pets.mapper';
 import { Pet } from '../../contracts/pet';
 
@@ -22,6 +22,14 @@ export const resqpetModuleApi = createApi({
     }
   },
   endpoints: (build) => ({
+    getPetById: build.query<Pet, { id: string }>({
+      query: ({ id }) => ({
+        url: `/pets/${id}`,
+      }),
+      transformResponse: (response: Pet) => {
+        return response;
+      },
+    }),
     getPets: build.query<TPageableGetPetsResponse, { queryParams: APIGetPetsWithFiltersQueryParams }>({
       query: ({ queryParams }) => ({
         url: `/pets/filter`,
@@ -50,7 +58,18 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getUserDetailsById'],
     }),
+    createPet: build.mutation<Pet, { form: FormData }>({
+      query: ({ form }) => ({
+        url: `/pets/own-with-images`,
+        method: 'POST',
+        body: form,
+      }),
+      transformResponse: (response: TAPIResponse<APIGetPetsResponse, string[]>) => {
+        return response.data;
+      },
+    }),
   }),
 });
 
-export const { useLazyGetUserDetailsByIdQuery, useLazyGetPetsQuery, useLazyGetPetRecommendationsQuery } = resqpetModuleApi;
+export const { useLazyGetUserDetailsByIdQuery, useLazyGetPetsQuery, useLazyGetPetRecommendationsQuery, useCreatePetMutation, useGetPetByIdQuery } =
+  resqpetModuleApi;
