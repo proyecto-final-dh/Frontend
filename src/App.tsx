@@ -13,6 +13,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { StylesObj, TourProvider } from '@reactour/tour';
 import ScrollToTop from './components/ScrollToTop';
 import { qrGeneratorSteps } from './pages/QrGenerator/lib/tour.steps';
+import YourAccount from './pages/YourAccount';
 
 function App() {
   const queryClient = new QueryClient();
@@ -92,6 +93,14 @@ function App() {
                       element={
                         <Layout>
                           <GiveAdoption />
+                        </Layout>
+                      }
+                    />
+                    <Route
+                      path='/your-account'
+                      element={
+                        <Layout>
+                          <YourAccount />
                         </Layout>
                       }
                     />
