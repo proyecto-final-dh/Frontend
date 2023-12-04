@@ -10,6 +10,7 @@ import { useLazyGetPetsQuery } from '../../store/apis/resqpet.api';
 import { useEffect, useState } from 'react';
 import { EN_ADOPCION, PetStatusesTypes } from '../../constants/pet-statuses.constants';
 import useBreakpoint from '../../hooks/use-breakpoint';
+import Reports from './components/Reports';
 
 const Home = () => {
   const { isLg } = useBreakpoint('lg');
@@ -57,6 +58,7 @@ const Home = () => {
             {!!pets && <Carrusel pets={pets.content} disableNext={pets.pageable.isLast} disablePrev={pets.pageable.isFirst} onNext={onNext} onPrev={onPrev} />}
           </>
         )}
+        <Reports />
       </Box>
     </div>
   );
