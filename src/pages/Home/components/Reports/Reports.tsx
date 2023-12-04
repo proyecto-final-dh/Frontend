@@ -6,7 +6,8 @@ import homeHeart from '../../../../assets/icons/home-heart.svg';
 import paw from '../../../../assets/icons/paw.svg';
 import qrCode from '../../../../assets/icons/qrcode.svg';
 import { TextDetail } from '../../../../components';
-import { Box } from '@mui/material';
+import { Box, Button } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 const reports = [
   {
@@ -46,14 +47,20 @@ const Reports = () => {
         <img src={wave} alt='Reports ' />
       </div>
 
-      <section className='flex flex-col items-center justify-center gap-10 bg-[#f7d8b2] lg:flex-row lg:justify-around'>
+      <section className='flex flex-col items-center justify-center gap-4 bg-[#f7d8b2] lg:flex-row lg:flex-wrap lg:w-full'>
         {reports.map((report) => (
-          <article key={report.id} className='flex flex-row gap-5 max-w-[450px] w-full'>
+          <article key={report.id} className='flex flex-row max-w-[450px] w-full'>
             <div className='relative'>
               <img src={report.image} />
-              <TextDetail size='xs' weight='bold' className='absolute top-[40%] left-1/4'>
-                {report.report}
-              </TextDetail>
+              {report.id === 'report-1' ? (
+                <TextDetail size='xs' weight='bold' className='absolute top-[40%] right-[40%]'>
+                  {report.report}
+                </TextDetail>
+              ) : (
+                <TextDetail size='xs' weight='bold' className='absolute top-[40%] right-1/2'>
+                  {report.report}
+                </TextDetail>
+              )}
             </div>
             <div className='flex items-center'>
               <img src={report.icon} className='w-32 p-2' />
@@ -64,6 +71,13 @@ const Reports = () => {
           </article>
         ))}
       </section>
+      <div className='flex justify-center items-center bg-[#f7d8b2] py-6'>
+        <Link to='/qr/create'>
+          <Button variant='contained' color='primary' sx={{ borderRadius: '30px', fontWeight: 700, padding: '10px 15px' }}>
+            Ver más reportes
+          </Button>
+        </Link>
+      </div>
     </Box>
   );
 };
