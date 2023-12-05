@@ -45,17 +45,6 @@ function App() {
               components={{ Badge: TourBadge as React.ComponentType<{ styles?: StylesObj }> }}
             >
               <div className='App bg-orange-light'>
-                <head>
-                  <title>ResQpet</title>
-                  <meta
-                    name='description'
-                    content='ResQPet ayuda a los dueños de mascotas a mantener a sus queridas mascotas seguras y permite adoptar o dar en adopción a mascotas necesitadas.'
-                  />
-                  <meta
-                    name='keywords'
-                    content='codigo QR, mascotas, cuidado de perros, adopción de gatos, adopción de perros, dar en adopción, veterinario, consejos para mascotas'
-                  />
-                </head>
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
                   <Container hasPadding={false}>
                     <ScrollToTop />

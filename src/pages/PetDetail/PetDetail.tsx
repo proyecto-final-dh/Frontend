@@ -21,7 +21,7 @@ const PetDetail: React.FC = () => {
 
   return (
     <div className='col-span-full'>
-      {data && <CardDetailPet key={data.id} pet={data} />}
+      {!!data && <CardDetailPet key={data.pet.id} data={data} />}
       <HeroBanner leftImage={dog} leftAlt='dog-whith-glasses'>
         <Title variant='h2' className='font-bold text-center text-black'>
           <span>

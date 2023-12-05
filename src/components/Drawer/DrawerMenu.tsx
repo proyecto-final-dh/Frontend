@@ -4,8 +4,11 @@ import { NAVBARROUTES } from '../Navbar/navbarPages';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
 import { IconLogin2, IconLogout2, IconMenu2, IconUserPlus } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { resqpetModuleApi } from '../../store/apis/resqpet.api';
 
 const DrawerMenu = () => {
+  const dispatch = useDispatch();
   const { keycloak } = useAuthProvider();
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
@@ -52,6 +55,7 @@ const DrawerMenu = () => {
               <ListItemButton
                 onClick={() => {
                   navigate('/');
+                  dispatch(resqpetModuleApi.util.resetApiState());
                   keycloak.logout();
                 }}
               >

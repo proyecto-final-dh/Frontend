@@ -17,7 +17,7 @@ function withKeycloakAuth<T extends Record<string, unknown>>(Component: Componen
         if (keycloak.subject) {
           try {
             setLoading(true);
-            await getUserDetailsByKcId(keycloak.subject);
+            await getUserDetailsByKcId();
             setLoading(false);
           } catch (error) {
             if ((error as { response: { status: number } }).response.status === 404) {
