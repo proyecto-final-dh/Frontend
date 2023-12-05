@@ -14,6 +14,7 @@ import { StylesObj, TourProvider } from '@reactour/tour';
 import ScrollToTop from './components/ScrollToTop';
 import { qrGeneratorSteps } from './pages/QrGenerator/lib/tour.steps';
 import AdoptionChart from './pages/AdoptionChart';
+import QrDetail from './pages/QrDetail';
 
 function App() {
   const queryClient = new QueryClient();
@@ -85,6 +86,14 @@ function App() {
                       element={
                         <Layout>
                           <QrGenerator />
+                        </Layout>
+                      }
+                    />
+                    <Route
+                      path='/qr/:id'
+                      element={
+                        <Layout>
+                          <QrDetail />
                         </Layout>
                       }
                     />

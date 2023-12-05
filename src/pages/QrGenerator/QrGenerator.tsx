@@ -4,32 +4,29 @@ import { useEffect, useMemo, useState } from 'react';
 import { useQuery } from 'react-query';
 import { getSpecies } from '../../services/species.service';
 import { getBreeds } from '../../services/breeds.service';
-import { IconAt, IconPhone, IconQuestionMark, IconUser } from '@tabler/icons-react';
-import { dateFormatter } from '../../utils/dates';
+import { IconQuestionMark } from '@tabler/icons-react';
 import { useKeycloak } from '@react-keycloak/web';
-import { useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
+import { useCreatePetMutation, useLazyGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
 import qrBannerImage from './../../assets/slider_adopcion.png';
 import qrPawsImage from './../../assets/icons/huellas.svg';
-import imageNotFoundMobile from './../../assets/qr-not-found-image-mobile.png';
-import imageNotFoundDesktop from './../../assets/qr-not-found-image-desktop.png';
 import cn from 'classnames';
 import QrModal from '../../components/QrModal/QrModal';
-import useBreakpoint from '../../hooks/use-breakpoint';
 import { useTour } from '@reactour/tour';
 import { withKeycloakAuth } from '../../config';
+import PetInfo from '../../components/PetInfo';
 
 const QrGenerator = () => {
   const {
     keycloak: { idTokenParsed },
   } = useKeycloak();
   const { setIsOpen, isOpen, currentStep } = useTour();
-  const { isLg } = useBreakpoint('lg');
   const { data: species, isLoading: isLoadingSpacies, error: errorSpecies } = useQuery('species', getSpecies);
   const { data: breeds, isLoading: isLoadingBreeds, error: errorBreeds } = useQuery('breeds', getBreeds);
   const [getUserDetails, { isError: errorGetUserDetails, isFetching: isFetchingUserDetails, isLoading: isLoadingUserDetails, data: userDetails }] =
     useLazyGetUserDetailsByIdQuery();
+  const [createPet, { isError: errorCreatePet, isLoading: isLoadingCreatePet, data: createPetResponse, isSuccess }] = useCreatePetMutation();
 
-  const isLoading = isLoadingSpacies || isLoadingBreeds || isLoadingUserDetails || isFetchingUserDetails;
+  const isLoading = isLoadingSpacies || isLoadingBreeds || isLoadingUserDetails || isFetchingUserDetails || isLoadingCreatePet;
 
   const [petName, setPetName] = useState('');
   const [specie, setSpecie] = useState<null | number>(null);
@@ -38,6 +35,7 @@ const QrGenerator = () => {
   const [description, setDescription] = useState('');
 
   const [qrModal, setQrModal] = useState(false);
+  const [qrUrl, setQrUrl] = useState('');
 
   const filteredBreeds = useMemo(() => {
     if (!breeds) return [];
@@ -48,7 +46,8 @@ const QrGenerator = () => {
     if (errorSpecies) console.log({ errorSpecies });
     if (errorBreeds) console.log({ errorBreeds });
     if (errorGetUserDetails) console.log({ errorGetUserDetails });
-  }, [errorSpecies, errorBreeds, errorGetUserDetails]);
+    if (errorCreatePet) console.log({ errorCreatePet });
+  }, [errorSpecies, errorBreeds, errorGetUserDetails, errorCreatePet]);
 
   useEffect(() => {
     if (idTokenParsed?.sub) {
@@ -56,9 +55,45 @@ const QrGenerator = () => {
     }
   }, [idTokenParsed]);
 
+  useEffect(() => {
+    const image = document.getElementById('qr-image') as HTMLImageElement;
+    if (!image) return;
+    setQrUrl(`${location.origin}/qr/${createPetResponse?.id}`);
+  }, [createPetResponse, qrModal]);
+
+  useEffect(() => {
+    if (isSuccess) setQrModal(true);
+  }, [isSuccess]);
+
   const disableSubmit = useMemo(() => {
     return !petName || !specie || !breed || !description;
   }, [petName, specie, breed, description]);
+
+  const onSubmit = () => {
+    const form = new FormData();
+
+    const petInfo = {
+      name: `${petName}`,
+      breed_id: `${breed}`,
+      owner_id: userDetails?.id,
+      description: `${description}`,
+    };
+
+    form.append(
+      'post',
+      new Blob([JSON.stringify(petInfo)], {
+        type: 'application/json',
+      }),
+    );
+
+    images.forEach((image) => {
+      if (image.value) {
+        form.append('image', image.value);
+      }
+    });
+
+    createPet({ form });
+  };
 
   return (
     <main>
@@ -159,69 +194,30 @@ const QrGenerator = () => {
               })}
               type='submit'
               disabled={disableSubmit}
-              onClick={() => setQrModal(true)}
+              onClick={onSubmit}
             >
               <TextDetail size='s' weight='bold'>
                 Generar QR
               </TextDetail>
             </button>
-            {qrModal && <QrModal closeModal={() => setQrModal(false)} />}
+            {qrModal && <QrModal url={qrUrl} closeModal={() => setQrModal(false)} />}
             <div className='relative hidden w-full h-28 lg:block'>
               <div className='left-0 w-full bottom-10'>
                 <img src={qrPawsImage} alt='huellas' />
               </div>
             </div>
           </section>
-          <section className='w-full lg:p-10 lg:w-1/2'>
-            <div className='flex justify-center rounded-lg bg-mid-gray' id='qr-generator-2-step'>
-              {!images[0].value && (
-                <>
-                  {isLg && <img src={imageNotFoundDesktop} className='object-contain w-full rounded-lg h-96' />}
-                  {!isLg && <img src={imageNotFoundMobile} className='object-contain w-full rounded-lg h-96' />}
-                </>
-              )}
-              {!!images[0].value && <img src={URL.createObjectURL(images[0].value)} className='object-cover w-full rounded-lg h-96' />}
-            </div>
-            <article className='relative flex flex-col gap-3 -mt-6 rounded-t-3xl bg-primary p-9 z-2'>
-              <Title variant='h2'>{petName}</Title>
-              <div className='flex justify-between'>
-                <TextDetail size='xs' weight='bold' className='uppercase'>
-                  {species?.find((b) => b.id === specie)?.name ?? ''}
-                </TextDetail>
-                <TextDetail size='xs' weight='regular'>
-                  {dateFormatter(new Date().toISOString(), 'YYYY-MM-DD', 'DD MMM YYYY')}
-                </TextDetail>
-              </div>
-              <TextDetail size='xs' weight='regular' className='break-words'>
-                {description}
-              </TextDetail>
-              <TextDetail size='xs' weight='regular' className='break-words'>
-                Por favor contactarse con su protector para que <strong>{petName}</strong> vuelva con su familia:
-              </TextDetail>
-              {!!idTokenParsed && !!userDetails && (
-                <div className='flex flex-col justify-around gap-4'>
-                  <div className='flex flex-col items-center justify-center gap-4 p-2 bg-white rounded-lg'>
-                    <IconUser className='w-7 h-7 min-w-[28px] min-h-[28px]' />
-                    <TextDetail size='xs' weight='regular' className='text-center'>
-                      {idTokenParsed.name}
-                    </TextDetail>
-                  </div>
-                  <div className='flex flex-col items-center justify-center gap-4 p-2 bg-white rounded-lg'>
-                    <IconAt className='w-7 h-7 min-w-[28px] min-h-[28px]' />
-                    <TextDetail size='xs' weight='regular' className='text-center'>
-                      {idTokenParsed.email}
-                    </TextDetail>
-                  </div>
-                  <div className='flex flex-col items-center justify-center gap-4 p-2 bg-white rounded-lg'>
-                    <IconPhone className='w-7 h-7 min-w-[28px] min-h-[28px]' />
-                    <TextDetail size='xs' weight='regular' className='text-center'>
-                      {userDetails.cellphone}
-                    </TextDetail>
-                  </div>
-                </div>
-              )}
-            </article>
-          </section>
+          {idTokenParsed && userDetails && (
+            <PetInfo
+              petName={petName}
+              specie={species?.find((b) => b.id === specie)?.name ?? ''}
+              description={description}
+              images={images.map((i) => ({ id: i.id, url: i.value ? URL.createObjectURL(i.value) : '', alt: i.value?.name ?? '' }))}
+              userName={idTokenParsed.name}
+              userEmail={idTokenParsed.email}
+              userPhone={userDetails.cellphone}
+            />
+          )}
         </form>
       )}
     </main>
