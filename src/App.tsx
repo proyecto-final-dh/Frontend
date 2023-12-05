@@ -15,6 +15,9 @@ import ScrollToTop from './components/ScrollToTop';
 import { qrGeneratorSteps } from './pages/QrGenerator/lib/tour.steps';
 import AdoptionChart from './pages/AdoptionChart';
 import QrDetail from './pages/QrDetail';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import 'dayjs/locale/es';
 
 function App() {
   const queryClient = new QueryClient();
@@ -53,68 +56,78 @@ function App() {
                     content='codigo QR, mascotas, cuidado de perros, adopción de gatos, adopción de perros, dar en adopción, veterinario, consejos para mascotas'
                   />
                 </head>
-                <Container hasPadding={false}>
-                  <ScrollToTop />
-                  <Routes>
-                    <Route
-                      path='/'
-                      element={
-                        <Layout>
-                          <Home />
-                        </Layout>
-                      }
-                    />
-                    <Route
-                      path='/adoption'
-                      element={
-                        <Layout>
-                          <Adoption />
-                        </Layout>
-                      }
-                    />
-                    <Route path='/register' element={<Register />} />
-                    <Route
-                      path='/pet/:id'
-                      element={
-                        <Layout>
-                          <PetDetail />
-                        </Layout>
-                      }
-                    />
-                    <Route
-                      path='/qr/create'
-                      element={
-                        <Layout>
-                          <QrGenerator />
-                        </Layout>
-                      }
-                    />
-                    <Route
-                      path='/qr/:id'
-                      element={
-                        <Layout>
-                          <QrDetail />
-                        </Layout>
-                      }
-                    />
-                    <Route
-                      path='/give-for-adoption'
-                      element={
-                        <Layout>
-                          <GiveAdoption />
-                        </Layout>
-                      }
-                    />
-                    <Route
-                      path='/reports'
-                      element={
-                        <Layout>
-                          <AdoptionChart />
-                        </Layout>
-                      }
-                    />
-                  </Routes>
-                </Container>
+                <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
+                  <Container hasPadding={false}>
+                    <ScrollToTop />
+                    <Routes>
+                      <Route
+                        path='/'
+                        element={
+                          <Layout>
+                            <Home />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/adoption'
+                        element={
+                          <Layout>
+                            <Adoption />
+                          </Layout>
+                        }
+                      />
+                      <Route path='/register' element={<Register />} />
+                      <Route
+                        path='/pet/:id'
+                        element={
+                          <Layout>
+                            <PetDetail />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/qr/create'
+                        element={
+                          <Layout>
+                            <QrGenerator />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/qr/:id'
+                        element={
+                          <Layout>
+                            <QrDetail />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/give-for-adoption'
+                        element={
+                          <Layout>
+                            <GiveAdoption />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/reports'
+                        element={
+                          <Layout>
+                            <AdoptionChart />
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/reports'
+                        element={
+                          <Layout>
+                            <AdoptionChart />
+                          </Layout>
+                        }
+                      />
+                    </Routes>
+                  </Container>
+                </LocalizationProvider>
               </div>
             </TourProvider>
           </QueryClientProvider>
