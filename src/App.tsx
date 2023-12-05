@@ -97,7 +97,7 @@ function App() {
                       }
                     />
                     <Route
-                      path='/adoption-charts'
+                      path='/reports'
                       element={
                         <Layout>
                           <AdoptionChart />

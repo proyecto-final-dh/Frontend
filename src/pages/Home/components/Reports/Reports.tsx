@@ -72,7 +72,7 @@ const Reports = () => {
         ))}
       </section>
       <div className='flex justify-center items-center bg-[#f7d8b2] py-6'>
-        <Link to='/adoption-charts'>
+        <Link to='/reports'>
           <Button variant='contained' color='primary' sx={{ borderRadius: '30px', fontWeight: 700, padding: '10px 15px' }}>
             Ver más reportes
           </Button>
