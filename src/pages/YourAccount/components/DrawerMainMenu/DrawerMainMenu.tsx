@@ -6,6 +6,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 import { IconMenuDeep } from '@tabler/icons-react';
 import { useState } from 'react';
+import styles from '../MainMenu/MainMenu.module.css';
+import cn from 'classnames';
 
 const DrawerMainMenu = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -17,7 +19,7 @@ const DrawerMainMenu = () => {
           <List>
             {MAINMENUROUTES.map((item, index) => (
               <ListItem key={index} disablePadding>
-                <ListItemButton className='hover:bg-primary !important'>
+                <ListItemButton className={cn(styles['item-main-menu'])}>
                   <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>

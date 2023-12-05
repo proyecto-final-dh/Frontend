@@ -8,7 +8,7 @@ const YourAccount = () => {
         <div className='basis-1/4 p-4'>
           <MainMenu />
         </div>
-        <div className='basis-3/4 p-4'>aqui va el cuerpo</div>
+        <div className='basis-3/4 p-4'>Children</div>
       </div>
       <div>
         <img src={bannerFooter} alt='slider-pets-footer' className='w-full' />

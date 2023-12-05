@@ -1,0 +1,12 @@
+.group-main-menu {
+  padding: 16px 0 !important;
+}
+.item-main-menu:hover {
+  background-color: #d8a868 !important;
+  border-right: 4px solid #b76435;
+}
+
+.item-main-menu:active {
+  background-color: #d8a868 !important;
+  border-right: 4px solid #b76435;
+}

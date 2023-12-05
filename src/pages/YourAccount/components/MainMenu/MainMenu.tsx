@@ -6,6 +6,8 @@ import { MAINMENUROUTES } from './mainMenuPages';
 import { Title } from '../../../../components';
 import { useMediaQuery, useTheme } from '@mui/material';
 import DrawerMainMenu from '../DrawerMainMenu';
+import styles from './MainMenu.module.css';
+import cn from 'classnames';
 
 const MainMenu = () => {
   const theme = useTheme();
@@ -27,10 +29,10 @@ const MainMenu = () => {
               Tu cuenta
             </Title>
           </div>
-          <List>
+          <List className={cn(styles['group-main-menu'])}>
             {MAINMENUROUTES.map((item, index) => (
               <ListItem key={index} disablePadding>
-                <ListItemButton className='hover:bg-primary !important'>
+                <ListItemButton className={cn(styles['item-main-menu'])}>
                   <ListItemText primary={item.label} />
                 </ListItemButton>
               </ListItem>
