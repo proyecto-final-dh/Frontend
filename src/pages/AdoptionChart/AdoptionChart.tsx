@@ -8,32 +8,16 @@ import { Bar } from 'react-chartjs-2';
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 const labelFontSize = 14;
 
-// ************ Grafica de Mascotas en Adopción**************
 export const options = {
   responsive: true,
   plugins: {
     legend: {
       position: 'top' as const,
     },
-    // title: {
-    //   display: true,
-    //   text: 'Mascotas Disponibles en Adopción',
-    // },
+
     tooltip: {
       titleFont: { size: labelFontSize },
       bodyFont: { size: labelFontSize },
-    },
-    scales: {
-      x: {
-        ticks: {
-          font: { size: labelFontSize },
-        },
-      },
-      y: {
-        ticks: {
-          font: { size: labelFontSize },
-        },
-      },
     },
   },
 };
@@ -58,7 +42,6 @@ export const data = {
   ],
 };
 
-// ************ Options para la gráfica de Mascotas en Adopción VS Mascotas Adoptadas**************
 export const options_2 = {
   responsive: true,
   plugins: {
@@ -72,18 +55,8 @@ export const options_2 = {
   },
 };
 
-function MascotasEnAdopcionSuma(gatoData: number[], perroData: number[]): number[] | null {
-  if (gatoData.length !== perroData.length) {
-    console.error('Los arrays no tienen la misma longitud.');
-    return null; // Otra opción sería lanzar una excepción o manejarlo de otra manera según tus necesidades
-  }
-  // Suma
-  const result: number[] = gatoData.map((valor, indice) => valor + perroData[indice]);
-
-  return result;
-}
 const MascotasAdoptadasData = [10, 28];
-const MascotasenAdopcionData = MascotasEnAdopcionSuma(gatoData, perroData);
+const MascotasenAdopcionData = [30, 5];
 
 export const dataMascotasEnAdopVSMascotasAdop = {
   labels,
