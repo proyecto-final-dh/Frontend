@@ -5,7 +5,7 @@ import { NAVBARROUTES } from './navbarPages';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
-// import withKcContext from '../../hocs/withKcContext';
+import withKcContext from '../../hocs/withKcContext';
 
 const Navbar = () => {
   const { keycloak } = useAuthProvider();
@@ -94,4 +94,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default withKcContext(Navbar);

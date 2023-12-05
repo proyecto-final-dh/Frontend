@@ -13,6 +13,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { StylesObj, TourProvider } from '@reactour/tour';
 import ScrollToTop from './components/ScrollToTop';
 import { qrGeneratorSteps } from './pages/QrGenerator/lib/tour.steps';
+import YourAccount from './pages/YourAccount';
 import AdoptionChart from './pages/AdoptionChart';
 import QrDetail from './pages/QrDetail';
 import { LocalizationProvider } from '@mui/x-date-pickers';
@@ -118,13 +119,13 @@ function App() {
                         }
                       />
                       <Route
-                        path='/reports'
-                        element={
-                          <Layout>
-                            <AdoptionChart />
-                          </Layout>
-                        }
-                      />
+                      path='/your-account'
+                      element={
+                        <Layout>
+                          <YourAccount />
+                        </Layout>
+                      }
+                    />
                     </Routes>
                   </Container>
                 </LocalizationProvider>

@@ -7,6 +7,7 @@ module.exports = {
     screens,
     colors: {
       primary: '#D8A868',
+      'primary-light': '#F3C58E',
       orange: '#FFAE12',
       'orange-dark': '#B76435',
       'orange-light': '#F7D8B2',
