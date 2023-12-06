@@ -31,7 +31,7 @@ const Register = () => {
 
   useEffect(() => {
     if (!keycloak.tokenParsed?.sub) return;
-    getUserDetailsById(keycloak.tokenParsed?.sub)
+    getUserDetailsById()
       .then(() => {
         navigate('/');
       })

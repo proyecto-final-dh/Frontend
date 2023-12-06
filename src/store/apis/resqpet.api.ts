@@ -1,20 +1,24 @@
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import { REHYDRATE } from 'redux-persist';
-import { APIResponseUserDetails, APIUserDetailsResponse } from '../../contracts/user-details.contract';
+import { APIUserDetailsResponse } from '../../contracts/user-details.contract';
 import { APIGetPetsResponse, APIGetPetsWithFiltersQueryParams, APIPageableGetPetsResponse, TPageableGetPetsResponse } from '../../contracts/pets';
 import petsMapper from '../../mappers/pets.mapper';
-import { Pet } from '../../contracts/pet';
+import { Pet, PetWithOwner } from '../../contracts/pet';
+import { kc } from '../../config';
+import { APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
 
 export const resqpetModuleApi = createApi({
   reducerPath: 'resqpetModuleApi',
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_RESQPET_URL,
     prepareHeaders: (headers) => {
-      headers.set('token', '');
+      if (kc.token) {
+        headers.set('Authorization', `Bearer ${kc.token}`);
+      }
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations'],
+  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport'],
   keepUnusedDataFor: 3600,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
@@ -22,12 +26,13 @@ export const resqpetModuleApi = createApi({
     }
   },
   endpoints: (build) => ({
-    getPetById: build.query<Pet, { id: string }>({
+    getPetById: build.query<PetWithOwner, { id: string }>({
       query: ({ id }) => ({
         url: `/pets/${id}`,
       }),
-      transformResponse: (response: Pet) => {
-        return response;
+      transformResponse: (response: TAPIResponse<PetWithOwner, object>) => {
+        console.log({ response });
+        return response.data;
       },
     }),
     getPets: build.query<TPageableGetPetsResponse, { queryParams: APIGetPetsWithFiltersQueryParams }>({
@@ -50,11 +55,11 @@ export const resqpetModuleApi = createApi({
       providesTags: ['getPetRecommendations'],
     }),
     getUserDetailsById: build.query<APIUserDetailsResponse, { userId: string }>({
-      query: ({ userId }) => ({
-        url: `/user-details/user/${userId}`,
+      query: () => ({
+        url: `/users`,
       }),
-      transformResponse: (response: APIResponseUserDetails) => {
-        return response.data;
+      transformResponse: (response: APIUserDetailsResponse) => {
+        return response;
       },
       providesTags: ['getUserDetailsById'],
     }),
@@ -68,8 +73,33 @@ export const resqpetModuleApi = createApi({
         return response.data;
       },
     }),
+    getStatusReport: build.query<APIStatusReportResponse, { startDate: string; endDate: string }>({
+      query: ({ startDate, endDate }) => ({
+        url: `/history/reports/status?startDate=${startDate}&endDate=${endDate}`,
+      }),
+      transformResponse: (response: APIStatusReportResponse) => {
+        return response;
+      },
+      providesTags: ['getStatusReport'],
+    }),
+    getSpeciesReport: build.query<APISpeciesReportResponse, { startDate: string; endDate: string }>({
+      query: ({ startDate, endDate }) => ({
+        url: `/history/species/status?startDate=${startDate}&endDate=${endDate}`,
+      }),
+      transformResponse: (response: APISpeciesReportResponse) => {
+        return response;
+      },
+      providesTags: ['getSpeciesReport'],
+    }),
   }),
 });
 
-export const { useLazyGetUserDetailsByIdQuery, useLazyGetPetsQuery, useLazyGetPetRecommendationsQuery, useCreatePetMutation, useGetPetByIdQuery } =
-  resqpetModuleApi;
+export const {
+  useLazyGetUserDetailsByIdQuery,
+  useLazyGetPetsQuery,
+  useLazyGetPetRecommendationsQuery,
+  useCreatePetMutation,
+  useGetPetByIdQuery,
+  useLazyGetSpeciesReportQuery,
+  useLazyGetStatusReportQuery,
+} = resqpetModuleApi;

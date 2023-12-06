@@ -6,8 +6,11 @@ import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
 import withKcContext from '../../hocs/withKcContext';
+import { useDispatch } from 'react-redux';
+import { resqpetModuleApi } from '../../store/apis/resqpet.api';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { keycloak } = useAuthProvider();
   const [value, setValue] = useState('');
   const theme = useTheme();
@@ -78,6 +81,7 @@ const Navbar = () => {
                   <button
                     onClick={() => {
                       navigate('/');
+                      dispatch(resqpetModuleApi.util.resetApiState());
                       keycloak.logout();
                     }}
                     className='rounded-3xl bg-orange-dark text-[16px] font-bold px-4 text-white'

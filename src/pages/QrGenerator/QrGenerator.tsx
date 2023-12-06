@@ -212,7 +212,7 @@ const QrGenerator = () => {
               petName={petName}
               specie={species?.find((b) => b.id === specie)?.name ?? ''}
               description={description}
-              images={images.map((i) => ({ id: i.id, url: i.value ? URL.createObjectURL(i.value) : '', alt: i.value?.name ?? '' }))}
+              images={images.map((i) => ({ id: i.id, url: i.value ? URL.createObjectURL(i.value) : '', title: i.value?.name ?? '' }))}
               userName={idTokenParsed.name}
               userEmail={idTokenParsed.email}
               userPhone={userDetails.cellphone}
