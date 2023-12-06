@@ -2,7 +2,7 @@ import cn from 'classnames';
 
 type TextDetailProps = {
   children: React.ReactNode;
-  size: 'xs' | 's';
+  size: 'xs' | 's' | 'xl' | 'xxl';
   weight: 'regular' | 'medium' | 'bold';
   className?: string;
 };
@@ -11,6 +11,8 @@ const TextDetail = ({ children, size, weight, className }: TextDetailProps) => {
   const sizeClass = {
     xs: 'text-detail-xs',
     s: 'text-detail-s',
+    xl: 'text-detal-l',
+    xxl: 'text-[36px]',
   }[size];
 
   const weightClass = {

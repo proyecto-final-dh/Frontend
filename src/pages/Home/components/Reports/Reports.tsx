@@ -54,12 +54,16 @@ const Reports = () => {
             <div className='relative gap-4'>
               <img src={report.image} />
               {report.id === 'report-1' ? (
-                <TextDetail size='xs' weight='bold' className='flex absolute top-[40%] right-[40%]'>
-                  <Number n={report.report}></Number>
-                  <span className='pl-1'> días</span>
-                </TextDetail>
+                <div className='absolute flex flex-col items-center top-[15%]  right-[45%]'>
+                  <TextDetail size='xxl' weight='bold'>
+                    <Number n={report.report}></Number>
+                  </TextDetail>
+                  <TextDetail size='xs' weight='bold' className='mt-[-0.75rem]'>
+                    días
+                  </TextDetail>
+                </div>
               ) : (
-                <TextDetail size='xs' weight='bold' className='absolute top-[40%] right-1/2'>
+                <TextDetail size='xxl' weight='bold' className='absolute  top-1/4 right-1/3'>
                   <Number n={report.report}></Number>
                 </TextDetail>
               )}
