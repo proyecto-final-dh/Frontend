@@ -18,20 +18,25 @@ const DrawerMenu = () => {
       <Drawer anchor='right' open={openDrawer} onClose={() => setOpenDrawer(false)}>
         <Box sx={{ width: 200, bgcolor: 'primary.light', height: '100%' }}>
           <List>
-            {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => (
-              <ListItemButton
-                key={index}
-                onClick={() => {
-                  navigate(route);
-                  setOpenDrawer(false);
-                }}
-              >
-                <div className='flex items-center gap-2'>
-                  <ItemIcon className='text-orange-dark' />
-                  <ListItemText>{label}</ListItemText>
-                </div>
-              </ListItemButton>
-            ))}
+            {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => {
+              if (label === 'tu cuenta' && !keycloak.authenticated) {
+                return null;
+              }
+              return (
+                <ListItemButton
+                  key={index}
+                  onClick={() => {
+                    navigate(route);
+                    setOpenDrawer(false);
+                  }}
+                >
+                  <div className='flex items-center gap-2'>
+                    <ItemIcon className='text-orange-dark' />
+                    <ListItemText>{label}</ListItemText>
+                  </div>
+                </ListItemButton>
+              );
+            })}
             <div className='w-full px-4'>
               <div className='w-full h-px bg-black' />
             </div>
