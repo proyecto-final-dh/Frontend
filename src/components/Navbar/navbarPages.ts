@@ -5,5 +5,5 @@ export const NAVBARROUTES: { label: string; route: string; icon: (props: TablerI
   { label: 'Adoptar', route: '/adoption', icon: IconCat },
   { label: 'Dar en adopción', route: '/give-for-adoption', icon: IconPaw },
   { label: 'Reportes', route: '/reports', icon: IconReportAnalytics },
-  { label: 'Tu cuenta', route: '/your-account', icon: IconUserCircle },
+  { label: 'Tu cuenta', route: '/profile', icon: IconUserCircle },
 ];

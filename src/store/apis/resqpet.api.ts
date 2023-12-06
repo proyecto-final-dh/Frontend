@@ -6,6 +6,8 @@ import petsMapper from '../../mappers/pets.mapper';
 import { Pet, PetWithOwner } from '../../contracts/pet';
 import { kc } from '../../config';
 import { APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
+import { APIInterestResponse, APIResponseInterest } from '../../contracts/interest.contract';
+import { APIMyPetsResponse } from '../../contracts/my-pets.contract';
 
 export const resqpetModuleApi = createApi({
   reducerPath: 'resqpetModuleApi',
@@ -18,8 +20,9 @@ export const resqpetModuleApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport'],
-  keepUnusedDataFor: 3600,
+  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getInterest', 'getForAdoption', 'getMyPets'],
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
       return action.payload?.[reducerPath];
@@ -54,7 +57,7 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getPetRecommendations'],
     }),
-    getUserDetailsById: build.query<APIUserDetailsResponse, { userId: string }>({
+    getUserDetailsById: build.query<APIUserDetailsResponse, object>({
       query: () => ({
         url: `/users`,
       }),
@@ -91,10 +94,38 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getSpeciesReport'],
     }),
+    getInterest: build.query<APIInterestResponse[], object>({
+      query: () => ({
+        url: `/interests`,
+      }),
+      transformResponse: (response: APIResponseInterest) => {
+        return response.data;
+      },
+      providesTags: ['getInterest'],
+    }),
+    getForAdoption: build.query<APIMyPetsResponse[], object>({
+      query: () => ({
+        url: `/pets/pet-for-adoption`,
+      }),
+      transformResponse: (response: APIMyPetsResponse[]) => {
+        return response;
+      },
+      providesTags: ['getForAdoption'],
+    }),
+    getMyPets: build.query<APIMyPetsResponse[], object>({
+      query: () => ({
+        url: `/pets/rescued-pet`,
+      }),
+      transformResponse: (response: APIMyPetsResponse[]) => {
+        return response;
+      },
+      providesTags: ['getMyPets'],
+    }),
   }),
 });
 
 export const {
+  useGetUserDetailsByIdQuery,
   useLazyGetUserDetailsByIdQuery,
   useLazyGetPetsQuery,
   useLazyGetPetRecommendationsQuery,
@@ -102,4 +133,7 @@ export const {
   useGetPetByIdQuery,
   useLazyGetSpeciesReportQuery,
   useLazyGetStatusReportQuery,
+  useGetInterestQuery,
+  useGetForAdoptionQuery,
+  useGetMyPetsQuery,
 } = resqpetModuleApi;
