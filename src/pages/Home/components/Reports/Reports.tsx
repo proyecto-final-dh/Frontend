@@ -10,6 +10,12 @@ import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Number from '../../../../components/Number';
 
+interface ReportProps {
+  enAdopcionCount: number;
+  adoptadasCount: number;
+  conQrCount: number;
+  averageTime: number;
+}
 const reports = [
   {
     id: 'report-1',
@@ -41,7 +47,7 @@ const reports = [
   },
 ];
 
-const Reports = () => {
+const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQrCount, averageTime, }) => {
   return (
     <Box>
       <div className='items-center mt-[-40px] overflow-hidden lg:shadow-lg'>
@@ -77,8 +83,8 @@ const Reports = () => {
           </article>
         ))}
       </section>
-      <div className='flex justify-center items-center bg-[#f7d8b2] py-6 lg:shadow-lg'>
-        <Link to='/qr/create'>
+      <div className='flex justify-center items-center bg-[#f7d8b2] py-6'>
+        <Link to='/reports'>
           <Button variant='contained' color='primary' sx={{ borderRadius: '30px', fontWeight: 700, padding: '10px 15px' }}>
             Ver más reportes
           </Button>

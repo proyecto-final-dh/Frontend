@@ -14,7 +14,7 @@ import { EN_ADOPCION, PetStatusesTypes } from '../../constants/pet-statuses.cons
 import { PetSizesTypes, SIZES } from '../../constants/pet-sizes.constants';
 import { IconPawOff } from '@tabler/icons-react';
 
-const Adoption = () => {
+const Adoption: React.FC = () => {
   const [getPets, { isFetching: isFetchingPets, isLoading: isLoadingPets, data: pets, isError: isPetsError }] = useLazyGetPetsQuery();
 
   const { isLg } = useBreakpoint('lg');
