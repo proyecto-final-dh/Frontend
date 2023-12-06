@@ -8,15 +8,17 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import DrawerMainMenu from '../DrawerMainMenu';
 import styles from './MainMenu.module.css';
 import cn from 'classnames';
+import { useNavigate } from 'react-router-dom';
 
 const MainMenu = () => {
+  const navigate = useNavigate();
   const theme = useTheme();
   const isMatch = useMediaQuery(theme.breakpoints.down('md'));
 
   return (
     <>
       {isMatch ? (
-        <div className='bg-primary-light rounded-3xl p-4 flex justify-between items-center'>
+        <div className='flex items-center justify-between p-4 bg-primary-light rounded-3xl'>
           <Title variant='h3' className='font-bold'>
             Tu cuenta
           </Title>
@@ -31,7 +33,7 @@ const MainMenu = () => {
           </div>
           <List className={cn(styles['group-main-menu'])}>
             {MAINMENUROUTES.map((item, index) => (
-              <ListItem key={index} disablePadding>
+              <ListItem key={index} disablePadding onClick={() => navigate(item.route)}>
                 <ListItemButton className={cn(styles['item-main-menu'])}>
                   <ListItemText primary={item.label} />
                 </ListItemButton>

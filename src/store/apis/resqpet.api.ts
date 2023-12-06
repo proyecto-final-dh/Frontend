@@ -6,6 +6,7 @@ import petsMapper from '../../mappers/pets.mapper';
 import { Pet, PetWithOwner } from '../../contracts/pet';
 import { kc } from '../../config';
 import { APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
+import { APIInterestResponse, APIResponseInterest } from '../../contracts/interest.contract';
 
 export const resqpetModuleApi = createApi({
   reducerPath: 'resqpetModuleApi',
@@ -18,7 +19,7 @@ export const resqpetModuleApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport'],
+  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getInterest'],
   keepUnusedDataFor: 3600,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
@@ -54,7 +55,7 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getPetRecommendations'],
     }),
-    getUserDetailsById: build.query<APIUserDetailsResponse, { userId: string }>({
+    getUserDetailsById: build.query<APIUserDetailsResponse, object>({
       query: () => ({
         url: `/users`,
       }),
@@ -91,10 +92,20 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getSpeciesReport'],
     }),
+    getInterest: build.query<APIInterestResponse[], object>({
+      query: () => ({
+        url: `/interests`,
+      }),
+      transformResponse: (response: APIResponseInterest) => {
+        return response.data;
+      },
+      providesTags: ['getInterest'],
+    }),
   }),
 });
 
 export const {
+  useGetUserDetailsByIdQuery,
   useLazyGetUserDetailsByIdQuery,
   useLazyGetPetsQuery,
   useLazyGetPetRecommendationsQuery,
@@ -102,4 +113,5 @@ export const {
   useGetPetByIdQuery,
   useLazyGetSpeciesReportQuery,
   useLazyGetStatusReportQuery,
+  useGetInterestQuery,
 } = resqpetModuleApi;

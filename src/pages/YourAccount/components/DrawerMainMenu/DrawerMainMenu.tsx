@@ -8,8 +8,10 @@ import { IconMenuDeep } from '@tabler/icons-react';
 import { useState } from 'react';
 import styles from '../MainMenu/MainMenu.module.css';
 import cn from 'classnames';
+import { useNavigate } from 'react-router-dom';
 
 const DrawerMainMenu = () => {
+  const navigate = useNavigate();
   const [openDrawer, setOpenDrawer] = useState(false);
 
   return (
@@ -18,7 +20,14 @@ const DrawerMainMenu = () => {
         <div className='bg-primary-light'>
           <List>
             {MAINMENUROUTES.map((item, index) => (
-              <ListItem key={index} disablePadding>
+              <ListItem
+                key={index}
+                disablePadding
+                onClick={() => {
+                  navigate(item.route);
+                  setOpenDrawer(false);
+                }}
+              >
                 <ListItemButton className={cn(styles['item-main-menu'])}>
                   <ListItemText primary={item.label} />
                 </ListItemButton>

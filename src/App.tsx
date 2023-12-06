@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Home, Register, PetDetail, Adoption, QrGenerator, GiveAdoption } from './pages';
+import { Home, Register, PetDetail, Adoption, QrGenerator, GiveAdoption, MyProfile, MyPets, PetsInAdoption, AdoptionRequests } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container, Loader, TourBadge } from './components';
 import { Provider } from 'react-redux';
@@ -108,13 +108,45 @@ function App() {
                         }
                       />
                       <Route
-                      path='/your-account'
-                      element={
-                        <Layout>
-                          <YourAccount />
-                        </Layout>
-                      }
-                    />
+                        path='/profile'
+                        element={
+                          <Layout>
+                            <YourAccount>
+                              <MyProfile />
+                            </YourAccount>
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/profile/my-pets'
+                        element={
+                          <Layout>
+                            <YourAccount>
+                              <MyPets />
+                            </YourAccount>
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/profile/for-adoption'
+                        element={
+                          <Layout>
+                            <YourAccount>
+                              <PetsInAdoption />
+                            </YourAccount>
+                          </Layout>
+                        }
+                      />
+                      <Route
+                        path='/profile/adoption-requests'
+                        element={
+                          <Layout>
+                            <YourAccount>
+                              <AdoptionRequests />
+                            </YourAccount>
+                          </Layout>
+                        }
+                      />
                     </Routes>
                   </Container>
                 </LocalizationProvider>
