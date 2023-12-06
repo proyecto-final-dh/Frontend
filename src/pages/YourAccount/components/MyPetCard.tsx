@@ -1,4 +1,3 @@
-import { IconUserEdit, IconTrash } from '@tabler/icons-react';
 import Button from '../../../components/Botones/Button';
 
 export interface IMyPetCard {
@@ -15,8 +14,6 @@ export interface IMyPetCard {
   userEmail?: string;
   mainAction?: () => void;
   mainActionLabel?: string;
-  onEdit?: () => void;
-  onDelete?: () => void;
 }
 
 const MyPetCard = ({
@@ -32,8 +29,6 @@ const MyPetCard = ({
   userEmail,
   mainAction,
   mainActionLabel,
-  onDelete,
-  onEdit,
   userPhone,
 }: IMyPetCard) => {
   return (
@@ -76,19 +71,6 @@ const MyPetCard = ({
       <article className='flex justify-between'>
         {!!mainActionLabel && mainAction && <Button label={mainActionLabel} variant='primary' onClick={mainAction}></Button>}
         {(!mainActionLabel || !mainAction) && <div className='w-full'></div>}
-
-        <div className='flex gap-2'>
-          {onEdit && (
-            <div onClick={onEdit} className='flex justify-center items-center bg-primary rounded-full p-2 h-8 w-8'>
-              <IconUserEdit />
-            </div>
-          )}
-          {onDelete && (
-            <div onClick={onDelete} className='flex justify-center items-center bg-primary rounded-full p-2 h-8 w-8'>
-              <IconTrash />
-            </div>
-          )}
-        </div>
       </article>
     </section>
   );
