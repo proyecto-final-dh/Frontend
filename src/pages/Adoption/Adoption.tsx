@@ -13,7 +13,6 @@ import { useLazyGetPetsQuery } from '../../store/apis/resqpet.api';
 import { EN_ADOPCION, PetStatusesTypes } from '../../constants/pet-statuses.constants';
 import { PetSizesTypes, SIZES } from '../../constants/pet-sizes.constants';
 import { IconPawOff } from '@tabler/icons-react';
-import { withKeycloakAuth } from '../../config';
 
 const Adoption: React.FC = () => {
   const [getPets, { isFetching: isFetchingPets, isLoading: isLoadingPets, data: pets, isError: isPetsError }] = useLazyGetPetsQuery();
@@ -163,4 +162,4 @@ const Adoption: React.FC = () => {
   );
 };
 
-export default withKeycloakAuth(Adoption);
+export default Adoption;
