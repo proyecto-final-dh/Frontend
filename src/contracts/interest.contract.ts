@@ -1,5 +1,32 @@
 export type APIInterestResponse = {
-  pet_id: number;
+  pet: {
+    id: number;
+    name: string;
+    status: string;
+    size: string;
+    gender: string;
+    description: string;
+    age: number;
+    breed: {
+      id: number;
+      name: string;
+      species: {
+        id: number;
+        name: string;
+      };
+    };
+    location: {
+      id: number;
+      country: string;
+      city: string;
+      state: string;
+    };
+    images: {
+      id: number;
+      url: string;
+      title: string;
+    }[];
+  };
   owner_information: {
     userId: string;
     userDetailsId: number;
@@ -14,7 +41,6 @@ export type APIInterestResponse = {
       state: string;
     };
   };
-  interested: boolean;
 };
 
 export type APIResponseInterest = TAPIResponse<APIInterestResponse[], unknown>;
