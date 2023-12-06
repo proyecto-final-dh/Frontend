@@ -8,6 +8,7 @@ import qrCode from '../../../../assets/icons/qrcode.svg';
 import { TextDetail } from '../../../../components';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
+import Number from '../../../../components/Number';
 
 interface ReportProps {
   enAdopcionCount: number;
@@ -19,7 +20,7 @@ const reports = [
   {
     id: 'report-1',
     image: imageBlue,
-    report: 60 + ' días',
+    report: 60,
     icon: calendarCoffe,
     description: 'Tiempo promedio desde su publicacion a su adopción',
   },
@@ -49,26 +50,31 @@ const reports = [
 const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQrCount, averageTime, }) => {
   return (
     <Box>
-      <div className='items-center mt-[-40px] overflow-hidden '>
+      <div className='items-center mt-[-40px] overflow-hidden lg:shadow-lg'>
         <img src={wave} alt='Reports ' />
       </div>
 
-      <section className='flex flex-col items-center justify-center gap-4 bg-[#f7d8b2] lg:flex-row lg:flex-wrap lg:w-full'>
+      <section className='flex flex-col items-center justify-center px-4 gap-y-4 gap-x-56 bg-[#f7d8b2] lg:flex-row lg:flex-wrap lg:w-full lg:shadow-lg'>
         {reports.map((report) => (
-          <article key={report.id} className='flex flex-row max-w-[450px] w-full'>
-            <div className='relative'>
+          <article key={report.id} className='flex flex-row gap-4 max-w-[450px] w-full'>
+            <div className='relative gap-4'>
               <img src={report.image} />
               {report.id === 'report-1' ? (
-                <TextDetail size='xs' weight='bold' className='absolute top-[40%] right-[40%]'>
-                  {report.report}
-                </TextDetail>
+                <div className='absolute flex flex-col items-center top-[15%]  right-[45%]'>
+                  <TextDetail size='xxl' weight='bold'>
+                    <Number n={report.report}></Number>
+                  </TextDetail>
+                  <TextDetail size='xs' weight='bold' className='mt-[-0.75rem]'>
+                    días
+                  </TextDetail>
+                </div>
               ) : (
-                <TextDetail size='xs' weight='bold' className='absolute top-[40%] right-1/2'>
-                  {report.report}
+                <TextDetail size='xxl' weight='bold' className='absolute  top-1/4 right-1/3'>
+                  <Number n={report.report}></Number>
                 </TextDetail>
               )}
             </div>
-            <div className='flex items-center'>
+            <div className='flex items-center justify-center gap-4'>
               <img src={report.icon} className='w-32 p-2' />
               <TextDetail size='xs' weight='bold'>
                 {report.description}
