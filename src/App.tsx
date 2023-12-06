@@ -108,13 +108,13 @@ function App() {
                         }
                       />
                       <Route
-                      path='/your-account'
-                      element={
-                        <Layout>
-                          <YourAccount />
-                        </Layout>
-                      }
-                    />
+                        path='/your-account'
+                        element={
+                          <Layout>
+                            <YourAccount />
+                          </Layout>
+                        }
+                      />
                     </Routes>
                   </Container>
                 </LocalizationProvider>
