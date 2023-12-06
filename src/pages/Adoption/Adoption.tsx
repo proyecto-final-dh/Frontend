@@ -40,6 +40,11 @@ const Adoption: React.FC = () => {
     return 4;
   }, [currentPage, isLg]);
 
+  const filteredBreeds = useMemo(() => {
+    if (!breeds) return [];
+    return breeds.filter((b) => b.species.id === specie);
+  }, [breed, specie, breeds, species]);
+
   useEffect(() => {
     if (errorLocations) console.log({ error: errorLocations });
     if (errorSpacies) console.log({ error: errorSpacies });
@@ -100,7 +105,7 @@ const Adoption: React.FC = () => {
             <FormControl fullWidth>
               <InputLabel id='breed'>Raza</InputLabel>
               <Select labelId='breed' id='breed' value={breed} label='Raza' onChange={(e) => setBreed(Number(e.target.value))}>
-                {breeds?.map((b) => (
+                {filteredBreeds?.map((b) => (
                   <MenuItem value={b.id} key={b.id}>
                     {b.name}
                   </MenuItem>
