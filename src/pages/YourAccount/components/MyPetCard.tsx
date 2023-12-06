@@ -1,4 +1,3 @@
-import { IconUserEdit, IconTrash } from '@tabler/icons-react';
 import Button from '../../../components/Botones/Button';
 
 export interface IMyPetCard {
@@ -15,8 +14,6 @@ export interface IMyPetCard {
   userEmail?: string;
   mainAction?: () => void;
   mainActionLabel?: string;
-  onEdit?: () => void;
-  onDelete?: () => void;
 }
 
 const MyPetCard = ({
@@ -32,12 +29,10 @@ const MyPetCard = ({
   userEmail,
   mainAction,
   mainActionLabel,
-  onDelete,
-  onEdit,
-  userPhone,
+  userPhone
 }: IMyPetCard) => {
   return (
-    <section className='flex flex-col gap-4 p-4 border-2 rounded-3xl border-primary'>
+    <section className='flex flex-col gap-4 p-4 border-2 rounded-3xl border-primary h-fit'>
       <article className='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
         <div className='gap-2 lg:flex lg:items-center'>
           <figure className='flex items-center justify-center w-20 h-20 p-2 overflow-hidden'>
@@ -75,20 +70,6 @@ const MyPetCard = ({
       </article>
       <article className='flex justify-between'>
         {!!mainActionLabel && mainAction && <Button label={mainActionLabel} variant='primary' onClick={mainAction}></Button>}
-        {(!mainActionLabel || !mainAction) && <div className='w-full'></div>}
-
-        <div className='flex gap-2'>
-          {onEdit && (
-            <div onClick={onEdit} className='flex items-center justify-center w-8 h-8 p-2 rounded-full bg-primary'>
-              <IconUserEdit />
-            </div>
-          )}
-          {onDelete && (
-            <div onClick={onDelete} className='flex items-center justify-center w-8 h-8 p-2 rounded-full bg-primary'>
-              <IconTrash />
-            </div>
-          )}
-        </div>
       </article>
     </section>
   );

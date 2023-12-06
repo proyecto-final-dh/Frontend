@@ -48,20 +48,25 @@ const Navbar = () => {
                 setValue(index);
               }}
             >
-              {NAVBARROUTES.map((page, index) => (
-                <Tab
-                  key={index}
-                  label={page.label}
-                  sx={{
-                    minHeight: '36px',
-                    alignSelf: 'stretch',
-                    height: '36px',
-                    textTransform: 'capitalize',
-                    fontWeight: '700',
-                    color: 'inherit',
-                  }}
-                />
-              ))}
+              {NAVBARROUTES.map((page, index) => {
+                if (page.label === 'tu cuenta' && !keycloak.authenticated) {
+                  return null;
+                }
+                return (
+                  <Tab
+                    key={index}
+                    label={page.label}
+                    sx={{
+                      minHeight: '36px',
+                      alignSelf: 'stretch',
+                      height: '36px',
+                      textTransform: 'capitalize',
+                      fontWeight: '700',
+                      color: 'inherit',
+                    }}
+                  />
+                );
+              })}
               <div className='w-px bg-black h-9' />
               {!keycloak.authenticated && (
                 <div className='flex ml-3 gap-7'>
