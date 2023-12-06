@@ -7,6 +7,7 @@ import { Pet, PetWithOwner } from '../../contracts/pet';
 import { kc } from '../../config';
 import { APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
 import { APIInterestResponse, APIResponseInterest } from '../../contracts/interest.contract';
+import { APIMyPetsResponse } from '../../contracts/my-pets.contract';
 
 export const resqpetModuleApi = createApi({
   reducerPath: 'resqpetModuleApi',
@@ -19,7 +20,7 @@ export const resqpetModuleApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getInterest'],
+  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getInterest', 'getForAdoption', 'getMyPets'],
   keepUnusedDataFor: 0,
   refetchOnMountOrArgChange: true,
   extractRehydrationInfo(action, { reducerPath }) {
@@ -102,6 +103,24 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getInterest'],
     }),
+    getForAdoption: build.query<APIMyPetsResponse[], object>({
+      query: () => ({
+        url: `/pets/pet-for-adoption`,
+      }),
+      transformResponse: (response: APIMyPetsResponse[]) => {
+        return response;
+      },
+      providesTags: ['getForAdoption'],
+    }),
+    getMyPets: build.query<APIMyPetsResponse[], object>({
+      query: () => ({
+        url: `/pets/rescued-pet`,
+      }),
+      transformResponse: (response: APIMyPetsResponse[]) => {
+        return response;
+      },
+      providesTags: ['getMyPets'],
+    }),
   }),
 });
 
@@ -115,4 +134,6 @@ export const {
   useLazyGetSpeciesReportQuery,
   useLazyGetStatusReportQuery,
   useGetInterestQuery,
+  useGetForAdoptionQuery,
+  useGetMyPetsQuery,
 } = resqpetModuleApi;
