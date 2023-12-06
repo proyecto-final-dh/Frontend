@@ -44,7 +44,7 @@ const GiveAdoption: React.FC = () => {
       method: 'POST',
       body: formData,
       redirect: 'follow',
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${kc.token}` },
     })
       .then((response) => response.json())
       .then((res) => setImageModal(res.data.images[0].url)),

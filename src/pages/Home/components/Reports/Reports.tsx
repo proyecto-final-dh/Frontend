@@ -9,6 +9,12 @@ import { TextDetail } from '../../../../components';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
+interface ReportProps {
+  enAdopcionCount: number;
+  adoptadasCount: number;
+  conQrCount: number;
+  averageTime: number;
+}
 const reports = [
   {
     id: 'report-1',
@@ -40,7 +46,7 @@ const reports = [
   },
 ];
 
-const Reports = () => {
+const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQrCount, averageTime, }) => {
   return (
     <Box>
       <div className='items-center mt-[-40px] overflow-hidden '>

@@ -5,7 +5,7 @@ import { APIGetPetsResponse, APIGetPetsWithFiltersQueryParams, APIPageableGetPet
 import petsMapper from '../../mappers/pets.mapper';
 import { Pet, PetWithOwner } from '../../contracts/pet';
 import { kc } from '../../config';
-import { APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
+import { APIReportGeneral, APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
 
 export const resqpetModuleApi = createApi({
   reducerPath: 'resqpetModuleApi',
@@ -18,7 +18,7 @@ export const resqpetModuleApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport'],
+  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getReportsGeneral'],
   keepUnusedDataFor: 3600,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
@@ -91,6 +91,16 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getSpeciesReport'],
     }),
+    getReport: build.query<APIReportGeneral, void>({
+      query: () => ({
+        url: `/history/generalReports`,
+      }),
+      transformResponse: (response: APIReportGeneral) => {
+        console.log({ response });
+        return response;
+      },
+      providesTags: ['getReportsGeneral'],
+    }),
   }),
 });
 
@@ -102,4 +112,5 @@ export const {
   useGetPetByIdQuery,
   useLazyGetSpeciesReportQuery,
   useLazyGetStatusReportQuery,
+  useLazyGetReportQuery,
 } = resqpetModuleApi;
