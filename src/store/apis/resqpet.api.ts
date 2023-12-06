@@ -20,7 +20,8 @@ export const resqpetModuleApi = createApi({
     },
   }),
   tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getInterest'],
-  keepUnusedDataFor: 3600,
+  keepUnusedDataFor: 0,
+  refetchOnMountOrArgChange: true,
   extractRehydrationInfo(action, { reducerPath }) {
     if (action.type === REHYDRATE) {
       return action.payload?.[reducerPath];

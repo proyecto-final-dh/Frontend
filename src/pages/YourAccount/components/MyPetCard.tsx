@@ -37,14 +37,14 @@ const MyPetCard = ({
   userPhone,
 }: IMyPetCard) => {
   return (
-    <section className='flex flex-col rounded-3xl border-2 border-primary p-4 gap-4'>
+    <section className='flex flex-col gap-4 p-4 border-2 rounded-3xl border-primary'>
       <article className='flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between'>
-        <div className='lg:flex lg:items-center gap-2'>
-          <figure className='flex justify-center items-center p-2 h-20 w-20 overflow-hidden'>
-            <img src={image} alt={altImage} className='rounded-full object-cover w-full h-full' />
+        <div className='gap-2 lg:flex lg:items-center'>
+          <figure className='flex items-center justify-center w-20 h-20 p-2 overflow-hidden'>
+            <img src={image} alt={altImage} className='object-cover w-full h-full rounded-full' />
           </figure>
           <div className='flex flex-col gap-2'>
-            <p className='font-bold text-lg'>{petName}</p>
+            <p className='text-lg font-bold'>{petName}</p>
             <p>
               {breed} | {species}
             </p>
@@ -79,12 +79,12 @@ const MyPetCard = ({
 
         <div className='flex gap-2'>
           {onEdit && (
-            <div onClick={onEdit} className='flex justify-center items-center bg-primary rounded-full p-2 h-8 w-8'>
+            <div onClick={onEdit} className='flex items-center justify-center w-8 h-8 p-2 rounded-full bg-primary'>
               <IconUserEdit />
             </div>
           )}
           {onDelete && (
-            <div onClick={onDelete} className='flex justify-center items-center bg-primary rounded-full p-2 h-8 w-8'>
+            <div onClick={onDelete} className='flex items-center justify-center w-8 h-8 p-2 rounded-full bg-primary'>
               <IconTrash />
             </div>
           )}
