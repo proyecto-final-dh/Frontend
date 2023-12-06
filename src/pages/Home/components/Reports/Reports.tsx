@@ -16,38 +16,38 @@ interface ReportProps {
   conQrCount: number;
   averageTime: number;
 }
-const reports = [
-  {
-    id: 'report-1',
-    image: imageBlue,
-    report: 60,
-    icon: calendarCoffe,
-    description: 'Tiempo promedio desde su publicacion a su adopción',
-  },
-  {
-    id: 'report-2',
-    image: imageBlue,
-    report: 500,
-    icon: homeHeart,
-    description: 'Tiempo promedio desde su publicacion a su adopción',
-  },
-  {
-    id: 'report-3',
-    image: imageOrange,
-    report: 227,
-    icon: paw,
-    description: 'Tiempo promedio desde su publicacion a su adopción',
-  },
-  {
-    id: 'report-4',
-    image: imageOrange,
-    report: 500,
-    icon: qrCode,
-    description: 'Tiempo promedio desde su publicacion a su adopción',
-  },
-];
 
-const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQrCount, averageTime, }) => {
+const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQrCount, averageTime }: ReportProps) => {
+  const reports = [
+    {
+      id: 'report-1',
+      image: imageBlue,
+      report: averageTime,
+      icon: calendarCoffe,
+      description: 'Tiempo promedio desde su publicacion a su adopción',
+    },
+    {
+      id: 'report-2',
+      image: imageBlue,
+      report: enAdopcionCount,
+      icon: homeHeart,
+      description: 'Total de mascotas que se encuentran buscando un hogar',
+    },
+    {
+      id: 'report-3',
+      image: imageOrange,
+      report: adoptadasCount,
+      icon: paw,
+      description: 'Total de mascotas adoptadas a través de nuestra pagina',
+    },
+    {
+      id: 'report-4',
+      image: imageOrange,
+      report: conQrCount,
+      icon: qrCode,
+      description: 'Total de mascotas adoptadas a través de nuestra pagina',
+    },
+  ];
   return (
     <Box>
       <div className='items-center mt-[-40px] overflow-hidden lg:shadow-lg'>
@@ -56,11 +56,11 @@ const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQr
 
       <section className='flex flex-col items-center justify-center px-4 gap-y-4 gap-x-56 bg-[#f7d8b2] lg:flex-row lg:flex-wrap lg:w-full lg:shadow-lg'>
         {reports.map((report) => (
-          <article key={report.id} className='flex flex-row gap-4 max-w-[450px] w-full'>
+          <article key={report.id} className='flex flex-row items-center justify-center gap-4 max-w-[450px] w-full'>
             <div className='relative gap-4'>
               <img src={report.image} />
               {report.id === 'report-1' ? (
-                <div className='absolute flex flex-col items-center top-[15%]  right-[45%]'>
+                <div className='absolute flex flex-col items-center top-[20%]  w-[80%]'>
                   <TextDetail size='xxl' weight='bold'>
                     <Number n={report.report}></Number>
                   </TextDetail>
@@ -69,14 +69,16 @@ const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQr
                   </TextDetail>
                 </div>
               ) : (
-                <TextDetail size='xxl' weight='bold' className='absolute  top-1/4 right-1/3'>
-                  <Number n={report.report}></Number>
-                </TextDetail>
+                <div className='absolute flex flex-col items-center top-[20%]  w-[80%]'>
+                  <TextDetail size='xxl' weight='bold'>
+                    <Number n={report.report}></Number>
+                  </TextDetail>
+                </div>
               )}
             </div>
-            <div className='flex items-center justify-center gap-4'>
+            <div className='flex items-center justify-center gap-2'>
               <img src={report.icon} className='w-32 p-2' />
-              <TextDetail size='xs' weight='bold'>
+              <TextDetail size='xs' weight='bold' className='w-full'>
                 {report.description}
               </TextDetail>
             </div>

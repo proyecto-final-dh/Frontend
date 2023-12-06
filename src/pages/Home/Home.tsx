@@ -64,7 +64,20 @@ const Home = () => {
             {!!pets && <Carrusel pets={pets.content} disableNext={pets.pageable.isLast} disablePrev={pets.pageable.isFirst} onNext={onNext} onPrev={onPrev} />}
           </>
         )}
-        {isLoadingReportsGeneral ? <Loader opacity={60} /> : <>{!!reports && <Reports />}</>}
+        {isLoadingReportsGeneral ? (
+          <Loader opacity={60} />
+        ) : (
+          <>
+            {!!reports && (
+              <Reports
+                adoptadasCount={reports.adoptadasCount}
+                averageTime={reports.averageTime}
+                conQrCount={reports.conQrCount}
+                enAdopcionCount={reports.enAdopcionCount}
+              />
+            )}
+          </>
+        )}
       </Box>
     </div>
   );
