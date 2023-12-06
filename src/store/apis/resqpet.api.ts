@@ -121,6 +121,15 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getMyPets'],
     }),
+    createInterests: build.mutation<PetWithOwner, { id: number }>({
+      query: ({ id }) => ({
+        url: `/interests/${id}`,
+        method: 'POST',
+      }),
+      transformResponse: (response: TAPIResponse<PetWithOwner, object>) => {
+        return response.data;
+      },
+    }),
   }),
 });
 
@@ -136,4 +145,5 @@ export const {
   useGetInterestQuery,
   useGetForAdoptionQuery,
   useGetMyPetsQuery,
+  useCreateInterestsMutation,
 } = resqpetModuleApi;
