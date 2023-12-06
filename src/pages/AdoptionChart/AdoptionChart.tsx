@@ -1,5 +1,5 @@
 import { Title, MainBanner, Loader } from '../../components';
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import imgBannerChart from '../../assets/banner-chart.png';
 
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Tooltip, Legend } from 'chart.js';
@@ -7,6 +7,8 @@ import { Bar } from 'react-chartjs-2';
 import { FormControl } from '@mui/material';
 import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
+import { useLazyGetSpeciesReportQuery, useLazyGetStatusReportQuery } from '../../store/apis/resqpet.api';
+import { EN_ADOPCION } from '../../constants/pet-statuses.constants';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 const labelFontSize = 14;
@@ -25,63 +27,68 @@ export const options = {
   },
 };
 
-const labels = ['Noviembre', 'Diciembre'];
-
-const gatoData = [10, 5];
-const perroData = [20, 35];
-export const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Gato',
-      data: gatoData,
-      backgroundColor: 'rgba(255, 99, 132, 0.5)',
-    },
-    {
-      label: 'Perro',
-      data: perroData,
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
-    },
-  ],
-};
-
-export const options_2 = {
-  responsive: true,
-  plugins: {
-    legend: {
-      position: 'top' as const,
-    },
-    title: {
-      display: true,
-      text: 'Mascotas en Adopción VS Mascotas Adoptadas',
-    },
-  },
-};
-
-const MascotasAdoptadasData = [10, 28];
-const MascotasenAdopcionData = [30, 5];
-
-export const dataMascotasEnAdopVSMascotasAdop = {
-  labels,
-  datasets: [
-    {
-      label: 'Mascotas Adoptadas',
-      data: MascotasAdoptadasData,
-      backgroundColor: 'rgba(255, 222, 139, 255)',
-    },
-    {
-      label: 'Mascotas en Adopción',
-      data: MascotasenAdopcionData,
-      backgroundColor: 'rgba(255, 149, 135, 255)',
-    },
-  ],
-};
-
 const AdoptionChart = () => {
+  const [
+    getSpeciesReport,
+    {
+      isSuccess: isSuccessSpeciesReport,
+      isFetching: isFetchingSpeciesReport,
+      isLoading: isLoadingSpeciesReport,
+      data: speciesReport,
+      isError: isSpeciesReportError,
+    },
+  ] = useLazyGetSpeciesReportQuery();
+  const [
+    getStatusReport,
+    {
+      isSuccess: isSuccessStatusReport,
+      isFetching: isFetchingStatusReport,
+      isLoading: isLoadingStatusReport,
+      data: statusReport,
+      isError: isStatusReportError,
+    },
+  ] = useLazyGetStatusReportQuery();
+
   const [startDate, setStartDate] = useState<Dayjs | null>(null);
   const [endDate, setEndDate] = useState<Dayjs | null>(null);
 
-  const isLoading = false;
+  const isLoading = isFetchingSpeciesReport || isLoadingSpeciesReport || isFetchingStatusReport || isLoadingStatusReport;
+
+  const statusData = useMemo(() => {
+    if (!statusReport) return null;
+    return {
+      labels: statusReport[0].result.map((item) => item.date),
+      datasets: statusReport.map((item) => ({
+        label: item.status,
+        data: item.result.map((resultItem) => resultItem.count),
+        backgroundColor: item.status === EN_ADOPCION ? 'rgba(255, 149, 135, 255)' : 'rgba(255, 222, 139, 255)',
+      })),
+    };
+  }, [statusReport]);
+
+  const speciesData = useMemo(() => {
+    if (!speciesReport) return null;
+    return {
+      labels: speciesReport[0].result.map((item) => item.date),
+      datasets: speciesReport.map((item) => ({
+        label: item.speciesId.toString(),
+        data: item.result.map((resultItem) => resultItem.count),
+        backgroundColor: item.speciesId === 1 ? 'rgba(255, 149, 135, 255)' : 'rgba(255, 222, 139, 255)',
+      })),
+    };
+  }, [speciesReport]);
+
+  useEffect(() => {
+    if (isSpeciesReportError) console.log({ error: isSpeciesReportError });
+    if (isStatusReportError) console.log({ error: isStatusReportError });
+  }, [isSpeciesReportError, isStatusReportError]);
+
+  useEffect(() => {
+    if (startDate && endDate) {
+      getSpeciesReport({ startDate: startDate.format('YYYY-MM-DD'), endDate: endDate.format('YYYY-MM-DD') });
+      getStatusReport({ startDate: startDate.format('YYYY-MM-DD'), endDate: endDate.format('YYYY-MM-DD') });
+    }
+  }, [startDate, endDate]);
 
   return (
     <div className='bg-white col-span-full'>
@@ -103,7 +110,7 @@ const AdoptionChart = () => {
                 }}
                 views={['month', 'year']}
                 value={startDate}
-                minDate={dayjs('2023-11')}
+                minDate={dayjs('2023-01')}
                 maxDate={dayjs()}
               />
             </FormControl>
@@ -121,21 +128,31 @@ const AdoptionChart = () => {
               />
             </FormControl>
           </div>
-          <Title variant='h3' className='pr-4 font-bold !text-[18px] lg:!text-[24px]'>
-            Mascotas disponibles en adopción por especie
-          </Title>
-          <div className='px-10 mt-4'>
-            <Bar options={options} data={data} />
-          </div>
+
+          {isSuccessStatusReport && (
+            <>
+              <Title variant='h3' className='pr-4 font-bold !text-[18px] lg:!text-[24px]'>
+                Mascotas disponibles en adopción por especie
+              </Title>
+
+              <div className='px-10 mt-4'>
+                {statusData ? <Bar options={options} data={statusData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+              </div>
+            </>
+          )}
 
           <div className='w-full h-1 my-5 lg:my-10 bg-gray'></div>
 
-          <Title variant='h3' className='pr-4 font-bold !text-[18px] lg:!text-[24px]'>
-            Informe Mascotas en Adopción VS Mascotas Adoptadas
-          </Title>
-          <div className='px-10 mt-4'>
-            <Bar options={options_2} data={dataMascotasEnAdopVSMascotasAdop} />
-          </div>
+          {isSuccessSpeciesReport && (
+            <>
+              <Title variant='h3' className='pr-4 font-bold !text-[18px] lg:!text-[24px]'>
+                Informe Mascotas en Adopción VS Mascotas Adoptadas
+              </Title>
+              <div className='px-10 mt-4'>
+                {speciesData ? <Bar options={options} data={speciesData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>

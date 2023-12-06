@@ -73,20 +73,20 @@ export const resqpetModuleApi = createApi({
         return response.data;
       },
     }),
-    getStatusReport: build.query<APIStatusReportResponse, { startDate: string; endDate: string }>({
+    getStatusReport: build.query<APIStatusReportResponse[], { startDate: string; endDate: string }>({
       query: ({ startDate, endDate }) => ({
         url: `/history/reports/status?startDate=${startDate}&endDate=${endDate}`,
       }),
-      transformResponse: (response: APIStatusReportResponse) => {
+      transformResponse: (response: APIStatusReportResponse[]) => {
         return response;
       },
       providesTags: ['getStatusReport'],
     }),
-    getSpeciesReport: build.query<APISpeciesReportResponse, { startDate: string; endDate: string }>({
+    getSpeciesReport: build.query<APISpeciesReportResponse[], { startDate: string; endDate: string }>({
       query: ({ startDate, endDate }) => ({
-        url: `/history/species/status?startDate=${startDate}&endDate=${endDate}`,
+        url: `/history/reports/species?startDate=${startDate}&endDate=${endDate}`,
       }),
-      transformResponse: (response: APISpeciesReportResponse) => {
+      transformResponse: (response: APISpeciesReportResponse[]) => {
         return response;
       },
       providesTags: ['getSpeciesReport'],
