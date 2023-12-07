@@ -10,9 +10,10 @@ import { useCreateInterestsMutation } from '../../../store/apis/resqpet.api';
 
 interface CardProps {
   data: PetWithOwner;
+  interest: boolean;
 }
 
-const CardDetailPet: React.FC<CardProps> = ({ data }) => {
+const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
   const { keycloak } = useAuthProvider();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -102,7 +103,11 @@ const CardDetailPet: React.FC<CardProps> = ({ data }) => {
         <div className='max-w-xs mx-auto mt-10 lg:max-w-full'>
           <Table headers={headers} data={rows} />
         </div>
-        <button onClick={handleAdoptClick} className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>
+        <button
+          disabled={interest}
+          onClick={handleAdoptClick}
+          className='w-full p-6 my-10 font-bold bg-primary rounded-3xl disabled:opacity-50 lg:max-w-[153px] lg:p-3 float-right'
+        >
           Adoptar
         </button>
         {isModalOpen && <ModalAdopConf pet={data} data={createInterestResponse} onClose={closeModal} />}
