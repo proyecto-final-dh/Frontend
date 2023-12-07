@@ -142,12 +142,12 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getResqued'],
     }),
-    getMyPets: build.query<APIMyPetsResponse[], object>({
+    getMyPets: build.query<Pet[], object>({
       query: () => ({
         url: `/pets/owner`,
       }),
-      transformResponse: (response: APIMyPetsResponse[]) => {
-        return response;
+      transformResponse: (response: TPagination<Pet>) => {
+        return response.content;
       },
       providesTags: ['getMyPets'],
     }),
