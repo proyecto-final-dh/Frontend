@@ -24,7 +24,7 @@ const PetDetail: React.FC = () => {
   useEffect(() => {
     const petInterest = interest?.data.find((pet) => pet.pet.id === Number(id));
     if (petInterest) setEnable(true);
-  }, []);
+  }, [interest]);
 
   return (
     <div className='col-span-full'>

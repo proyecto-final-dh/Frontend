@@ -16,12 +16,12 @@ const MyPets = () => {
           {data.map((item) => {
             return (
               <MyPetCard
-                key={item.pet.id}
-                image={item.images[0].url}
-                altImage={item.images[0].title}
-                petName={item.pet.name}
-                breed={item.pet.breed.name}
-                species={item.pet.breed.species.name}
+                key={item.id}
+                image={item.images?.[0]?.url ?? ''}
+                altImage={item.images?.[0]?.title ?? ''}
+                petName={item.name}
+                breed={item.breed.name}
+                species={item.breed.species.name}
               />
             );
           })}

@@ -7,7 +7,7 @@ export type APIStatusReportResponse = {
 };
 
 export type APISpeciesReportResponse = {
-  speciesId: number;
+  species: string;
   result: {
     date: string;
     count: number;
