@@ -135,7 +135,7 @@ export const resqpetModuleApi = createApi({
     }),
     getResqued: build.query<APIMyPetsResponse[], object>({
       query: () => ({
-        url: `/pets/resqued-pet`,
+        url: `/pets/rescued-pet`,
       }),
       transformResponse: (response: APIMyPetsResponse[]) => {
         return response;
@@ -144,7 +144,7 @@ export const resqpetModuleApi = createApi({
     }),
     getMyPets: build.query<APIMyPetsResponse[], object>({
       query: () => ({
-        url: `/pets/rescued-pet`,
+        url: `/pets/owner`,
       }),
       transformResponse: (response: APIMyPetsResponse[]) => {
         return response;
@@ -158,6 +158,15 @@ export const resqpetModuleApi = createApi({
       }),
       transformResponse: (response: TAPIResponse<PetWithOwner, object>) => {
         return response.data;
+      },
+    }),
+    updatePetStatus: build.mutation<string, { id: number }>({
+      query: ({ id }) => ({
+        url: `pets/${id}/update-status?newStatus=ADOPTADA`,
+        method: 'PUT',
+      }),
+      transformResponse: (response: string) => {
+        return response;
       },
     }),
   }),
@@ -178,4 +187,5 @@ export const {
   useLazyGetResquedQuery,
   useGetMyPetsQuery,
   useCreateInterestsMutation,
+  useUpdatePetStatusMutation,
 } = resqpetModuleApi;

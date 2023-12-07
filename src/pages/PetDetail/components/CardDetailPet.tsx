@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { PetWithOwner } from '../../../contracts/pet';
 import { TextDetail, Table, Title } from '../../../components';
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { IconChevronLeft, IconChevronRight, IconPaw } from '@tabler/icons-react';
 import { useAuthProvider } from '../../../config';
 import { getUserDetailsByKcId } from '../../../services/user-details.service';
 import { useNavigate } from 'react-router-dom';
@@ -103,14 +103,20 @@ const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
         <div className='max-w-xs mx-auto mt-10 lg:max-w-full'>
           <Table headers={headers} data={rows} />
         </div>
-        <button
-          disabled={interest}
-          onClick={handleAdoptClick}
-          className='w-full p-6 my-10 font-bold bg-primary rounded-3xl disabled:opacity-50 lg:max-w-[153px] lg:p-3 float-right'
-        >
-          Adoptar
-        </button>
-        {isModalOpen && <ModalAdopConf pet={data} data={createInterestResponse} onClose={closeModal} />}
+        <div className=' flex flex-col justify-center items-center my-10'>
+          <button
+            disabled={interest}
+            onClick={handleAdoptClick}
+            className='w-full p-6 font-bold bg-primary rounded-3xl disabled:opacity-50 lg:max-w-[153px] lg:p-3 float-right'
+          >
+            Adoptar
+          </button>
+          <div className='flex gap-2 items-center'>
+            <IconPaw className='w-6 h-6 fill-orange-dark' />
+            <span className='text-center font-bold text-detail-xs p-2'> Puedes encontrar los datos del usuario en tu cuenta </span>
+          </div>
+          {isModalOpen && <ModalAdopConf pet={data} data={createInterestResponse} onClose={closeModal} />}
+        </div>
       </article>
     </div>
   );

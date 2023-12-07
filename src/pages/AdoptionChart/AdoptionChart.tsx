@@ -138,7 +138,7 @@ const AdoptionChart = () => {
                 Mascotas disponibles en adopción por especie
               </Title>
 
-              <div className='px-10 mt-4'>
+              <div className='mx-auto w-3/4 lg:w-2/3 px-10 mt-4'>
                 {speciesData ? <Bar options={options} data={speciesData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
               </div>
             </>
@@ -151,7 +151,7 @@ const AdoptionChart = () => {
               <Title variant='h3' className='pr-4 font-bold !text-[18px] lg:!text-[24px]'>
                 Informe Mascotas en Adopción VS Mascotas Adoptadas
               </Title>
-              <div className='px-10 mt-4'>
+              <div className='mx-auto w-3/4 lg:w-2/3 px-10 mt-4'>
                 {statusData ? <Bar options={options} data={statusData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
               </div>
             </>
