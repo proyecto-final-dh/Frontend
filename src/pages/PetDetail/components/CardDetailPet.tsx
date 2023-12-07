@@ -63,7 +63,7 @@ const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
       { key: 'Edad', value: data.pet.age?.toString() ?? '' },
       { key: 'Tamaño', value: data.pet.size },
       { key: 'Género', value: data.pet.gender },
-      { key: 'Localización', value: `${data.owner_information?.location?.city ?? ''}-${data.owner_information?.location?.country ?? ''}` },
+      { key: 'Localización', value: `${data.pet?.location?.city ?? ''}-${data.pet?.location?.country ?? ''}` },
     ];
   }, [data]);
 
