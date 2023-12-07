@@ -45,7 +45,7 @@ function App() {
               beforeClose={enableBody}
               components={{ Badge: TourBadge as React.ComponentType<{ styles?: StylesObj }> }}
             >
-              <div className='App bg-orange-light'>
+              <div className='App bg-orange-gray'>
                 <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale='es'>
                   <Container hasPadding={false}>
                     <ScrollToTop />

@@ -19,7 +19,7 @@ const DrawerMenu = () => {
         <Box sx={{ width: 200, bgcolor: 'primary.light', height: '100%' }}>
           <List>
             {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => {
-              if (label === 'tu cuenta' && !keycloak.authenticated) {
+              if (label === 'Tu cuenta' && !keycloak.authenticated) {
                 return null;
               }
               return (
