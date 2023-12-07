@@ -4,7 +4,7 @@ import './fonts.css';
 import Layout from './components/Layout';
 import { Route, Routes } from 'react-router-dom';
 import { AuthProvider } from './config';
-import { Home, Register, PetDetail, Adoption, QrGenerator, GiveAdoption, MyProfile, MyPets, PetsInAdoption, AdoptionRequests } from './pages';
+import { Home, Register, PetDetail, Adoption, QrGenerator, GiveAdoption, MyProfile, MyPets, PetsForAdoption, AdoptionRequests } from './pages';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { Container, Loader, TourBadge } from './components';
 import { Provider } from 'react-redux';
@@ -132,7 +132,7 @@ function App() {
                         element={
                           <Layout>
                             <YourAccount>
-                              <PetsInAdoption />
+                              <PetsForAdoption />
                             </YourAccount>
                           </Layout>
                         }

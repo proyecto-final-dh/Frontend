@@ -29,6 +29,7 @@ export const resqpetModuleApi = createApi({
     'getReportsGeneral',
     'getInterest',
     'getForAdoption',
+    'getResqued',
     'getMyPets',
   ],
   keepUnusedDataFor: 0,
@@ -132,6 +133,15 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getForAdoption'],
     }),
+    getResqued: build.query<APIMyPetsResponse[], object>({
+      query: () => ({
+        url: `/pets/resqued-pet`,
+      }),
+      transformResponse: (response: APIMyPetsResponse[]) => {
+        return response;
+      },
+      providesTags: ['getResqued'],
+    }),
     getMyPets: build.query<APIMyPetsResponse[], object>({
       query: () => ({
         url: `/pets/rescued-pet`,
@@ -164,7 +174,8 @@ export const {
   useLazyGetStatusReportQuery,
   useLazyGetReportQuery,
   useGetInterestQuery,
-  useGetForAdoptionQuery,
+  useLazyGetForAdoptionQuery,
+  useLazyGetResquedQuery,
   useGetMyPetsQuery,
   useCreateInterestsMutation,
 } = resqpetModuleApi;
