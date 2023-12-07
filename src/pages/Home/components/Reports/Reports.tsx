@@ -45,7 +45,7 @@ const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQr
       image: imageOrange,
       report: conQrCount,
       icon: qrCode,
-      description: 'Total de mascotas adoptadas a través de nuestra pagina',
+      description: 'Total de mascotas registradas a través de nuestra pagina',
     },
   ];
   return (
