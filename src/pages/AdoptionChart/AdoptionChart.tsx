@@ -9,6 +9,8 @@ import { DatePicker } from '@mui/x-date-pickers';
 import dayjs, { Dayjs } from 'dayjs';
 import { useLazyGetSpeciesReportQuery, useLazyGetStatusReportQuery } from '../../store/apis/resqpet.api';
 import { EN_ADOPCION } from '../../constants/pet-statuses.constants';
+import { getSpecies } from '../../services/species.service';
+import { useQuery } from 'react-query';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 const labelFontSize = 14;
@@ -28,6 +30,7 @@ export const options = {
 };
 
 const AdoptionChart = () => {
+  const { data: species } = useQuery('species', getSpecies);
   const [
     getSpeciesReport,
     {
@@ -71,7 +74,7 @@ const AdoptionChart = () => {
     return {
       labels: speciesReport[0].result.map((item) => item.date),
       datasets: speciesReport.map((item) => ({
-        label: item.speciesId.toString(),
+        label: species?.find((e) => e.id === item.speciesId)?.name ?? '',
         data: item.result.map((resultItem) => resultItem.count),
         backgroundColor: item.speciesId === 1 ? 'rgba(255, 149, 135, 255)' : 'rgba(255, 222, 139, 255)',
       })),
@@ -136,7 +139,7 @@ const AdoptionChart = () => {
               </Title>
 
               <div className='px-10 mt-4'>
-                {statusData ? <Bar options={options} data={statusData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+                {speciesData ? <Bar options={options} data={speciesData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
               </div>
             </>
           )}
@@ -149,7 +152,7 @@ const AdoptionChart = () => {
                 Informe Mascotas en Adopción VS Mascotas Adoptadas
               </Title>
               <div className='px-10 mt-4'>
-                {speciesData ? <Bar options={options} data={speciesData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+                {statusData ? <Bar options={options} data={statusData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
               </div>
             </>
           )}

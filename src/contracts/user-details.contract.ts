@@ -1,4 +1,8 @@
 export type APIUserDetailsResponse = {
+  userDetailsId: number;
+  name: string;
+  lastname: string;
+  email: string;
   id: number;
   userId: string;
   cellphone: string;
