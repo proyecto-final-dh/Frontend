@@ -31,7 +31,7 @@ const ModalConfirmAdoption: React.FC<CustomModalProps> = ({ isOpen, onClose, pet
               </div>
               <div className='flex items-center justify-center gap-5 pt-3'>
                 <Title variant='h2' className='text-center font-bold text-[22px] lg:text-[28px]'>
-                  Confirma que pirata fue adoptado ?
+                  Confirma que {petName} fue adoptado ?
                 </Title>
                 <IconCircleCheckFilled className='w-[40px] h-[40px]' />
               </div>
