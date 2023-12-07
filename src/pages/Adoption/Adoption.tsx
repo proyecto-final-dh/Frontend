@@ -14,7 +14,7 @@ import { EN_ADOPCION, PetStatusesTypes } from '../../constants/pet-statuses.cons
 import { PetSizesTypes, SIZES } from '../../constants/pet-sizes.constants';
 import { IconPawOff } from '@tabler/icons-react';
 
-const Adoption = () => {
+const Adoption: React.FC = () => {
   const [getPets, { isFetching: isFetchingPets, isLoading: isLoadingPets, data: pets, isError: isPetsError }] = useLazyGetPetsQuery();
 
   const { isLg } = useBreakpoint('lg');
@@ -38,6 +38,11 @@ const Adoption = () => {
     }
     return 4;
   }, [currentPage, isLg]);
+
+  const filteredBreeds = useMemo(() => {
+    if (!breeds) return [];
+    return breeds.filter((b) => b.species.id === specie);
+  }, [breed, specie, breeds, species]);
 
   useEffect(() => {
     if (errorLocations) console.log({ error: errorLocations });
@@ -99,7 +104,7 @@ const Adoption = () => {
             <FormControl fullWidth>
               <InputLabel id='breed'>Raza</InputLabel>
               <Select labelId='breed' id='breed' value={breed} label='Raza' onChange={(e) => setBreed(Number(e.target.value))}>
-                {breeds?.map((b) => (
+                {filteredBreeds?.map((b) => (
                   <MenuItem value={b.id} key={b.id}>
                     {b.name}
                   </MenuItem>

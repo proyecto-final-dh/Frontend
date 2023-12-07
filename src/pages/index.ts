@@ -4,3 +4,7 @@ export { default as PetDetail } from './PetDetail';
 export { default as Adoption } from './Adoption';
 export { default as GiveAdoption } from './GiveAdoption';
 export { default as QrGenerator } from './QrGenerator';
+export { default as MyProfile } from './MyProfile';
+export { default as MyPets } from './MyPets';
+export { default as PetsForAdoption } from './PetsForAdoption';
+export { default as AdoptionRequests } from './AdoptionRequests';

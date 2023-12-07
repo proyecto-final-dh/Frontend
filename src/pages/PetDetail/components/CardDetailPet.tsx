@@ -1,28 +1,39 @@
-import React, { useMemo, useState } from 'react';
-import { Pet } from '../../../contracts/pet';
+import React, { useEffect, useMemo, useState } from 'react';
+import { PetWithOwner } from '../../../contracts/pet';
 import { TextDetail, Table, Title } from '../../../components';
-import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
+import { IconChevronLeft, IconChevronRight, IconPaw } from '@tabler/icons-react';
 import { useAuthProvider } from '../../../config';
 import { getUserDetailsByKcId } from '../../../services/user-details.service';
 import { useNavigate } from 'react-router-dom';
 import ModalAdopConf from './ModalAdopConf';
+import { useCreateInterestsMutation } from '../../../store/apis/resqpet.api';
 
 interface CardProps {
-  pet: Pet;
+  data: PetWithOwner;
+  interest: boolean;
 }
 
-const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
+const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
   const { keycloak } = useAuthProvider();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [createInterest, { isError: errorCreateInterest, data: createInterestResponse, isSuccess }] = useCreateInterestsMutation();
+
+  useEffect(() => {
+    if (isSuccess) setIsModalOpen(true);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (errorCreateInterest) console.log({ errorCreateInterest });
+  }, [errorCreateInterest]);
 
   const handleNextImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % pet.images.length);
+    setCurrentImageIndex((prevIndex) => (prevIndex + 1) % data.pet.images.length);
   };
 
   const handlePrevImage = () => {
-    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? pet.images.length - 1 : prevIndex - 1));
+    setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? data.pet.images.length - 1 : prevIndex - 1));
   };
 
   const handleAdoptClick = () => {
@@ -30,15 +41,15 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
       navigate('/register');
       return;
     }
-    getUserDetailsByKcId(keycloak.subject)
-      .then(() => setIsModalOpen(true))
-      .catch((error) => {
-        if ((error as { response: { status: number } }).response.status === 404) {
-          navigate('/register');
-        } else {
-          console.log({ error });
-        }
-      });
+    getUserDetailsByKcId().catch((error) => {
+      if ((error as { response: { status: number } }).response.status === 404) {
+        navigate('/register');
+      } else {
+        console.log({ error });
+      }
+    });
+
+    createInterest({ id: data.pet.id }).then((response) => console.log(response));
   };
 
   const closeModal = () => {
@@ -46,31 +57,31 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
   };
 
   const rows = useMemo(() => {
-    if (!pet) return [];
+    if (!data) return [];
     return [
-      { key: 'Raza', value: pet.breed.name },
-      { key: 'Edad', value: pet.age.toString() },
-      { key: 'Tamaño', value: pet.size },
-      { key: 'Género', value: pet.gender },
-      { key: 'Localización', value: `${pet.userDetails.location.city}-${pet.userDetails.location.country}` },
+      { key: 'Raza', value: data.pet.breed.name },
+      { key: 'Edad', value: data.pet.age?.toString() ?? '' },
+      { key: 'Tamaño', value: data.pet.size },
+      { key: 'Género', value: data.pet.gender },
+      { key: 'Localización', value: `${data.owner_information?.location?.city ?? ''}-${data.owner_information?.location?.country ?? ''}` },
     ];
-  }, [pet]);
+  }, [data]);
 
   const headers = useMemo(() => {
-    if (!pet) return [];
+    if (!data) return [];
     return [
       { ref: 'key', label: 'Especie' },
-      { ref: 'value', label: pet.breed.species.name },
+      { ref: 'value', label: data.pet.breed.species.name },
     ];
-  }, [pet]);
+  }, [data]);
 
   return (
     <div className='flex flex-col lg:flex-row'>
       <div className='mb-4 lg:w-1/2 sm:mb-0 sm:mr-4'>
         <div className='flex justify-center p-5 '>
-          <img src={pet.images[currentImageIndex].url} alt={pet.images[currentImageIndex].alt} className='object-cover w-full rounded-lg h-96' />
+          <img src={data.pet.images[currentImageIndex].url} alt={data.pet.images[currentImageIndex].title} className='object-cover w-full rounded-lg h-96' />
         </div>
-        {pet.images.length > 1 && (
+        {data.pet.images.length > 1 && (
           <div className='flex justify-center mt-2 space-x-4'>
             <div className='cursor-pointer'>
               <IconChevronLeft onClick={handlePrevImage} />
@@ -84,18 +95,28 @@ const CardDetailPet: React.FC<CardProps> = ({ pet }) => {
 
       <article className='mt-4 px-7 lg:pl-0 lg:pr-4 lg:w-1/2'>
         <Title variant='h1' className='mb-6 font-bold'>
-          {pet.name}
+          {data.pet.name}
         </Title>
         <TextDetail size='s' weight='regular'>
-          {pet.description}
+          {data.pet.description}
         </TextDetail>
         <div className='max-w-xs mx-auto mt-10 lg:max-w-full'>
           <Table headers={headers} data={rows} />
         </div>
-        <button onClick={handleAdoptClick} className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>
-          Adoptar
-        </button>
-        {isModalOpen && <ModalAdopConf pet={pet} onClose={closeModal} />}
+        <div className=' flex flex-col justify-center items-center my-10'>
+          <button
+            disabled={interest}
+            onClick={handleAdoptClick}
+            className='w-full p-6 font-bold bg-primary rounded-3xl disabled:opacity-50 lg:max-w-[153px] lg:p-3 float-right'
+          >
+            Adoptar
+          </button>
+          <div className='flex gap-2 items-center'>
+            <IconPaw className='w-6 h-6 fill-orange-dark' />
+            <span className='text-center font-bold text-detail-xs p-2'> Puedes encontrar los datos del usuario en tu cuenta </span>
+          </div>
+          {isModalOpen && <ModalAdopConf pet={data} data={createInterestResponse} onClose={closeModal} />}
+        </div>
       </article>
     </div>
   );

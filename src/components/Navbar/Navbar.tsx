@@ -6,8 +6,11 @@ import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
 // import withKcContext from '../../hocs/withKcContext';
+import { useDispatch } from 'react-redux';
+import { resqpetModuleApi } from '../../store/apis/resqpet.api';
 
 const Navbar = () => {
+  const dispatch = useDispatch();
   const { keycloak } = useAuthProvider();
   const [value, setValue] = useState('');
   const theme = useTheme();
@@ -45,20 +48,25 @@ const Navbar = () => {
                 setValue(index);
               }}
             >
-              {NAVBARROUTES.map((page, index) => (
-                <Tab
-                  key={index}
-                  label={page.label}
-                  sx={{
-                    minHeight: '36px',
-                    alignSelf: 'stretch',
-                    height: '36px',
-                    textTransform: 'capitalize',
-                    fontWeight: '700',
-                    color: 'inherit',
-                  }}
-                />
-              ))}
+              {NAVBARROUTES.map((page, index) => {
+                if (page.label === 'Tu cuenta' && !keycloak.authenticated) {
+                  return null;
+                }
+                return (
+                  <Tab
+                    key={index}
+                    label={page.label}
+                    sx={{
+                      minHeight: '36px',
+                      alignSelf: 'stretch',
+                      height: '36px',
+                      textTransform: 'capitalize',
+                      fontWeight: '700',
+                      color: 'inherit',
+                    }}
+                  />
+                );
+              })}
               <div className='w-px bg-black h-9' />
               {!keycloak.authenticated && (
                 <div className='flex ml-3 gap-7'>
@@ -78,6 +86,7 @@ const Navbar = () => {
                   <button
                     onClick={() => {
                       navigate('/');
+                      dispatch(resqpetModuleApi.util.resetApiState());
                       keycloak.logout();
                     }}
                     className='rounded-3xl bg-orange-dark text-[16px] font-bold px-4 text-white'

@@ -4,8 +4,11 @@ import { NAVBARROUTES } from '../Navbar/navbarPages';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
 import { IconLogin2, IconLogout2, IconMenu2, IconUserPlus } from '@tabler/icons-react';
+import { useDispatch } from 'react-redux';
+import { resqpetModuleApi } from '../../store/apis/resqpet.api';
 
 const DrawerMenu = () => {
+  const dispatch = useDispatch();
   const { keycloak } = useAuthProvider();
   const [openDrawer, setOpenDrawer] = useState(false);
   const navigate = useNavigate();
@@ -15,20 +18,25 @@ const DrawerMenu = () => {
       <Drawer anchor='right' open={openDrawer} onClose={() => setOpenDrawer(false)}>
         <Box sx={{ width: 200, bgcolor: 'primary.light', height: '100%' }}>
           <List>
-            {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => (
-              <ListItemButton
-                key={index}
-                onClick={() => {
-                  navigate(route);
-                  setOpenDrawer(false);
-                }}
-              >
-                <div className='flex items-center gap-2'>
-                  <ItemIcon className='text-orange-dark' />
-                  <ListItemText>{label}</ListItemText>
-                </div>
-              </ListItemButton>
-            ))}
+            {NAVBARROUTES.map(({ label, icon: ItemIcon, route }, index) => {
+              if (label === 'Tu cuenta' && !keycloak.authenticated) {
+                return null;
+              }
+              return (
+                <ListItemButton
+                  key={index}
+                  onClick={() => {
+                    navigate(route);
+                    setOpenDrawer(false);
+                  }}
+                >
+                  <div className='flex items-center gap-2'>
+                    <ItemIcon className='text-orange-dark' />
+                    <ListItemText>{label}</ListItemText>
+                  </div>
+                </ListItemButton>
+              );
+            })}
             <div className='w-full px-4'>
               <div className='w-full h-px bg-black' />
             </div>
@@ -52,6 +60,7 @@ const DrawerMenu = () => {
               <ListItemButton
                 onClick={() => {
                   navigate('/');
+                  dispatch(resqpetModuleApi.util.resetApiState());
                   keycloak.logout();
                 }}
               >
