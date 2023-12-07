@@ -1,12 +1,19 @@
 FROM node:16.14.2-alpine AS builder
 # Set working directory
 WORKDIR /app
+<<<<<<< HEAD
 # Copy all files from current directory to working dir in image
 COPY . .
 # Set environment variables
 # install node modules and build assets
 RUN npm ci 
 RUN npm run build
+=======
+COPY package.json .
+RUN npm ci
+COPY . .
+RUN npm build
+>>>>>>> develop
 
 # nginx state for serving content
 FROM nginx:alpine

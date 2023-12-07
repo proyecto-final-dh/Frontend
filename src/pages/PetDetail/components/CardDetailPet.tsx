@@ -63,7 +63,7 @@ const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
       { key: 'Edad', value: data.pet.age?.toString() ?? '' },
       { key: 'Tamaño', value: data.pet.size },
       { key: 'Género', value: data.pet.gender },
-      { key: 'Localización', value: `${data.owner_information?.location?.city ?? ''}-${data.owner_information?.location?.country ?? ''}` },
+      { key: 'Localización', value: `${data.pet?.location?.city ?? ''}-${data.pet?.location?.country ?? ''}` },
     ];
   }, [data]);
 
@@ -111,10 +111,12 @@ const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
           >
             Adoptar
           </button>
-          <div className='flex gap-2 items-center'>
-            <IconPaw className='w-6 h-6 fill-orange-dark' />
-            <span className='text-center font-bold text-detail-xs p-2'> Puedes encontrar los datos del usuario en tu cuenta </span>
-          </div>
+          {interest && (
+            <div className='flex gap-2 items-center'>
+              <IconPaw className='w-6 h-6 fill-orange-dark' />
+              <span className='text-center font-bold text-detail-xs p-2'> Puedes encontrar los datos del usuario en tu cuenta </span>
+            </div>
+          )}
           {isModalOpen && <ModalAdopConf pet={data} data={createInterestResponse} onClose={closeModal} />}
         </div>
       </article>
