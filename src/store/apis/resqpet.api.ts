@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { fetchBaseQuery, createApi } from '@reduxjs/toolkit/query/react';
 import { REHYDRATE } from 'redux-persist';
 import { APIUserDetailsResponse } from '../../contracts/user-details.contract';
@@ -164,6 +165,7 @@ export const resqpetModuleApi = createApi({
       query: ({ id }) => ({
         url: `pets/${id}/update-status?newStatus=ADOPTADA`,
         method: 'PUT',
+        responseHandler: (response: { text: () => any }) => response.text(),
       }),
       transformResponse: (response: string) => {
         return response;
