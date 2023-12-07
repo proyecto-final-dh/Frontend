@@ -81,7 +81,7 @@ const GiveAdoption: React.FC = () => {
         formData.append(`image`, image.value);
       }
     });
-
+    console.log(kc.token);
     mutation.mutateAsync(formData);
     setModalOpen(true);
   };

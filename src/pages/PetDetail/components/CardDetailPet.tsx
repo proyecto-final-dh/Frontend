@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { PetWithOwner } from '../../../contracts/pet';
 import { TextDetail, Table, Title } from '../../../components';
 import { IconChevronLeft, IconChevronRight } from '@tabler/icons-react';
@@ -6,16 +6,27 @@ import { useAuthProvider } from '../../../config';
 import { getUserDetailsByKcId } from '../../../services/user-details.service';
 import { useNavigate } from 'react-router-dom';
 import ModalAdopConf from './ModalAdopConf';
+import { useCreateInterestsMutation } from '../../../store/apis/resqpet.api';
 
 interface CardProps {
   data: PetWithOwner;
+  interest: boolean;
 }
 
-const CardDetailPet: React.FC<CardProps> = ({ data }) => {
+const CardDetailPet: React.FC<CardProps> = ({ data, interest }) => {
   const { keycloak } = useAuthProvider();
   const navigate = useNavigate();
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [createInterest, { isError: errorCreateInterest, data: createInterestResponse, isSuccess }] = useCreateInterestsMutation();
+
+  useEffect(() => {
+    if (isSuccess) setIsModalOpen(true);
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (errorCreateInterest) console.log({ errorCreateInterest });
+  }, [errorCreateInterest]);
 
   const handleNextImage = () => {
     setCurrentImageIndex((prevIndex) => (prevIndex + 1) % data.pet.images.length);
@@ -30,15 +41,15 @@ const CardDetailPet: React.FC<CardProps> = ({ data }) => {
       navigate('/register');
       return;
     }
-    getUserDetailsByKcId()
-      .then(() => setIsModalOpen(true))
-      .catch((error) => {
-        if ((error as { response: { status: number } }).response.status === 404) {
-          navigate('/register');
-        } else {
-          console.log({ error });
-        }
-      });
+    getUserDetailsByKcId().catch((error) => {
+      if ((error as { response: { status: number } }).response.status === 404) {
+        navigate('/register');
+      } else {
+        console.log({ error });
+      }
+    });
+
+    createInterest({ id: data.pet.id }).then((response) => console.log(response));
   };
 
   const closeModal = () => {
@@ -92,10 +103,14 @@ const CardDetailPet: React.FC<CardProps> = ({ data }) => {
         <div className='max-w-xs mx-auto mt-10 lg:max-w-full'>
           <Table headers={headers} data={rows} />
         </div>
-        <button onClick={handleAdoptClick} className='w-full p-6 my-10 font-bold bg-primary rounded-3xl lg:max-w-[153px] lg:p-3 float-right'>
+        <button
+          disabled={interest}
+          onClick={handleAdoptClick}
+          className='w-full p-6 my-10 font-bold bg-primary rounded-3xl disabled:opacity-50 lg:max-w-[153px] lg:p-3 float-right'
+        >
           Adoptar
         </button>
-        {isModalOpen && <ModalAdopConf data={data} onClose={closeModal} />}
+        {isModalOpen && <ModalAdopConf pet={data} data={createInterestResponse} onClose={closeModal} />}
       </article>
     </div>
   );

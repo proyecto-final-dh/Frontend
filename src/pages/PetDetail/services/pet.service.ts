@@ -12,3 +12,8 @@ export const getPetsByStatus = async ({ page = 0, size = 9, status }: { status: 
   const response = await resqpetAPI().get<APIPageableGetPetsByStatusResponse>(`/pets/status`, { params: { status, page, size } });
   return petsByStatusMapper.toFront(response.data);
 };
+
+export const getInterestPet = async () => {
+  const response = await resqpetAPI().get<TAPIResponse<PetWithOwner[], object>>(`/interests`);
+  return response.data;
+};
