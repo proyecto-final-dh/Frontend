@@ -3,7 +3,6 @@ import { Loader } from '../../components';
 import PetInfo from '../../components/PetInfo';
 import { useGetPetByIdQuery } from '../../store/apis/resqpet.api';
 import { useEffect } from 'react';
-import withKcContext from '../../hocs/withKcContext';
 
 const QrDetail = () => {
   const { id } = useParams();
@@ -35,4 +34,4 @@ const QrDetail = () => {
   );
 };
 
-export default withKcContext(QrDetail);
+export default QrDetail;
