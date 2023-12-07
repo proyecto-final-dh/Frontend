@@ -7,6 +7,7 @@ RUN npm run build
 
 # nginx state for serving content
 FROM nginx:alpine
+EXPOSE 80
 # Remove default nginx static assets
 RUN rm -rf /usr/share/nginx/html/*
 # Remove default nginx conf
