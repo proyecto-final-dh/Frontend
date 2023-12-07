@@ -5,7 +5,7 @@ import { APIGetPetsResponse, APIGetPetsWithFiltersQueryParams, APIPageableGetPet
 import petsMapper from '../../mappers/pets.mapper';
 import { Pet, PetWithOwner } from '../../contracts/pet';
 import { kc } from '../../config';
-import { APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
+import { APIReportGeneral, APISpeciesReportResponse, APIStatusReportResponse } from '../../contracts/reports.contract';
 import { APIInterestResponse, APIResponseInterest } from '../../contracts/interest.contract';
 import { APIMyPetsResponse } from '../../contracts/my-pets.contract';
 
@@ -20,7 +20,7 @@ export const resqpetModuleApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getInterest', 'getForAdoption', 'getMyPets'],
+  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getReportsGeneral','getInterest', 'getForAdoption', 'getMyPets'],
   keepUnusedDataFor: 0,
   refetchOnMountOrArgChange: true,
   extractRehydrationInfo(action, { reducerPath }) {
@@ -94,6 +94,15 @@ export const resqpetModuleApi = createApi({
       },
       providesTags: ['getSpeciesReport'],
     }),
+    getReport: build.query<APIReportGeneral, void>({
+      query: () => ({
+        url: `/history/generalReports`,
+      }),
+      transformResponse: (response: APIReportGeneral) => {
+        console.log({ response });
+        return response;
+      },
+      providesTags: ['getReportsGeneral'],
     getInterest: build.query<APIInterestResponse[], object>({
       query: () => ({
         url: `/interests`,
@@ -133,6 +142,7 @@ export const {
   useGetPetByIdQuery,
   useLazyGetSpeciesReportQuery,
   useLazyGetStatusReportQuery,
+  useLazyGetReportQuery,
   useGetInterestQuery,
   useGetForAdoptionQuery,
   useGetMyPetsQuery,

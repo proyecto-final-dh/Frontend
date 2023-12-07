@@ -5,7 +5,7 @@ import { NAVBARROUTES } from './navbarPages';
 import Logo from '../Logo/Logo';
 import { useNavigate } from 'react-router-dom';
 import { useAuthProvider } from '../../config';
-import withKcContext from '../../hocs/withKcContext';
+// import withKcContext from '../../hocs/withKcContext';
 import { useDispatch } from 'react-redux';
 import { resqpetModuleApi } from '../../store/apis/resqpet.api';
 
@@ -103,4 +103,4 @@ const Navbar = () => {
   );
 };
 
-export default withKcContext(Navbar);
+export default Navbar;

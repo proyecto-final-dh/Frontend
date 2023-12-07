@@ -29,7 +29,7 @@ const MyPetCard = ({
   userEmail,
   mainAction,
   mainActionLabel,
-  userPhone
+  userPhone,
 }: IMyPetCard) => {
   return (
     <section className='flex flex-col gap-4 p-4 border-2 rounded-3xl border-primary h-fit'>
@@ -68,7 +68,7 @@ const MyPetCard = ({
           {!!userPhone && <p>{userPhone}</p>}
         </div>
       </article>
-      <article className='flex justify-between'>
+      <article className='flex justify-end'>
         {!!mainActionLabel && mainAction && <Button label={mainActionLabel} variant='primary' onClick={mainAction}></Button>}
       </article>
     </section>

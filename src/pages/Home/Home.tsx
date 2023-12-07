@@ -6,7 +6,7 @@ import Carrusel from './components/Carrusel/Carrusel';
 import HeroBanner from '../../components/Banner/HeroBanner';
 import qr from '../../../src/assets/qr-code-movil.png';
 import dog1 from '../../../src/assets/dog-glasses1.png';
-import { useLazyGetPetsQuery } from '../../store/apis/resqpet.api';
+import { useLazyGetPetsQuery, useLazyGetReportQuery } from '../../store/apis/resqpet.api';
 import { useEffect, useState } from 'react';
 import { EN_ADOPCION, PetStatusesTypes } from '../../constants/pet-statuses.constants';
 import useBreakpoint from '../../hooks/use-breakpoint';
@@ -15,6 +15,7 @@ import Reports from './components/Reports';
 const Home = () => {
   const { isLg } = useBreakpoint('lg');
   const [getPets, { isFetching: isFetchingPets, isLoading: isLoadingPets, data: pets }] = useLazyGetPetsQuery();
+  const [getReportGeneral, { isFetching: isFetchingReport, isLoading: isLoadingReports, data: reports }] = useLazyGetReportQuery();
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -27,6 +28,10 @@ const Home = () => {
     getPets({ queryParams: filters });
   }, [currentPage, isLg]);
 
+  useEffect(() => {
+    getReportGeneral();
+  }, []);
+
   const onPrev = () => {
     setCurrentPage((prev) => prev - 1);
   };
@@ -36,6 +41,7 @@ const Home = () => {
   };
 
   const isLoading = isLoadingPets || isFetchingPets;
+  const isLoadingReportsGeneral = isLoadingReports || isFetchingReport;
 
   return (
     <div className='bg-white col-span-full'>
@@ -58,7 +64,20 @@ const Home = () => {
             {!!pets && <Carrusel pets={pets.content} disableNext={pets.pageable.isLast} disablePrev={pets.pageable.isFirst} onNext={onNext} onPrev={onPrev} />}
           </>
         )}
-        <Reports />
+        {isLoadingReportsGeneral ? (
+          <Loader opacity={60} />
+        ) : (
+          <>
+            {!!reports && (
+              <Reports
+                adoptadasCount={reports.adoptadasCount}
+                averageTime={reports.averageTime}
+                conQrCount={reports.conQrCount}
+                enAdopcionCount={reports.enAdopcionCount}
+              />
+            )}
+          </>
+        )}
       </Box>
     </div>
   );
