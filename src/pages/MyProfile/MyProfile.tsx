@@ -1,5 +1,5 @@
 import { useGetUserDetailsByIdQuery } from '../../store/apis/resqpet.api';
-import { Loader } from '../../components';
+import { Loader, Title } from '../../components';
 import ProfileCard from '../YourAccount/components/ProfileCard';
 import { withKeycloakAuth } from '../../config';
 
@@ -9,6 +9,9 @@ const MyProfile = () => {
   const _isLoading = isFetching || isLoading;
   return (
     <div className='w-full'>
+      <Title className='m-4' variant='h1'>
+        Mi Perfil
+      </Title>
       {_isLoading && <Loader opacity={60} />}
       {!isLoading && data && (
         <ProfileCard

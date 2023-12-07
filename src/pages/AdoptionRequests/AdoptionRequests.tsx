@@ -1,4 +1,4 @@
-import { Loader } from '../../components';
+import { Loader, Title } from '../../components';
 import { withKeycloakAuth } from '../../config';
 import { useGetInterestQuery } from '../../store/apis/resqpet.api';
 import MyPetCard from '../YourAccount/components/MyPetCard';
@@ -10,9 +10,12 @@ const AdoptionRequests = () => {
 
   return (
     <div className='w-full'>
+      <Title className='m-4' variant='h1'>
+        Mis Solicitudes de Adopción
+      </Title>
       {_isLoading && <Loader opacity={60} />}
       {!isLoading && data && (
-        <>
+        <div className='flex flex-col gap-1'>
           {data.map((item) => {
             return (
               <MyPetCard
@@ -28,7 +31,7 @@ const AdoptionRequests = () => {
               />
             );
           })}
-        </>
+        </div>
       )}
     </div>
   );

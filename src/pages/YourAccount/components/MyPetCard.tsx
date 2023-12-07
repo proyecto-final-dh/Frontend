@@ -46,8 +46,7 @@ const MyPetCard = ({
           </div>
         </div>
 
-        <div className='flex flex-col gap-2'>
-          {!!userName && <p> {userName} </p>}
+        <div className='flex flex-col gap-2 items-end'>
           {!!publishDate && (
             <p className='font-bold'>
               Fecha de publicación: <span className='font-regular'>{publishDate} </span>
@@ -64,6 +63,7 @@ const MyPetCard = ({
               Fecha de adopción: <span className='font-regular'>{adoptionDate} </span>
             </p>
           )}
+          {!!userName && <p> {userName} </p>}
           {!!userEmail && <p>{userEmail}</p>}
           {!!userPhone && <p>{userPhone}</p>}
         </div>

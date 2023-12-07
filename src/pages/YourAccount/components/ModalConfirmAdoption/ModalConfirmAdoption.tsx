@@ -10,9 +10,10 @@ interface CustomModalProps {
   gender: string;
   size: string;
   image: string;
+  onSubmit: () => void;
 }
 
-const ModalConfirmAdoption: React.FC<CustomModalProps> = ({ isOpen, onClose, petName, specie, gender, size, image }) => {
+const ModalConfirmAdoption: React.FC<CustomModalProps> = ({ isOpen, onClose, petName, specie, gender, size, image, onSubmit }) => {
   return (
     <>
       {isOpen && (
@@ -36,7 +37,9 @@ const ModalConfirmAdoption: React.FC<CustomModalProps> = ({ isOpen, onClose, pet
                 <IconCircleCheckFilled className='w-[40px] h-[40px]' />
               </div>
               <div className='flex items-center justify-center pt-4'>
-                <button className='rounded-3xl bg-primary text-center text-white py-2 w-full lg:max-w-[160px] mx-auto cursor-pointer'>Confirmar</button>
+                <button onClick={onSubmit} className='rounded-3xl bg-primary text-center text-white py-2 w-full lg:max-w-[160px] mx-auto cursor-pointer'>
+                  Confirmar
+                </button>
               </div>
             </section>
           </div>
