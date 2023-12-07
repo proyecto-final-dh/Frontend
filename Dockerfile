@@ -15,7 +15,8 @@ RUN rm -rf /usr/share/nginx/html/*
 # Remove default nginx conf
 RUN rm /etc/nginx/conf.d/default.conf
 # Copy static assets from builder stage
+EXPOSE 80
 COPY --from=builder /app/build /usr/share/nginx/html
 COPY --from=builder /app/docker/nginx.conf /etc/nginx/conf.d
 # Containers run nginx with global directives and daemon off
-EXPOSE 80
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
