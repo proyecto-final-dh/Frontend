@@ -1,10 +1,22 @@
+import { useEffect, useState } from 'react';
 import { Loader, Title } from '../../components';
+import QrModal from '../../components/QrModal/QrModal';
 import { withKeycloakAuth } from '../../config';
 import { useGetMyPetsQuery } from '../../store/apis/resqpet.api';
 import MyPetCard from '../YourAccount/components/MyPetCard';
 
 const MyPets = () => {
   const { isFetching, isLoading, data } = useGetMyPetsQuery({});
+
+  const [selectedId, setSelectedId] = useState('');
+  const [qrModal, setQrModal] = useState(false);
+  const [qrUrl, setQrUrl] = useState('');
+
+  useEffect(() => {
+    const image = document.getElementById('qr-image') as HTMLImageElement;
+    if (!image) return;
+    setQrUrl(`${location.origin}/qr/${selectedId}`);
+  }, [selectedId, qrModal]);
 
   const _isLoading = isFetching || isLoading;
 
@@ -25,13 +37,17 @@ const MyPets = () => {
                 petName={item.name}
                 breed={item.breed.name}
                 species={item.breed.species.name}
-                mainAction={() => console.log}
+                mainAction={() => {
+                  setSelectedId(item.id.toString());
+                  setQrModal(true);
+                }}
                 mainActionLabel='Ver QR'
               />
             );
           })}
         </div>
       )}
+      {qrModal && <QrModal url={qrUrl} closeModal={() => setQrModal(false)} />}
     </div>
   );
 };
