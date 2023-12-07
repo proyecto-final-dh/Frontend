@@ -42,7 +42,7 @@ const QrModal = ({ closeModal, url }: QrModalProps) => {
   };
 
   return (
-    <div className='fixed w-screen h-screen top-0 left-0 z-[10] flex justify-center items-center bg-primary/80'>
+    <div className='fixed w-screen h-screen top-0 left-0 z-[10] flex justify-center items-center bg-primary/80 mt-10'>
       <section className='relative flex flex-col justify-center w-10/12 p-4 bg-white h-5/6 lg:w-6/12 rounded-3xl lg:p-8'>
         <IconX onClick={closeModal} className='absolute text-orange-dark top-4 right-4' />
         <Title variant='h2' className='text-center font-bold text-[22px] lg:text-[28px]'>

@@ -20,7 +20,17 @@ export const resqpetModuleApi = createApi({
       return headers;
     },
   }),
-  tagTypes: ['getPets', 'getUserDetailsById', 'getPetRecommendations', 'getStatusReport', 'getSpeciesReport', 'getReportsGeneral','getInterest', 'getForAdoption', 'getMyPets'],
+  tagTypes: [
+    'getPets',
+    'getUserDetailsById',
+    'getPetRecommendations',
+    'getStatusReport',
+    'getSpeciesReport',
+    'getReportsGeneral',
+    'getInterest',
+    'getForAdoption',
+    'getMyPets',
+  ],
   keepUnusedDataFor: 0,
   refetchOnMountOrArgChange: true,
   extractRehydrationInfo(action, { reducerPath }) {
@@ -103,6 +113,7 @@ export const resqpetModuleApi = createApi({
         return response;
       },
       providesTags: ['getReportsGeneral'],
+    }),
     getInterest: build.query<APIInterestResponse[], object>({
       query: () => ({
         url: `/interests`,

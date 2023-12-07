@@ -49,7 +49,7 @@ const Navbar = () => {
               }}
             >
               {NAVBARROUTES.map((page, index) => {
-                if (page.label === 'tu cuenta' && !keycloak.authenticated) {
+                if (page.label === 'Tu cuenta' && !keycloak.authenticated) {
                   return null;
                 }
                 return (
