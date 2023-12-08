@@ -9,6 +9,7 @@ import { TextDetail } from '../../../../components';
 import { Box, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 import Number from '../../../../components/Number';
+import useBreakpoint from '../../../../hooks/use-breakpoint';
 
 interface ReportProps {
   enAdopcionCount: number;
@@ -18,6 +19,7 @@ interface ReportProps {
 }
 
 const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQrCount, averageTime }: ReportProps) => {
+  const { isLg } = useBreakpoint('lg');
   const reports = [
     {
       id: 'report-1',
@@ -61,7 +63,7 @@ const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQr
               <img src={report.image} />
               {report.id === 'report-1' ? (
                 <div className='absolute flex flex-col items-center top-[20%]  w-[80%]'>
-                  <TextDetail size='xxl' weight='bold'>
+                  <TextDetail size={isLg ? 'xxl' : 'xl'} weight='bold'>
                     <Number n={report.report}></Number>
                   </TextDetail>
                   <TextDetail size='xs' weight='bold' className='mt-[-0.75rem]'>
@@ -70,7 +72,7 @@ const Reports: React.FC<ReportProps> = ({ enAdopcionCount, adoptadasCount, conQr
                 </div>
               ) : (
                 <div className='absolute flex flex-col items-center top-[20%]  w-[80%]'>
-                  <TextDetail size='xxl' weight='bold'>
+                  <TextDetail size={isLg ? 'xxl' : 'xl'} weight='bold'>
                     <Number n={report.report}></Number>
                   </TextDetail>
                 </div>

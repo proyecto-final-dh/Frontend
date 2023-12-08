@@ -6,8 +6,10 @@ import MyPetCard from '../YourAccount/components/MyPetCard';
 import { dateFormatter } from '../../utils/dates';
 import ModalConfirmAdoption from '../YourAccount/components/ModalConfirmAdoption/ModalConfirmAdoption';
 import { APIMyPetsResponse } from '../../contracts/my-pets.contract';
+import useBreakpoint from '../../hooks/use-breakpoint';
 
 const PetsForAdoption = () => {
+  const { isLg } = useBreakpoint('lg');
   const [getForAdoption, { isFetching: isFetchingForAdoption, isLoading: isLoadingForAdoption, data: dataForAdoption }] = useLazyGetForAdoptionQuery();
   const [getResqued, { isFetching: isFetchingResqued, isLoading: isLoadingResqued, data: dataResqued }] = useLazyGetResquedQuery();
   const [updateStatus, { isSuccess }] = useUpdatePetStatusMutation();
@@ -51,7 +53,7 @@ const PetsForAdoption = () => {
       />
       {!_isLoading && dataForAdoption && (
         <>
-          <Title className='m-4' variant='h1'>
+          <Title className='m-4' variant={isLg ? 'h1' : 'h3'}>
             En adopción
           </Title>
           <div className='flex flex-col gap-1'>
@@ -79,7 +81,7 @@ const PetsForAdoption = () => {
       )}
       {!_isLoading && dataResqued && (
         <>
-          <Title className='m-4' variant='h1'>
+          <Title className='m-4' variant={isLg ? 'h1' : 'h3'}>
             Adoptados
           </Title>
           <div className='flex flex-col gap-1'>

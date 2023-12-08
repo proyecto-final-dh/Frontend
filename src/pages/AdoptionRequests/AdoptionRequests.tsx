@@ -1,16 +1,18 @@
 import { Loader, Title } from '../../components';
 import { withKeycloakAuth } from '../../config';
+import useBreakpoint from '../../hooks/use-breakpoint';
 import { useGetInterestQuery } from '../../store/apis/resqpet.api';
 import MyPetCard from '../YourAccount/components/MyPetCard';
 
 const AdoptionRequests = () => {
+  const { isLg } = useBreakpoint('lg');
   const { isFetching, isLoading, data } = useGetInterestQuery({});
 
   const _isLoading = isFetching || isLoading;
 
   return (
     <div className='w-full'>
-      <Title className='m-4' variant='h1'>
+      <Title className='m-4' variant={isLg ? 'h1' : 'h3'}>
         Mis Solicitudes de Adopción
       </Title>
       {_isLoading && <Loader opacity={60} />}
