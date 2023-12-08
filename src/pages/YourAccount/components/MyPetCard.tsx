@@ -46,7 +46,7 @@ const MyPetCard = ({
           </div>
         </div>
 
-        <div className='flex flex-col gap-2 items-end'>
+        <div className='flex flex-col gap-2 lg:items-end'>
           {!!publishDate && (
             <p className='font-bold'>
               Fecha de publicación: <span className='font-regular'>{publishDate} </span>

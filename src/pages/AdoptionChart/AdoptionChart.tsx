@@ -135,8 +135,10 @@ const AdoptionChart = () => {
                 Mascotas disponibles en adopción por especie
               </Title>
 
-              <div className='w-3/4 lg:w-2/3'>
-                {speciesData ? <Bar options={options} data={speciesData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+              <div className='flex justify-center w-full'>
+                <div className='lg:w-2/3'>
+                  {speciesData ? <Bar options={options} data={speciesData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+                </div>
               </div>
             </>
           )}
@@ -148,8 +150,10 @@ const AdoptionChart = () => {
               <Title variant='h3' className='pr-4 font-bold !text-[18px] lg:!text-[24px]'>
                 Informe Mascotas en Adopción VS Mascotas Adoptadas
               </Title>
-              <div className='w-3/4 lg:w-2/3'>
-                {statusData ? <Bar options={options} data={statusData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+              <div className='flex justify-center w-full'>
+                <div className='lg:w-2/3'>
+                  {statusData ? <Bar options={options} data={statusData} /> : <Title variant='h1'>No tenemos datos por el momento 😿</Title>}
+                </div>
               </div>
             </>
           )}

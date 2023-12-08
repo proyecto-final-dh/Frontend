@@ -2,6 +2,7 @@ import React from 'react';
 import { PetWithOwner } from '../../../contracts/pet';
 import { IconX, IconMail, IconPhone, IconMapPin, IconHelpOctagonFilled } from '@tabler/icons-react';
 import Title from '../../../components/Title';
+import useBreakpoint from '../../../hooks/use-breakpoint';
 interface ModalProps {
   data: PetWithOwner | undefined;
   pet: PetWithOwner;
@@ -9,6 +10,7 @@ interface ModalProps {
 }
 
 const ModalAdopConf: React.FC<ModalProps> = ({ data, pet: { pet: innerPet }, onClose }) => {
+  const { isLg } = useBreakpoint('lg');
   const icons = {
     email: <IconMail />,
     phone: <IconPhone />,
@@ -20,15 +22,17 @@ const ModalAdopConf: React.FC<ModalProps> = ({ data, pet: { pet: innerPet }, onC
       <div className='flex flex-col rounded-3xl'>
         <section className='relative flex flex-col p-8 bg-orange-light h-22 rounded-t-2xl'>
           <IconX onClick={onClose} className='absolute text-orange-dark top-4 right-4' />
-          <div className='flex flex-col items-center gap-8 lg:flex-row'>
-            <div>
-              <img src={innerPet.images[0].url} alt={innerPet.images[0].title} className='md:max-w-[200px] rounded-3xl lg:max-w-[250px] ' />
+          {isLg && (
+            <div className='flex flex-col items-center gap-8 lg:flex-row'>
+              <div>
+                <img src={innerPet.images[0].url} alt={innerPet.images[0].title} className='md:max-w-[200px] rounded-3xl lg:max-w-[250px] ' />
+              </div>
+              <div className='flex items-center justify-center gap-5'>
+                <h3 className='font-bold text-center text-h3'>{innerPet.name}</h3>
+                <p>{`${innerPet.breed.species.name} | ${innerPet.gender} | ${innerPet.size}`}</p>
+              </div>
             </div>
-            <div className='flex items-center justify-center gap-5'>
-              <h3 className='font-bold text-center text-h3'>{innerPet.name}</h3>
-              <p>{`${innerPet.breed.species.name} | ${innerPet.gender} | ${innerPet.size}`}</p>
-            </div>
-          </div>
+          )}
           <div className='flex items-center justify-center gap-5 pt-3'>
             <Title variant='h2' className='text-center font-bold text-[22px] lg:text-[28px]'>
               ¿Deseas adoptarlo(a)?

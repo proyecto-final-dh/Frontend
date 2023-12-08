@@ -4,8 +4,10 @@ import QrModal from '../../components/QrModal/QrModal';
 import { withKeycloakAuth } from '../../config';
 import { useGetMyPetsQuery } from '../../store/apis/resqpet.api';
 import MyPetCard from '../YourAccount/components/MyPetCard';
+import useBreakpoint from '../../hooks/use-breakpoint';
 
 const MyPets = () => {
+  const { isLg } = useBreakpoint('lg');
   const { isFetching, isLoading, data } = useGetMyPetsQuery({});
 
   const [selectedId, setSelectedId] = useState('');
@@ -22,7 +24,7 @@ const MyPets = () => {
 
   return (
     <div className='w-full'>
-      <Title className='m-4' variant='h1'>
+      <Title className='m-4' variant={isLg ? 'h1' : 'h3'}>
         Mis Mascotas registradas
       </Title>
       {_isLoading && <Loader opacity={60} />}

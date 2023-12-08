@@ -11,7 +11,7 @@ const TextDetail = ({ children, size, weight, className }: TextDetailProps) => {
   const sizeClass = {
     xs: 'text-detail-xs',
     s: 'text-detail-s',
-    xl: 'text-detal-l',
+    xl: 'text-[26px]',
     xxl: 'text-[36px]',
   }[size];
 
